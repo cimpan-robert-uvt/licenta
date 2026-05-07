@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Autentificare{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper mt-5">
+    <div class="auth-header">
+        <h2>Bine ai revenit!</h2>
+        <p class="opacity-75">Introdu datele pentru a continua</p>
+    </div>
+
+    <div class="card p-4">
+        <div class="card-body">
+            {% if request.GET.next %}
+            <div class="alert alert-warning text-center small mb-4">
+                <i class="fas fa-clock me-2"></i>Sesiunea a expirat. Te rugăm să te autentifici.
+            </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors.0 }}</div>
+                {% endif %}
+
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-muted small text-uppercase">{{ field.label }}</label>
+                    {{ field }} {% if field.errors %}
+                    <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Autentificare</button>
+            </form>
+        </div>
+        <div class="card-footer bg-transparent border-0 text-center py-3">
+            <p class="mb-0 text-muted">Nu ai cont? <a href="{% url 'register' %}"
+                    class="fw-bold text-primary">Înregistrează-te</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

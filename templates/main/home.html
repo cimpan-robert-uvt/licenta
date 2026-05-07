@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Oferte stagii de practică - Platformă inteligentă de gestionare a stagiilor de practică{% endblock %}
+
+{% block messages %}{% endblock %}
+
+{% block content %}
+
+    <h2 class="mb-4">Oferte stagii de practică disponibile</h2>
+    {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} shadow-sm" role="alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    {% if offers %}
+        <div class="row g-4">
+            {% for offer in offers %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ offer.title }}</h5>
+                            <p class="card-text text-muted small mb-3">{{ offer.description|truncatechars:100 }}</p>
+                            <div class="mb-3">
+                                <small class="text-muted"><i class="fas fa-building me-1"></i>{{ offer.company.company_profile.company_name }}</small><br>
+                                <small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>{{ offer.location|default:"Nespecificată" }}</small><br>
+                                <small class="text-muted"><i class="fas fa-hourglass-half me-1"></i>{{ offer.duration_weeks }} săptămâni</small>
+                            </div>
+                            <a href="{% url 'offer_details' offer.pk %}" class="btn btn-sm btn-outline-primary rounded-pill">Vezi detalii</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state-centered">
+            <p class="text-muted">Nu există oferte de stagii de practică disponibile în acest moment.</p>
+        </div>
+    {% endif %}
+{% endblock %}

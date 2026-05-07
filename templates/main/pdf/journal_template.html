@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Jurnal de practică</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 11pt;
+            color: #1f2937;
+            line-height: 1.5;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 12px 0;
+            font-size: 20pt;
+        }
+
+        .meta {
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .meta p {
+            margin: 2px 0;
+        }
+
+        .entry {
+            margin-top: 14px;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+        }
+
+        .entry-title {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .entry-date {
+            color: #4b5563;
+            font-size: 10pt;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jurnal de practică</h1>
+
+    <div class="meta">
+        <p><strong>Student:</strong> {{ student.get_full_name }}</p>
+        <p><strong>Companie:</strong> {{ company.company_profile.company_name|default:company.get_full_name }}</p>
+        <p><strong>Ofertă:</strong> {{ internship.offer.title|default:"-" }}</p>
+        <p><strong>Perioadă:</strong> {{ internship.start_date|date:"d.m.Y" }} - {{ internship.get_planned_end_date|date:"d.m.Y"|default:"-" }}</p>
+    </div>
+
+    {% for entry in entries %}
+        <div class="entry">
+            <div class="entry-title">Săptămâna {{ entry.week_number }}</div>
+            <div class="entry-date">Adăugat: {{ entry.created_at|date:"d.m.Y H:i" }}</div>
+            <div>{{ entry.content|linebreaksbr }}</div>
+        </div>
+    {% endfor %}
+</body>
+</html>

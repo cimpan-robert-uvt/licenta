@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/css/contract_pdf.css">
+</head>
+<body>
+    <h1>CONTRACT DE STAGIU DE PRACTICA</h1>
+    
+    <div class="section">
+        <div class="section-title">PARTILE CONTRACTANTE:</div>
+        
+        <div class="info-row">
+            <span class="label">Compania:</span>
+            <span>{{ company.company_name }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">CUI:</span>
+            <span>{{ company.cui|default:"-" }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Sediu:</span>
+            <span>{{ company.address|default:"-" }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="info-row">
+            <span class="label">Student:</span>
+            <span>{{ student.get_full_name }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Email:</span>
+            <span>{{ student.email }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">DETALII STAGIU:</div>
+        
+        <div class="info-row">
+            <span class="label">Pozitie:</span>
+            <span>{{ offer.title }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Locatie:</span>
+            <span>{{ offer.location }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Data inceperii:</span>
+            <span>{{ offer.start_date|date:"d.m.Y" }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Durata:</span>
+            <span>{{ offer.duration_weeks }} saptamani</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">DESCRIERE:</div>
+        <p>{{ offer.description }}</p>
+    </div>
+
+    {% if offer.requirements %}
+    <div class="section">
+        <div class="section-title">CERINTE:</div>
+        <p>{{ offer.requirements }}</p>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <div class="section-title">CONDITII:</div>
+        <p>
+            Prin prezentul contract, partile agreaza ca studentul {{ student.get_full_name }} 
+            sa efectueze un stagiu de practica la {{ company.company_name }} incepand cu data de 
+            {{ offer.start_date|date:"d.m.Y" }}, pentru o perioada de {{ offer.duration_weeks }} saptamani.
+        </p>
+        <p>
+            Stagiul de practica se va desfasura conform programului stabilit de companie si 
+            sub supravegherea unui mentor desemnat. Studentul se obliga sa respecte regulamentul 
+            intern al companiei si sa mentina confidentialitatea informatiilor la care are acces.
+        </p>
+    </div>
+
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line">
+                Semnatura Companie<br>
+                {{ company.company_name }}
+            </div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line">
+                Semnatura Student<br>
+                {{ student.get_full_name }}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Contract generat automat la data de {{ internship.created_at|date:"d.m.Y H:i" }}
+    </div>
+</body>
+</html>

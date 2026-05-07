@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Ofertele Mele{% endblock %}
+
+{% block messages %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-0">Ofertele mele</h2>
+        <p class="text-muted">Gestionează posturile de practică publicate</p>
+    </div>
+    <a href="{% url 'create_internship_offer' %}" class="btn btn-primary shadow-sm">Adaugă ofertă</a>
+</div>
+
+{% if messages %}
+<div class="mb-4">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} shadow-sm" role="alert">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if offers %}
+<div class="row g-4">
+    {% for offer in offers %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    {% if offer.is_active %}<span class="badge bg-success">Activ</span>{% else %}<span
+                        class="badge bg-secondary">Inactiv</span>{% endif %}
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" data-bs-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                            <li><a class="dropdown-item" href="{% url 'edit_internship_offer' offer.pk %}"><i
+                                        class="fas fa-edit me-2"></i>Editează</a></li>
+                            <li>
+                            </li>
+                            <li><a class="dropdown-item text-danger"
+                                    href="{% url 'delete_internship_offer' offer.pk %}"><i
+                                        class="fas fa-trash me-2"></i>Șterge</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h5 class="card-title fw-bold">{{ offer.title }}</h5>
+                <p class="card-text text-muted small mb-4">
+                    {{ offer.description|truncatechars:100 }}
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <small class="text-muted"><i class="far fa-clock me-1"></i> {{ offer.created_at|date:"j b Y" }}</small>
+                    <a href="{% url 'offer_details' offer.pk %}"
+                        class="btn btn-sm btn-outline-primary rounded-pill px-3">Detalii</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state-centered">
+    <div class="text-center">
+        <p>Nu ai publicat nicio ofertă momentan.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

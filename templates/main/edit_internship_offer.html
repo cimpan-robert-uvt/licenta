@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Editează Ofertă de Stagiu{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper mt-4">
+    <div class="auth-header">
+        <h2>Editează oferta de stagiu</h2>
+        <p class="opacity-75">Actualizează informațiile ofertei tale</p>
+    </div>
+
+    <div class="card p-4">
+        <div class="card-body">
+            {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="mb-2">
+                    <label class="form-label fw-bold text-muted small text-uppercase">{% if form.title.field.required %}*{% endif %}{{ form.title.label }}</label>
+                    {{ form.title }}
+                    {% if form.title.help_text %}
+                    <div class="form-text small mt-1">{{ form.title.help_text }}</div>
+                    {% endif %}
+                    {% if form.title.errors %}
+                    <div class="text-danger small mt-1">{{ form.title.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label fw-bold text-muted small text-uppercase">{% if form.description.field.required %}*{% endif %}{{ form.description.label }}</label>
+                    {{ form.description }}
+                    {% if form.description.help_text %}
+                    <div class="form-text small mt-1">{{ form.description.help_text }}</div>
+                    {% endif %}
+                    {% if form.description.errors %}
+                    <div class="text-danger small mt-1">{{ form.description.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label fw-bold text-muted small text-uppercase">{% if form.requirements.field.required %}*{% endif %}{{ form.requirements.label }}</label>
+                    {{ form.requirements }}
+                    {% if form.requirements.help_text %}
+                    <div class="form-text small mt-1">{{ form.requirements.help_text }}</div>
+                    {% endif %}
+                    {% if form.requirements.errors %}
+                    <div class="text-danger small mt-1">{{ form.requirements.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase d-block">{% if form.start_date.field.required %}*{% endif %}{{ form.start_date.label }}</label>
+                            {{ form.start_date }}
+                            {% if form.start_date.help_text %}
+                            <div class="form-text small mt-1">{{ form.start_date.help_text }}</div>
+                            {% endif %}
+                            {% if form.start_date.errors %}
+                            <div class="text-danger small mt-1">{{ form.start_date.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if form.duration_weeks.field.required %}*{% endif %}{{ form.duration_weeks.label }}</label>
+                            {{ form.duration_weeks }}
+                            {% if form.duration_weeks.help_text %}
+                            <div class="form-text small mt-1">{{ form.duration_weeks.help_text }}</div>
+                            {% endif %}
+                            {% if form.duration_weeks.errors %}
+                            <div class="text-danger small mt-1">{{ form.duration_weeks.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if form.location.field.required %}*{% endif %}{{ form.location.label }}</label>
+                            {{ form.location }}
+                            {% if form.location.help_text %}
+                            <div class="form-text small mt-1">{{ form.location.help_text }}</div>
+                            {% endif %}
+                            {% if form.location.errors %}
+                            <div class="text-danger small mt-1">{{ form.location.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{{ form.is_active.label }}</label>
+                            <div class="form-check mt-2">
+                                {{ form.is_active }}
+                                <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                                    Activează această ofertă
+                                </label>
+                            </div>
+                            {% if form.is_active.help_text %}
+                            <div class="form-text small mt-1">{{ form.is_active.help_text }}</div>
+                            {% endif %}
+                            {% if form.is_active.errors %}
+                            <div class="text-danger small mt-1">{{ form.is_active.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-muted small mt-3">* - câmp obligatoriu</p>
+                <div class="d-flex gap-2 mt-3">
+                    <a href="{% url 'company_my_offers' %}" class="btn btn-secondary flex-grow-1 rounded-pill">Anulează</a>
+                    <button type="submit" class="btn btn-primary flex-grow-1 rounded-pill">Salvează modificări</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Șterge cont{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper mt-4">
+    <div class="auth-header">
+        <h2>Șterge cont</h2>
+    </div>
+
+    <div class="card p-4">
+        <div class="card-body">
+            {% if request.user.is_company %}
+                <div class="alert alert-warning" role="alert" data-permanent="true">
+                    <h5 class="alert-heading">Atenție!</h5>
+                    <p>Ștergerea contului va rezulta în:</p>
+                    <ul class="mb-0">
+                        <li>Pierderea definitivă a datelor de profil</li>
+                        <li>Pierderea ofertelor și stagiilor de practică asociate contului</li>
+                        <li>Imposibilitatea recuperării acestui cont</li>
+                    </ul>
+                </div>
+            {% elif request.user.is_student %}
+                <div class="alert alert-warning" role="alert" data-permanent="true">
+                    <h5 class="alert-heading">Atenție!</h5>
+                    <p>Ștergerea contului va rezulta în:</p>
+                    <ul class="mb-0">
+                        <li>Pierderea definitivă a datelor de profil și a CV-ului</li>
+                        <li>Pierderea aplicațiilor, jurnalelor și stagiilor asociate contului</li>
+                        <li>Imposibilitatea recuperării acestui cont</li>
+                    </ul>
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="{{ form.password.id_for_label }}" class="form-label fw-bold">
+                        Introdu parola contului tău pentru a confirma ștergerea contului.
+                    </label>
+                    {{ form.password }}
+                    {% if form.password.help_text %}
+                        <small class="form-text text-muted d-block mt-1">{{ form.password.help_text|safe }}</small>
+                    {% endif %}
+                    {% if form.password.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for error in form.password.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <p class="opacity-75 text-danger">Ești sigur că dorești să îți ștergi contul? Această acțiune este ireversibilă.</p>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger flex-grow-1 rounded-pill">Confirmă ștergerea contului</button>
+                    <a href="{% url 'profile' %}" class="btn btn-secondary flex-grow-1 rounded-pill">Anulează</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

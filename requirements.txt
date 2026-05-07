@@ -1,0 +1,5 @@
+Django==5.0
+python-decouple==3.8
+xhtml2pdf==0.2.11
+pypdf==3.8.0
+google-genai

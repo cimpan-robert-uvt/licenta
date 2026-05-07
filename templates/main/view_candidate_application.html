@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cerere - {{ student.get_full_name }}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Informații cerere</h2>
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <p class="text-muted">{{ application.offer.title }} • Aplicat pe {{ application.applied_at|date:"j b Y, H:i" }}</p>
+            <div class="mt-2">
+                <strong>Status:</strong>
+                <span class="badge {% if application.status == 'pending' %}bg-secondary{% elif application.status == 'hr_accepted' %}bg-warning text-dark{% elif application.status == 'student_confirmed' %}bg-success{% elif application.status == 'withdrawn' %}bg-dark{% else %}bg-danger{% endif %}">
+                    {{ application.get_status_display }}
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'company_candidates' %}" class="btn btn-secondary rounded-pill">
+                <i class="bi bi-arrow-left"></i> Înapoi
+            </a>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-secondary-subtle text-dark">
+            <h5 class="mb-0"><i class="bi bi-person"></i> Informații candidat</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <strong>Nume complet:</strong><br>
+                    {{ student.get_full_name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Data nașterii:</strong><br>
+                    {{ student.birth_date|date:"j b Y"|default:"Nu este setată" }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if cv %}
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-secondary-subtle text-dark">
+                <h5 class="mb-0"><i class="bi bi-file-text"></i> CV</h5>
+            </div>
+            <div class="card-body">
+                {% if cv.pdf_file %}
+                    <p class="text-muted mb-3">
+                        Studentul a încărcat un CV personal.
+                    </p>
+                    <a href="{{ cv.pdf_file.url }}" target="_blank" class="btn btn-outline-primary rounded-pill">
+                        <i class="bi bi-file-earmark-pdf"></i> Deschide CV-ul personal
+                    </a>
+                {% else %}
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <strong>Email:</strong><br>
+                            {{ cv.email|default:"Nu este setat" }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>Telefon:</strong><br>
+                            {{ cv.phone|default:"Nu este setat" }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>Oraș:</strong><br>
+                            {{ cv.city|default:"Nu este setat" }}
+                        </div>
+                        {% if cv.linkedin %}
+                            <div class="col-md-6 mb-3">
+                                <strong>LinkedIn:</strong><br>
+                                <a href="{{ cv.linkedin }}" target="_blank">{{ cv.linkedin }}</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if cv.resume %}
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Rezumat</h6>
+                            <p class="text-justify">{{ cv.resume|linebreaks }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if cv.education.all %}
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Educație</h6>
+                            {% for education in cv.education.all %}
+                                <div class="mb-3 {% if not forloop.last %}pb-3 border-bottom{% endif %}">
+                                    <strong>{{ education.school_name }}</strong>
+                                    <p class="text-muted small mb-1">
+                                        {{ education.start_date|date:"j b Y" }} - {{ education.end_date|date:"j b Y" }}
+                                    </p>
+                                    {% if education.details %}
+                                        <p class="mb-0">{{ education.details|linebreaks }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if cv.experience.all %}
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Experiență</h6>
+                            {% for experience in cv.experience.all %}
+                                <div class="mb-3 {% if not forloop.last %}pb-3 border-bottom{% endif %}">
+                                    <strong>{{ experience.institution_name }}</strong>
+                                    <p class="text-muted small mb-1">
+                                        {{ experience.start_date|date:"j b Y" }} - {{ experience.end_date|date:"j b Y" }}
+                                    </p>
+                                    {% if experience.details %}
+                                        <p class="mb-0">{{ experience.details|linebreaks }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if cv.skills.all %}
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Abilități</h6>
+                            {% regroup cv.skills.all by get_skill_type_display as skill_groups %}
+                            {% for group in skill_groups %}
+                                <div class="mb-2">
+                                    <strong class="text-dark">{{ group.grouper }}:</strong>
+                                    <span class="text-dark">
+                                        {% for skill in group.list %}
+                                            {{ skill.skill_name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-file-earmark-x text-muted" style="font-size: 3rem;"></i>
+                <p class="text-muted mt-3">Acest student nu are un CV completat.</p>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if application.status == 'pending' %}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <h6 class="fw-bold mb-3">Acțiuni</h6>
+            <div class="d-flex gap-2">
+                <a href="{% url 'update_app_status' application.id 'accepted' %}" 
+                   class="btn btn-success rounded-pill px-4"
+                   onclick="return confirm('Ești sigur că vrei să accepți acest candidat?')">
+                    <i class="fas fa-check me-2"></i>Acceptă cererea
+                </a>
+                <a href="{% url 'update_app_status' application.id 'rejected' %}" 
+                   class="btn btn-danger rounded-pill px-4"
+                   onclick="return confirm('Ești sigur că vrei să refuzi acest candidat?')">
+                    <i class="fas fa-times me-2"></i>Refuză cererea
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if application.status == 'student_confirmed' and internship and internship.signed_contract %}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <a href="{{ internship.signed_contract.url }}" target="_blank" class="btn btn-outline-primary rounded-pill">
+                <i class="fas fa-file-pdf me-2"></i>Afișare contract
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

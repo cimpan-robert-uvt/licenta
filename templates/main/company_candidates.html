@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Candidați{% endblock %}
+
+{% block messages %}{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2 class="fw-bold">Gestionare candidați</h2>
+    <p class="text-muted">Vizualizează studenții care au aplicat la ofertele tale</p>
+</div>
+
+{% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} shadow-sm" role="alert">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if offer_data %}
+    <div class="accordion custom-accordion" id="candidatesAccordion">
+        {% for item in offer_data %}
+        <div class="card border-0 mb-3 overflow-hidden">
+            <div class="card-header bg-white border-0 py-3" id="heading{{ forloop.counter }}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link text-decoration-none w-100 d-flex justify-content-between align-items-center text-dark fw-bold" 
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}">
+                        <span>
+                            <i class="fas fa-briefcase text-primary me-2"></i>{{ item.offer.title }}
+                        </span>
+                        <span class="badge bg-primary rounded-pill">{{ item.applications.count }} aplicanți</span>
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" 
+                 data-bs-parent="#candidatesAccordion">
+                <div class="card-body pt-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="bg-light text-muted small text-uppercase">
+                                <tr>
+                                    <th class="border-0 ps-3">Student</th>
+                                    <th class="border-0">Email</th>
+                                    <th class="border-0">Oraș</th>
+                                    <th class="border-0">Data aplicării</th>
+                                    <th class="border-0 text-end pe-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for app in item.applications %}
+                                <tr>
+                                    <td class="ps-3 fw-bold">{{ app.student.get_full_name }}</td>
+                                    <td>
+                                        {% if app.student.student_cv %}
+                                            {{ app.student.student_cv.email|default:"-" }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if app.student.student_cv %}
+                                            {{ app.student.student_cv.city|default:"-" }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ app.applied_at|date:"d M, H:i" }}</td>
+                                    <td class="text-end pe-3">
+                                        <a href="{% url 'view_candidate_application' app.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-2">
+                                            Vizualizează
+                                        </a>
+                                        <span class="badge {% if app.status == 'student_confirmed' %}bg-success{% elif app.status == 'hr_accepted' %}bg-warning text-dark{% elif app.status == 'pending' %}bg-secondary{% elif app.status == 'withdrawn' %}bg-dark{% else %}bg-danger{% endif %}">
+                                            {{ app.get_status_display }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state-centered">
+        <p>Nu există candidați noi pentru ofertele tale active.</p>
+    </div>
+{% endif %}
+{% endblock %}

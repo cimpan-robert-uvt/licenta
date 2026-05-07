@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Înregistrare{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper mt-4">
+    <div class="auth-header">
+        <h2>Creează cont nou</h2>
+        <p class="opacity-75">Alege tipul de cont potrivit pentru tine</p>
+    </div>
+
+    <div class="card p-4">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger mb-3">
+                    {{ form.non_field_errors.0 }}
+                </div>
+                {% endif %}
+
+                <div class="row g-2">
+                    {% for field in form %}
+                        {% if field.name not in 'role|domain|company_name|profile_picture' %}
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <label class="form-label fw-bold text-muted small text-uppercase">{% if field.field.required %}*{% endif %}{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                <div class="form-text small mt-1">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            {% for field in form %}
+                                {% if field.name == 'role' %}
+                                <label class="form-label fw-bold text-muted small text-uppercase">{% if field.field.required %}*{% endif %}{{ field.label }}</label>
+                                <div class="d-flex gap-3 mt-1 mb-3">
+                                    {% for radio in field %}
+                                    <div class="form-check">
+                                        {{ radio.tag }}
+                                        <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                            {{ radio.choice_label }}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% if field.errors %}
+                                <div class="text-danger small mt-1" style="margin-top: -10px; margin-bottom: 15px;">{{ field.errors.0 }}</div>
+                                {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if form.domain.field.required %}*{% endif %}{{ form.domain.label }}</label>
+                            {{ form.domain }}
+                            {% if form.domain.errors %}
+                            <div class="text-danger small mt-1">{{ form.domain.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    {% for field in form %}
+                        {% if field.name in 'company_name|profile_picture' %}
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <label class="form-label fw-bold text-muted small text-uppercase">{% if field.field.required %}*{% endif %}{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                <div class="form-text small mt-1">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <p class="small text-muted mb-2">* - câmp obligatoriu</p>
+                <button type="submit" class="btn btn-primary w-100 mt-3">Creează cont</button>
+            </form>
+        </div>
+        <div class="card-footer bg-transparent border-0 text-center py-3">
+            <p class="mb-0 text-muted">Ai deja cont? <a href="{% url 'login' %}"
+                    class="fw-bold text-primary">Autentifică-te</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock %}

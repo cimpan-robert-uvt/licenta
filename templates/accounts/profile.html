@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profil utilizator{% endblock %}
+
+{% block content %}
+{% block messages %}{% endblock %}
+<div class="auth-wrapper mt-4">
+    <div class="auth-header">
+        <h2>Profilul meu</h2>
+        <p class="opacity-75">Gestionează informațiile tale personale</p>
+    </div>
+
+    <div class="card p-4">
+        <div class="card-body">
+            {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger mb-3">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="row g-2">
+                    {% for field in form %}
+                        {% if field.name not in 'role|domain|company_name|profile_picture' %}
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <label class="form-label fw-bold text-muted small text-uppercase">{% if field.field.required %}*{% endif %}{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                <div class="form-text small mt-1">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% if field.errors %}
+                                {% for error in field.errors %}
+                                <div class="text-danger small mt-1">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">Tip de Cont</label>
+                            <input type="text" class="form-control" value="{{ user.get_role_display }}" disabled>
+                            <div class="form-text small mt-1">Tipul de cont nu poate fi modificat</div>
+                        </div>
+                    </div>
+
+                    {% if user.is_student %}
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if form.domain.field.required %}*{% endif %}{{ form.domain.label }}</label>
+                            {{ form.domain }}
+                            {% if form.domain.errors %}
+                            {% for error in form.domain.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if user.is_company %}
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if form.company_name.field.required %}*{% endif %}{{ form.company_name.label }}</label>
+                            {{ form.company_name }}
+                            {% if form.company_name.errors %}
+                            {% for error in form.company_name.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if user.is_company %}
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if form.domain.field.required %}*{% endif %}{{ form.domain.label }}</label>
+                            {{ form.domain }}
+                            {% if form.domain.errors %}
+                            {% for error in form.domain.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Profile Picture Section -->
+                    <div class="col-md-8">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if form.profile_picture.field.required %}*{% endif %}{{ form.profile_picture.label }}</label>
+                            <div class="d-flex gap-2 align-items-start">
+                                <!-- Current Picture -->
+                                <div class="flex-shrink-0 pt-1">
+                                    {% if user.profile_picture %}
+                                        <img src="{{ user.profile_picture.url }}" alt="Profil" class="rounded-circle" 
+                                             style="width: 80px; height: 80px; object-fit: cover; border: 2px solid #667eea;">
+                                    {% else %}
+                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center"
+                                             style="width: 80px; height: 80px; border: 2px solid #667eea;">
+                                            <i class="fas fa-user text-muted"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Upload & Delete Controls -->
+                                <div class="flex-grow-1">
+                                    <input type="file" name="profile_picture" class="form-control form-control-sm" accept="image/*">
+                                    {% if user.profile_picture %}
+                                    <div class="form-check mt-2">
+                                        <input type="checkbox" name="profile_picture-clear" id="id_profile_picture-clear" class="form-check-input">
+                                        <label class="form-check-label" for="id_profile_picture-clear">Șterge fotografia actuală</label>
+                                    </div>
+                                    {% endif %}
+                                    {% if form.profile_picture.errors %}
+                                {% for error in form.profile_picture.errors %}
+                                <div class="text-danger small mt-1">{{ error }}</div>
+                                {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="small text-muted mb-2">* - câmp obligatoriu</p>
+                <button type="submit" class="btn btn-primary w-100 mt-3">Salvează modificări</button>
+            </form>
+        </div>
+        <div class="card-footer bg-transparent border-0 py-3">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <a href="{% url 'change_password' %}" class="btn btn-secondary w-100 rounded-pill">Schimbă parola</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{% url 'delete_account' %}" class="btn btn-danger w-100 rounded-pill">Șterge cont</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

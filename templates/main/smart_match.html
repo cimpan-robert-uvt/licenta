@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Analiză AI{% endblock %}
+
+{% block messages %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+            <h1 class="mb-4">Analiză AI</h1>
+            <p class="text-muted mb-5">
+                Identifica cele mai bune oportunitati de internship bazate pe profilul tau (PDF-ul personal sau CV-ul completat manual).
+            </p>
+
+            <div class="card shadow-sm mb-5 p-4">
+                {% if has_applicable_cv %}
+                    <form id="match-form" method="post" action="{% url 'smart_match' %}">
+                        {% csrf_token %}
+                        <button type="submit" id="scan-btn" class="btn btn-primary btn-lg px-5" {% if is_match_running %}disabled{% endif %}>
+                            <span id="btn-text">
+                                {% if is_match_running %}Se analizeaza...{% else %}Scaneaza profilul si gaseste oferte{% endif %}
+                            </span>
+                        </button>
+                    </form>
+                {% else %}
+                    <p class="text-muted mb-0">
+                        Pentru a aplica, trebuie să ai CV-ul completat sau să încarci un CV personal (PDF).
+                        <br>
+                        <br>
+                        <a href="{% url 'edit_cv' %}">Completează/încarcă CV-ul aici</a>
+                    </p>
+                {% endif %}
+                <small class="text-muted d-block mt-3">
+                    Procesul poate dura cateva secunde. Folosim modelele Google Gemini pentru analiza.
+                </small>
+                {% if last_analysis_at %}
+                    <small class="text-muted d-block mt-1">Ultima analiza: {{ last_analysis_at|date:"d.m.Y H:i" }}</small>
+                {% endif %}
+            </div>
+
+            {% if messages %}
+                <div class="mb-4 text-start">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} shadow-sm" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div id="results-section">
+                {% if matches %}
+                    <h3 class="mb-4 text-start">Top 10 recomandari pentru tine:</h3>
+                    <div class="row text-start">
+                        {% for match in matches %}
+                            <div class="col-12 mb-3">
+                                <div class="card h-100 border-start border-primary border-4 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h5 class="card-title mb-0">{{ match.offer.title }}</h5>
+                                            <span class="badge {% if match.score > 80 %}bg-success{% elif match.score > 50 %}bg-warning text-dark{% else %}bg-secondary{% endif %} fs-6">
+                                                Scor: {{ match.score }}%
+                                            </span>
+                                        </div>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ match.offer.company.company_profile.company_name }}</h6>
+                                        <p class="card-text">{{ match.explanation }}</p>
+                                        <a href="{% url 'offer_details' match.offer.id %}" class="btn btn-sm btn-outline-primary">Vezi detalii oferta</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const matchForm = document.getElementById('match-form');
+    const btn = document.getElementById('scan-btn');
+    const text = document.getElementById('btn-text');
+
+    if (matchForm && btn && text) {
+        matchForm.addEventListener('submit', function() {
+            btn.disabled = true;
+            text.innerText = 'Se analizeaza...';
+        });
+    }
+</script>
+{% endblock %}

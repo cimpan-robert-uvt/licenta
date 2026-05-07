@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestionare CV{% endblock %}
+
+{% block messages %}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Gestionare CV</h2>
+<div class="container mt-5">
+    {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} shadow-sm" role="alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <p class="text-muted">Câmpurile marcate cu * sunt obligatorii</p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-secondary-subtle text-dark">
+            <h5 class="mb-0"><i class="bi bi-upload"></i> CV personal (opțional)</h5>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-3">
+                Dacă încarci un CV, acesta va fi folosit cu prioritate la aplicarea la oferte.
+            </p>
+
+            <form method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-3">
+                {% csrf_token %}
+                <div>
+                    <label for="pdf_file" class="form-label fw-bold text-muted small text-uppercase">
+                        CV personal (PDF)
+                    </label>
+                    <input type="file" name="pdf_file" id="pdf_file" class="form-control" accept="application/pdf,.pdf">
+                </div>
+
+                {% if cv.pdf_file %}
+                    <small class="d-block">
+                        Fișier curent:
+                        <a href="{{ cv.pdf_file.url }}" target="_blank">{{ uploaded_pdf_filename }}</a>
+                    </small>
+                {% endif %}
+
+                <div class="d-flex gap-2 align-items-center flex-wrap">
+                    <button type="submit" name="upload_pdf" value="1" class="btn btn-outline-primary rounded-pill">
+                        <i class="bi bi-upload"></i> Încarcă
+                    </button>
+
+                    {% if cv.pdf_file %}
+                        <button
+                            type="submit"
+                            name="delete_pdf"
+                            value="1"
+                            class="btn btn-outline-danger rounded-pill"
+                            onclick="return confirm('Ești sigur că dorești să ștergi CV-ul încărcat?')"
+                        >
+                            <i class="bi bi-trash"></i> Șterge CV-ul actual
+                        </button>
+                    {% endif %}
+                </div>
+
+                {% if upload_error %}
+                    <div class="text-danger small">{{ upload_error }}</div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <form method="POST" class="form" novalidate>
+        {% csrf_token %}
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-secondary-subtle text-dark">
+                <h5 class="mb-0"><i class="bi bi-person"></i> Date de contact</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ cv_form.phone.id_for_label }}" class="form-label fw-bold text-muted small text-uppercase">
+                            {{ cv_form.phone.label }}
+                        </label>
+                        {{ cv_form.phone }}
+                        {% if cv_form.phone.errors %}
+                            <div class="text-danger small mt-1">{{ cv_form.phone.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ cv_form.email.id_for_label }}" class="form-label fw-bold text-muted small text-uppercase">
+                            {{ cv_form.email.label }}
+                        </label>
+                        {{ cv_form.email }}
+                        {% if cv_form.email.errors %}
+                            <div class="text-danger small mt-1">{{ cv_form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ cv_form.linkedin.id_for_label }}" class="form-label fw-bold text-muted small text-uppercase">
+                            {{ cv_form.linkedin.label }}
+                        </label>
+                        {{ cv_form.linkedin }}
+                        {% if cv_form.linkedin.errors %}
+                            <div class="text-danger small mt-1">{{ cv_form.linkedin.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ cv_form.city.id_for_label }}" class="form-label fw-bold text-muted small text-uppercase">
+                            {{ cv_form.city.label }}
+                        </label>
+                        {{ cv_form.city }}
+                        {% if cv_form.city.errors %}
+                            <div class="text-danger small mt-1">{{ cv_form.city.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-secondary-subtle text-dark">
+                <h5 class="mb-0"><i class="bi bi-file-text"></i> Despre</h5>
+            </div>
+            <div class="card-body">
+                <label for="{{ cv_form.resume.id_for_label }}" class="form-label fw-bold text-muted small text-uppercase">
+                    {{ cv_form.resume.label }}
+                </label>
+                {{ cv_form.resume }}
+                <small class="text-muted d-block mt-2">
+                    <span id="resumeCount">0</span>/500 caractere
+                </small>
+                {% if cv_form.resume.errors %}
+                    <div class="text-danger small mt-1">{{ cv_form.resume.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-secondary-subtle text-dark d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-book"></i> Educație</h5>
+                <button type="button" class="btn btn-sm btn-light" data-bs-toggle="collapse" data-bs-target="#educationContent">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div class="card-body" id="educationContent">
+                {{ education_formset.management_form }}
+                {% if education_formset.non_form_errors %}
+                    <div class="alert alert-danger mb-3">
+                        <strong>Erori:</strong>
+                        {{ education_formset.non_form_errors }}
+                    </div>
+                {% endif %}
+                <div id="education-formset" class="formset">
+                    {% for form in education_formset %}
+                        <div class="education-form mb-4 p-3 border rounded position-relative">
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger mb-3">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                            <div style="display: none;">
+                                {{ form.id }}
+                                {% if form.DELETE %}
+                                    {{ form.DELETE }}
+                                {% endif %}
+                            </div>
+                            {% if form.DELETE %}
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-form position-absolute" style="top: 10px; right: 10px;" onclick="return deleteExistingForm(this);">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-form position-absolute" style="top: 10px; right: 10px;" onclick="return deleteNewForm(this);">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.school_name.label }}
+                                    </label>
+                                    {{ form.school_name }}
+                                    {% if form.school_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.school_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.start_date.label }}
+                                    </label>
+                                    {{ form.start_date }}
+                                    {% if form.start_date.errors %}
+                                        <div class="text-danger small mt-1">{{ form.start_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.end_date.label }}
+                                    </label>
+                                    {{ form.end_date }}
+                                    {% if form.end_date.errors %}
+                                        <div class="text-danger small mt-1">{{ form.end_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.details.label }}
+                                    </label>
+                                    {{ form.details }}
+                                    {% if form.details.errors %}
+                                        <div class="text-danger small mt-1">{{ form.details.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary mt-3" onclick="addEducationForm()">
+                    <i class="bi bi-plus-circle"></i> Adaugă câmp nou
+                </button>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-secondary-subtle text-dark d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-briefcase"></i> Experiență</h5>
+                <button type="button" class="btn btn-sm btn-light" data-bs-toggle="collapse" data-bs-target="#experienceContent">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div class="card-body" id="experienceContent">
+                {{ experience_formset.management_form }}
+                {% if experience_formset.non_form_errors %}
+                    <div class="alert alert-danger mb-3">
+                        <strong>Erori:</strong>
+                        {{ experience_formset.non_form_errors }}
+                    </div>
+                {% endif %}
+                <div id="experience-formset" class="formset">
+                    {% for form in experience_formset %}
+                        <div class="experience-form mb-4 p-3 border rounded position-relative">
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger mb-3">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                            <div style="display: none;">
+                                {{ form.id }}
+                                {% if form.DELETE %}
+                                    {{ form.DELETE }}
+                                {% endif %}
+                            </div>
+                            {% if form.DELETE %}
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-form position-absolute" style="top: 10px; right: 10px;" onclick="return deleteExistingForm(this);">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-form position-absolute" style="top: 10px; right: 10px;" onclick="return deleteNewForm(this);">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.institution_name.label }}
+                                    </label>
+                                    {{ form.institution_name }}
+                                    {% if form.institution_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.institution_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.start_date.label }}
+                                    </label>
+                                    {{ form.start_date }}
+                                    {% if form.start_date.errors %}
+                                        <div class="text-danger small mt-1">{{ form.start_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.end_date.label }}
+                                    </label>
+                                    {{ form.end_date }}
+                                    {% if form.end_date.errors %}
+                                        <div class="text-danger small mt-1">{{ form.end_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.details.label }}
+                                    </label>
+                                    {{ form.details }}
+                                    {% if form.details.errors %}
+                                        <div class="text-danger small mt-1">{{ form.details.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary mt-3" onclick="addExperienceForm()">
+                    <i class="bi bi-plus-circle"></i> Adaugă câmp nou
+                </button>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-secondary-subtle text-dark d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-star"></i> Abilități</h5>
+                <button type="button" class="btn btn-sm btn-light" data-bs-toggle="collapse" data-bs-target="#skillsContent">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div class="card-body" id="skillsContent">
+                {{ skill_formset.management_form }}
+                {% if skill_formset.non_form_errors %}
+                    <div class="alert alert-danger mb-3">
+                        <strong>Erori:</strong>
+                        {{ skill_formset.non_form_errors }}
+                    </div>
+                {% endif %}
+                <div id="skill-formset" class="formset">
+                    {% for form in skill_formset %}
+                        <div class="skill-form mb-3 p-3 border rounded position-relative">
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger mb-3">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                            <div style="display: none;">
+                                {{ form.id }}
+                                {% if form.DELETE %}
+                                    {{ form.DELETE }}
+                                {% endif %}
+                            </div>
+                            {% if form.DELETE %}
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-form position-absolute" style="top: 10px; right: 10px;" onclick="return deleteExistingForm(this);">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-form position-absolute" style="top: 10px; right: 10px;" onclick="return deleteNewForm(this);">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.skill_type.label }}
+                                    </label>
+                                    {{ form.skill_type }}
+                                    {% if form.skill_type.errors %}
+                                        <div class="text-danger small mt-1">{{ form.skill_type.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">
+                                        {{ form.skill_name.label }}
+                                    </label>
+                                    {{ form.skill_name }}
+                                    {% if form.skill_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.skill_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary mt-3" onclick="addSkillForm()">
+                    <i class="bi bi-plus-circle"></i> Adaugă câmp nou
+                </button>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mb-5">
+            <button type="submit" class="btn btn-primary rounded-pill px-4">
+                <i class="bi bi-check-circle"></i> Salvează CV
+            </button>
+            <a href="{% url 'view_cv' %}" class="btn btn-secondary rounded-pill">
+                <i class="bi bi-arrow-left"></i> Înapoi
+            </a>
+        </div>
+    </form>
+</div>
+
+{% block extra_js %}
+    <script src="{% static 'js/cv.js' %}"></script>
+{% endblock %}
+{% endblock %}
