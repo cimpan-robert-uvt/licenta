@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title|default:'Acces restricționat' }}{% endblock %}
+
+{% block content %}
+<div class="min-vh-75 d-flex align-items-center justify-content-center py-5">
+    <div class="text-center px-3" style="max-width: 640px;">
+        <h1 class="fw-bold mb-0">Acces restricționat</h1>
+        <p class="text-muted">{{ error_message }}</p>
+    </div>
+</div>
+{% endblock %}

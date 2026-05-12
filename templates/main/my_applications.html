@@ -42,16 +42,18 @@
                             </p>
                             {% if app.status == 'hr_accepted' %}
                                 <div class="d-flex gap-2 flex-wrap">
-                                    <a href="{% url 'update_student_app_status' app.id 'confirm' %}"
-                                       class="btn btn-sm btn-success rounded-pill"
-                                       onclick="return confirm('Confirmi participarea la acest stagiu? După confirmare, celelalte cereri active vor fi retrase automat.')">
-                                        Confirmă participarea
-                                    </a>
-                                    <a href="{% url 'update_student_app_status' app.id 'decline' %}"
-                                       class="btn btn-sm btn-outline-danger rounded-pill"
-                                       onclick="return confirm('Sigur dorești să refuzi această participare?')">
-                                        Refuză participarea
-                                    </a>
+                                    <form method="POST" action="{% url 'update_student_app_status' app.id 'confirm' %}" style="display: inline;" onsubmit="return confirm('Confirmi participarea la acest stagiu? După confirmare, celelalte cereri active vor fi retrase automat.')">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-success rounded-pill">
+                                            Confirmă participarea
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{% url 'update_student_app_status' app.id 'decline' %}" style="display: inline;" onsubmit="return confirm('Sigur dorești să refuzi această participare?')">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                            Refuză participarea
+                                        </button>
+                                    </form>
                                     <a href="{% url 'offer_details' app.offer.pk %}" class="btn btn-sm btn-outline-primary rounded-pill">Vezi oferta</a>
                                 </div>
                             {% else %}

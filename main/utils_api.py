@@ -231,7 +231,6 @@ def _compute_weighted_score(item):
 
 
 def _score_cap_from_evidence(profile):
-    """Return a max allowed score only for clearly sparse manual CVs."""
     if profile.get("has_pdf"):
         return None
 
@@ -307,8 +306,6 @@ def _apply_evidence_caps(payload, profile):
 
 
 def _post_process_matches_payload(parsed_payload):
-    """Normalize output structure and make scoring consistent/granular."""
-
     candidate_keys = (
         "results",
         "matches",
@@ -359,6 +356,10 @@ def _post_process_matches_payload(parsed_payload):
         item["score"] = final_score
         item["scor"] = final_score
 
+        for text_key in ["justificare", "explanation", "justification"]:
+            if text_key in item and isinstance(item[text_key], str):
+                item[text_key] = item[text_key].replace("**", "")
+
     return container
 
 
@@ -396,20 +397,7 @@ def get_smart_matches(cv_data, offers_list):
 
 
 def get_career_guidance(student_cv, journal_entries, user_context=""):
-    """
-    Generate AI career guidance based on CV and internship journal entries.
-
-    Args:
-        student_cv: StudentCV instance
-        journal_entries: QuerySet or list of JournalEntry objects
-        user_context: str, optional personal context from student (max 500 chars)
-
-    Returns:
-        str: Career guidance text in Romanian (Markdown formatted)
-    """
     client = get_gemini_client()
-
-    cv_text = _build_manual_cv_text(student_cv)
 
     journal_text_lines = []
     for entry in journal_entries:
@@ -421,26 +409,60 @@ def get_career_guidance(student_cv, journal_entries, user_context=""):
     )
 
     prompt = (
-        f"Ești un consilier de carieră experimentat. "
-        f"Analizează următoarele informații:\n\n"
-        f"CV:\n{cv_text}\n\n"
-        f"Activități din stagiu:\n{journal_text}\n\n"
+        "Ești un consilier de carieră experimentat. "
+        "Analizează următoarele informații:\n\n"
     )
+
+    cv_data = student_cv
+    has_pdf = False
+    if student_cv.pdf_file:
+        pdf_path = getattr(student_cv.pdf_file, "path", None)
+        if pdf_path and os.path.exists(pdf_path):
+            has_pdf = True
+
+    if has_pdf:
+        prompt += "CV: atașat ca fișier PDF.\n\n"
+    else:
+        cv_text = _build_manual_cv_text(student_cv)
+        prompt += f"CV:\n{cv_text}\n\n"
+        cv_data = cv_text
+
+    prompt += f"Activități din stagiu:\n{journal_text}\n\n"
 
     if user_context.strip():
         prompt += f"Context personal adăugat de student: {user_context}\n\n"
 
     prompt += (
-        "Pe baza acestor informații, propune 3 direcții de carieră și explică concret "
-        "de ce se potrivesc abilităților și experienței studentului. "
-        "Răspunde structurat, scurt și ușor de citit, în română, folosind Markdown (puteri subliniate, ** pentru bold etc.)."
+        "Pe baza acestor informații, propune 2-3 direcții de carieră potrivite pentru student. "
+        "Răspunde cu 2-3 propoziții libere, fără prefix sau formatare specială, "
+        "text plăcut de citit care să îl inspire și să îi ofere perspective concrete. "
+        "Dacă informațiile sunt prea puține sau generale, menționează: "
+        "Informațiile disponibile sunt limitate pentru recomandări precise, dar pe baza activităților observate... "
+        "Fără introducere sau concluzie. Maxim 150 de cuvinte în total. Răspunde în română."
+        "Nu folosi formatare Markdown pentru text (fără bold, fără asteriscuri). "
     )
 
-    request_contents, _ = _build_cv_contents_and_profile(client, student_cv, prompt)
+    request_contents, _ = _build_cv_contents_and_profile(client, cv_data, prompt)
 
     response = generate_with_project_model(
         client,
         contents=request_contents,
     )
 
-    return response.text
+    raw_text = response.text.replace("**", "").strip()
+
+    if raw_text.startswith("```json") or raw_text.startswith("{"):
+        try:
+            json_string = _extract_json_text(raw_text)
+            parsed_dict = json.loads(json_string)
+
+            if isinstance(parsed_dict, dict):
+                clean_text = " ".join(str(v) for v in parsed_dict.values())
+            else:
+                clean_text = str(parsed_dict)
+        except Exception:
+            clean_text = raw_text.replace("'", "").replace('"', "").strip()
+    else:
+        clean_text = raw_text.replace("```", "").strip()
+
+    return clean_text

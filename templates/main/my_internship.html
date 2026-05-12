@@ -117,7 +117,7 @@
                     {% endif %}
                 </div>
 
-                {% if status == 'in_progress' and entries %}
+                {% if status != 'not_started' and entries %}
                 <div class="mt-4 pt-4 border-top">
                     <h5 class="mb-3">Analiză AI pentru cariera ta</h5>
                     <form id="career-analysis-form" method="post" action="{% url 'analyze_career' internship.pk %}" class="mb-4">
@@ -136,10 +136,22 @@
                                 <span id="char_count">0</span>/100 caractere
                             </small>
                         </div>
-                        <button type="submit" id="career-analysis-submit" class="btn btn-primary rounded-pill">
-                            <span id="career-analysis-label"></i>Analizează</span>
+                        <button type="submit" id="career-analysis-submit" class="btn btn-primary rounded-pill" {% if is_career_running %}disabled{% endif %}>
+                            <span id="career-analysis-label">
+                                {% if is_career_running %}Se analizeaza...{% else %}Analizează{% endif %}
+                            </span>
                         </button>
                     </form>
+
+                    {% if messages %}
+                        <div class="mb-3">
+                            {% for message in messages %}
+                                {% if 'career' in message.tags %}
+                                    <div class="alert alert-{{ message.level_tag }} shadow-sm mb-2" role="alert">{{ message }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
                     {% if career_analysis %}
                     <div class="card border-0 shadow-sm bg-light">
@@ -171,7 +183,9 @@
                         {% if messages %}
                             <div class="mb-3">
                                 {% for message in messages %}
-                                    <div class="alert alert-{{ message.tags }} shadow-sm mb-2" role="alert">{{ message }}</div>
+                                    {% if 'career' not in message.tags %}
+                                        <div class="alert alert-{{ message.level_tag }} shadow-sm mb-2" role="alert">{{ message }}</div>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         {% endif %}
@@ -227,12 +241,11 @@
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
     const textarea = document.getElementById('user_context');
     const charCount = document.getElementById('char_count');
     const form = document.getElementById('career-analysis-form');
-    const submitButton = document.getElementById('career-analysis-submit');
-    const label = document.getElementById('career-analysis-label');
+    const btn = document.getElementById('career-analysis-submit');
+    const text = document.getElementById('career-analysis-label');
 
     if (textarea && charCount) {
         const updateCount = function() {
@@ -243,12 +256,11 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCount();
     }
 
-    if (form && submitButton && label) {
+    if (form && btn && text) {
         form.addEventListener('submit', function() {
-            submitButton.disabled = true;
-            label.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Se generează...';
+            btn.disabled = true;
+            text.innerText = 'Se analizeaza...';
         });
     }
-});
 </script>
 {% endblock %}

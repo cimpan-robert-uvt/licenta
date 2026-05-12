@@ -5,7 +5,7 @@ from uuid import uuid4
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from django.http import HttpResponseForbidden, HttpResponse
+from django.http import HttpResponse
 from django.contrib.auth.hashers import check_password
 from django.core.files.base import ContentFile
 from django.core.cache import cache
@@ -39,9 +39,25 @@ def _smart_match_lock_key(user_id):
     return f"smart_match_running_{user_id}"
 
 
+def _career_analysis_lock_key(user_id, internship_id):
+    return f"career_analysis_running_{user_id}_{internship_id}"
+
+
 def _smart_match_error_redirect(request):
     messages.warning(request, SMART_MATCH_ERROR_MESSAGE)
     return redirect("smart_match")
+
+
+def _forbidden_page(request, message, title="Acces restricționat"):
+    return render(
+        request,
+        "main/forbidden_page.html",
+        {
+            "page_title": title,
+            "error_message": message,
+        },
+        status=403,
+    )
 
 
 def _extract_match_explanation(item, offer_obj):
@@ -117,7 +133,7 @@ def offer_details(request, pk):
 @login_required
 def apply_to_offer(request, offer_id):
     if not request.user.is_student():
-        return HttpResponseForbidden("Doar studenții pot aplica.")
+        return _forbidden_page(request, "Doar studenții pot aplica.")
 
     cv = StudentCV.objects.filter(user=request.user).first()
     if not has_applicable_cv(cv):
@@ -155,7 +171,7 @@ def apply_to_offer(request, offer_id):
 @login_required
 def withdraw_application(request, offer_id):
     if not request.user.is_student():
-        return HttpResponseForbidden("Doar studenții pot retrage o aplicație.")
+        return _forbidden_page(request, "Doar studenții pot retrage o aplicație.")
 
     offer = get_object_or_404(InternshipOffer, pk=offer_id)
 
@@ -177,7 +193,7 @@ def withdraw_application(request, offer_id):
 @login_required
 def my_applications(request):
     if not request.user.is_student():
-        return HttpResponseForbidden("Doar studenții pot vizualiza aplicațiile lor.")
+        return _forbidden_page(request, "Doar studenții pot vizualiza aplicațiile lor.")
 
     applications = Application.objects.filter(student=request.user).order_by(
         "-applied_at"
@@ -191,8 +207,9 @@ def my_applications(request):
 @login_required
 def my_internship(request):
     if not request.user.is_student():
-        return HttpResponseForbidden(
-            "Doar studenții pot vizualiza stagiile lor de practică."
+        return _forbidden_page(
+            request,
+            "Doar studenții pot vizualiza stagiile de practică.",
         )
 
     internship = (
@@ -218,6 +235,7 @@ def my_internship(request):
     hr_contact_name = None
     hr_contact_email = None
     career_analysis = None
+    is_career_running = False
 
     if internship:
         entries = internship.journal_entries.all().order_by(
@@ -228,6 +246,10 @@ def my_internship(request):
             CareerAnalysis.objects.filter(internship=internship)
             .order_by("-created_at")
             .first()
+        )
+
+        is_career_running = bool(
+            cache.get(_career_analysis_lock_key(request.user.id, internship.id))
         )
 
         company_profile = getattr(internship.company, "company_profile", None)
@@ -251,6 +273,7 @@ def my_internship(request):
         "hr_contact_name": hr_contact_name,
         "hr_contact_email": hr_contact_email,
         "career_analysis": career_analysis,
+        "is_career_running": is_career_running,
     }
     return render(request, "main/my_internship.html", context)
 
@@ -283,7 +306,7 @@ def create_journal_entry(request, internship_id):
     internship = get_object_or_404(Internship, pk=internship_id)
 
     if request.user != internship.student:
-        return HttpResponseForbidden("Doar studentul poate crea intrări în jurnal.")
+        return _forbidden_page(request, "Doar studentul poate crea intrări în jurnal.")
 
     if request.method == "POST":
         week_number_raw = request.POST.get("week_number")
@@ -344,7 +367,7 @@ def edit_journal_entry(request, internship_id, entry_id):
     internship = get_object_or_404(Internship, pk=internship_id)
 
     if request.user != internship.student:
-        return HttpResponseForbidden("Doar studentul poate edita intrări în jurnal.")
+        return _forbidden_page(request, "Doar studentul poate edita intrări în jurnal.")
 
     entry = get_object_or_404(JournalEntry, pk=entry_id, internship=internship)
 
@@ -406,7 +429,9 @@ def delete_journal_entry(request, internship_id, entry_id):
     internship = get_object_or_404(Internship, pk=internship_id)
 
     if request.user != internship.student:
-        return HttpResponseForbidden("Doar studentul poate șterge intrări din jurnal.")
+        return _forbidden_page(
+            request, "Doar studentul poate șterge intrări din jurnal."
+        )
 
     entry = get_object_or_404(JournalEntry, pk=entry_id, internship=internship)
 
@@ -423,8 +448,9 @@ def preview_journal_pdf(request, internship_id):
     internship = get_object_or_404(Internship, pk=internship_id)
 
     if request.user != internship.student:
-        return HttpResponseForbidden(
-            "Doar studentul poate previzualiza jurnalul acestui stagiu."
+        return _forbidden_page(
+            request,
+            "Doar studentul poate previzualiza jurnalul acestui stagiu.",
         )
 
     entries = internship.journal_entries.all().order_by("week_number", "created_at")
@@ -480,7 +506,7 @@ def edit_internship_offer(request, pk):
     offer = get_object_or_404(InternshipOffer, pk=pk)
 
     if offer.company != request.user:
-        return HttpResponseForbidden("Nu ai permisiunea de a edita această ofertă.")
+        return _forbidden_page(request, "Nu ai permisiunea de a edita această ofertă.")
 
     if request.method == "POST":
         form = InternshipOfferForm(request.POST, instance=offer)
@@ -502,7 +528,7 @@ def delete_internship_offer(request, pk):
     offer = get_object_or_404(InternshipOffer, pk=pk)
 
     if offer.company != request.user:
-        return HttpResponseForbidden("Nu ai permisiunea de a șterge această ofertă.")
+        return _forbidden_page(request, "Nu ai permisiunea de a șterge această ofertă.")
 
     if request.method == "POST":
         password = request.POST.get("password")
@@ -541,6 +567,9 @@ def company_candidates(request):
 @login_required
 @user_passes_test(is_company)
 def update_application_status(request, application_id, status):
+    if request.method != "POST":
+        return _forbidden_page(request, "Această acțiune necesită o cerere POST.")
+
     app = get_object_or_404(Application, id=application_id, offer__company=request.user)
 
     if status in ["accepted", "rejected"]:
@@ -569,9 +598,13 @@ def update_application_status(request, application_id, status):
 
 @login_required
 def update_student_application_status(request, application_id, action):
+    if request.method != "POST":
+        return _forbidden_page(request, "Această acțiune necesită o cerere POST.")
+
     if not request.user.is_student():
-        return HttpResponseForbidden(
-            "Doar studenții pot confirma sau refuza participarea."
+        return _forbidden_page(
+            request,
+            "Doar studenții pot confirma sau refuza participarea.",
         )
 
     app = get_object_or_404(Application, id=application_id, student=request.user)
@@ -672,7 +705,7 @@ def view_candidate_application(request, application_id):
 def view_cv(request):
     """View student's CV in read-only mode"""
     if not request.user.is_student():
-        return HttpResponseForbidden("Doar studenții pot vedea CV-uri.")
+        return _forbidden_page(request, "Doar studenții pot vedea CV-uri.")
 
     try:
         cv = StudentCV.objects.get(user=request.user)
@@ -689,7 +722,7 @@ def view_cv(request):
 def edit_cv(request):
     """Edit student's CV with all sections"""
     if not request.user.is_student():
-        return HttpResponseForbidden("Doar studenții pot edita CV-uri.")
+        return _forbidden_page(request, "Doar studenții pot edita CV-uri.")
 
     cv, created = StudentCV.objects.get_or_create(user=request.user)
     upload_error = None
@@ -825,8 +858,9 @@ def edit_cv(request):
 @login_required
 def smart_match_sync(request):
     if not request.user.is_student():
-        return HttpResponseForbidden(
-            "Doar studenții pot genera potrivirile de compatibilitate."
+        return _forbidden_page(
+            request,
+            "Doar studenții pot genera potrivirile de compatibilitate.",
         )
 
     lock_key = _smart_match_lock_key(request.user.id)
@@ -931,8 +965,9 @@ def smart_match_sync(request):
 @login_required
 def smart_match(request):
     if not request.user.is_student():
-        return HttpResponseForbidden(
-            "Doar studenții pot vizualiza rezultatele de compatibilitate."
+        return _forbidden_page(
+            request,
+            "Doar studenții pot vizualiza rezultatele de compatibilitate.",
         )
 
     if request.method == "POST":
@@ -965,11 +1000,24 @@ def smart_match(request):
 @login_required
 def analyze_career_view(request, internship_id):
     if not request.user.is_student():
-        return HttpResponseForbidden("Doar studenții pot genera analize de carieră.")
+        return _forbidden_page(
+            request,
+            "Doar studenții pot genera analize de carieră.",
+        )
 
     internship = get_object_or_404(Internship, pk=internship_id, student=request.user)
 
     if request.method != "POST":
+        return redirect("my_internship")
+
+    lock_key = _career_analysis_lock_key(request.user.id, internship.id)
+    lock_acquired = cache.add(lock_key, True, timeout=600)
+    if not lock_acquired:
+        messages.info(
+            request,
+            "Analiza de carieră este deja în curs. Te rugăm să aștepți finalizarea ei.",
+            extra_tags="career",
+        )
         return redirect("my_internship")
 
     user_context = (request.POST.get("user_context") or "").strip()[:100]
@@ -979,6 +1027,7 @@ def analyze_career_view(request, internship_id):
         messages.warning(
             request,
             "Trebuie să ai un CV completat pentru a genera analiza de carieră.",
+            extra_tags="career",
         )
         return redirect("edit_cv")
 
@@ -987,6 +1036,7 @@ def analyze_career_view(request, internship_id):
         messages.warning(
             request,
             "Trebuie să ai cel puțin o intrare în jurnal pentru a genera analiza de carieră.",
+            extra_tags="career",
         )
         return redirect("my_internship")
 
@@ -997,8 +1047,11 @@ def analyze_career_view(request, internship_id):
         messages.error(
             request,
             "Analiza de carieră nu a putut fi generată în acest moment.",
+            extra_tags="career",
         )
         return redirect("my_internship")
+    finally:
+        cache.delete(lock_key)
 
     CareerAnalysis.objects.filter(internship=internship).delete()
     CareerAnalysis.objects.create(
@@ -1007,6 +1060,7 @@ def analyze_career_view(request, internship_id):
         user_context=user_context,
     )
 
-    messages.success(request, "Analiza de carieră a fost generată cu succes.")
+    messages.success(
+        request, "Analiza de carieră a fost generată cu succes.", extra_tags="career"
+    )
     return redirect("my_internship")
-

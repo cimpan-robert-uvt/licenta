@@ -532,22 +532,34 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["old_password"].label = "Parola veche"
+        self.fields["old_password"].widget = forms.PasswordInput(
+            attrs={"class": "form-control", "autocomplete": "current-password"}
+        )
         self.fields["new_password1"].label = "Parolă nouă"
         self.fields[
             "new_password1"
         ].help_text = "Parola trebuie să conțină minim 8 caractere, o literă mică, o literă mare, o cifră și un caracter special."
+        self.fields["new_password1"].widget = forms.PasswordInput(
+            attrs={"class": "form-control", "autocomplete": "new-password"}
+        )
         self.fields["new_password2"].label = "Confirmă parola nouă"
         self.fields[
             "new_password2"
         ].help_text = "Introduceți din nou parola pentru verificare."
+        self.fields["new_password2"].widget = forms.PasswordInput(
+            attrs={"class": "form-control", "autocomplete": "new-password"}
+        )
 
         self.error_messages["password_mismatch"] = "Cele două parole nu se potrivesc."
+        self.error_messages["password_incorrect"] = (
+            "Parola veche a fost introdusă greșit."
+        )
 
         for field in self.fields.values():
             field.error_messages["required"] = "Acest câmp este obligatoriu."
 
     def clean_new_password1(self):
-        password = super().clean_new_password1()
+        password = self.cleaned_data.get("new_password1")
         if password:
             if len(password) < 8:
                 raise ValidationError(
