@@ -42,7 +42,7 @@
                 {% if cv.pdf_file %}
                     <small class="d-block">
                         Fișier curent:
-                        <a href="{{ cv.pdf_file.url }}" target="_blank">{{ uploaded_pdf_filename }}</a>
+                        <a href="{% url 'serve_protected_cv' cv.id %}" target="blank">{{ uploaded_pdf_filename }}</a>
                     </small>
                 {% endif %}
 

@@ -98,6 +98,11 @@ urlpatterns = [
         name="view_cv",
     ),
     path(
+        "cv/<int:cv_id>/pdf/",
+        views.serve_protected_cv,
+        name="serve_protected_cv",
+    ),
+    path(
         "cv/edit/",
         views.edit_cv,
         name="edit_cv",
@@ -111,5 +116,10 @@ urlpatterns = [
         "internship/<int:internship_id>/analyze-career/",
         views.analyze_career_view,
         name="analyze_career",
+    ),
+    path(
+        "test-contract/",
+        views.test_contract_pdf,
+        name="test_contract_pdf",
     ),
 ]

@@ -51,7 +51,7 @@
                     <p class="text-muted mb-3">
                         Studentul a încărcat un CV personal.
                     </p>
-                    <a href="{{ cv.pdf_file.url }}" target="_blank" class="btn btn-outline-primary rounded-pill">
+                    <a href="{% url 'serve_protected_cv' cv.id %}" target="blank" class="btn btn-outline-primary rounded-pill">
                         <i class="bi bi-file-earmark-pdf"></i> Deschide CV-ul personal
                     </a>
                 {% else %}

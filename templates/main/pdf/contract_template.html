@@ -1,104 +1,104 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../static/css/contract_pdf.css">
+    <title>Contract Practică - {{ student.get_full_name }}</title>
+    <link rel="stylesheet" href="{% static 'css/contract_pdf.css' %}">
 </head>
 <body>
-    <h1>CONTRACT DE STAGIU DE PRACTICA</h1>
-    
-    <div class="section">
-        <div class="section-title">PARTILE CONTRACTANTE:</div>
-        
-        <div class="info-row">
-            <span class="label">Compania:</span>
-            <span>{{ company.company_name }}</span>
-        </div>
-        <div class="info-row">
-            <span class="label">CUI:</span>
-            <span>{{ company.cui|default:"-" }}</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Sediu:</span>
-            <span>{{ company.address|default:"-" }}</span>
-        </div>
+
+    <div class="header-title">
+        <p><strong>Contract de stagiu de practică</strong></p>
+        <p><strong>privind efectuarea activităților de formare profesională</strong></p>
     </div>
 
-    <div class="section">
-        <div class="info-row">
-            <span class="label">Student:</span>
-            <span>{{ student.get_full_name }}</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Email:</span>
-            <span>{{ student.email }}</span>
-        </div>
-    </div>
+    <div class="article-title">Art. 1. PĂRŢILE CONTRACTANTE</div>
+    <p>
+        <strong>{{ company.company_name|default:"...................................." }}</strong>, cu sediul în <strong>{{ company.address|default:"...................................." }}</strong>, telefon <strong>{{ company.contact_phone|default:"..................." }}</strong>, email <strong>{{ company.user.email|default:"..................." }}</strong>, reprezentată prin <strong>{{ company.contact_person|default:"...................................." }}</strong>, adresa unde se va desfășura stagiul de practică: <strong>{{ offer.location|default:"...................................." }}</strong>, numit în continuare <em>partener de practică</em>,
+    </p>
+    <p style="text-align: center; font-weight: bold; margin: 10px 0;">şi</p>
+    <p>
+        Student(ă) <strong>{{ student.get_full_name }}</strong>, CNP ...................................., data nașterii ........................, locul nașterii ........................, cetățean .................., CI/pașaport ................................., adresa de domiciliu ........................................................................, adresa unde va locui pe durata desfășurării stagiului de practică ........................................................................, înscris în anul universitar <strong>{{ student.student_profile.year_of_study|default:"....." }}</strong>, specializarea <strong>{{ student.student_profile.specialization|default:"..................." }}</strong>, email: <strong>{{ student.email }}</strong>, telefon: ....................................... numit în continuare <em>practicant</em>,
+    </p>
+    <p>au convenit încheierea prezentului contract cu respectarea următoarelor clauze:</p>
 
-    <div class="section">
-        <div class="section-title">DETALII STAGIU:</div>
-        
-        <div class="info-row">
-            <span class="label">Pozitie:</span>
-            <span>{{ offer.title }}</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Locatie:</span>
-            <span>{{ offer.location }}</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Data inceperii:</span>
-            <span>{{ offer.start_date|date:"d.m.Y" }}</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Durata:</span>
-            <span>{{ offer.duration_weeks }} saptamani</span>
-        </div>
-    </div>
+    <div class="article-title">Art. 2. DISPOZIŢII GENERALE</div>
+    <ul>
+        <li><strong>Stagiul de practică</strong> reprezintă activitatea desfășurată de practicant, în conformitate cu obiectivele de formare profesională, care are drept scop verificarea aplicabilității cunoștințelor teoretice însușite în cadrul programului de instruire.</li>
+        <li><strong>Partener de practică</strong> - instituția, societatea comercială sau orice altă persoană juridică ce desfășoară o activitate în corelație cu specializarea practicantului și care asigură procesul de instruire practică.</li>
+        <li><strong>Practicantul</strong> este persoana care desfășoară activități practice în cadrul partenerului de practică pentru consolidarea cunoștințelor teoretice și pentru formarea abilităților practice.</li>
+        <li><strong>Tutorele</strong> este persoana desemnată de partenerul de practică, care va asigura respectarea condițiilor de pregătire și dobândire de către practicant a competențelor profesionale planificate pentru perioada stagiului de practică.</li>
+        <li><strong>Contractul de practică</strong> înseamnă acordul bilateral încheiat între partenerul de practică și practicant.</li>
+    </ul>
 
-    <div class="section">
-        <div class="section-title">DESCRIERE:</div>
-        <p>{{ offer.description }}</p>
-    </div>
+    <div class="article-title">Art. 3. OBIECTUL CONTRACTULUI</div>
+    <p>Obiectul prezentului contract constă în organizarea și desfășurarea stagiului de practică, în vederea consolidării cunoștințelor teoretice și pentru formarea abilităților practice spre a fi aplicate în concordanță cu specializarea practicantului. Stagiul de practică este realizat în vederea dobândirii competențelor profesionale stabilite de comun acord.</p>
 
-    {% if offer.requirements %}
-    <div class="section">
-        <div class="section-title">CERINTE:</div>
-        <p>{{ offer.requirements }}</p>
-    </div>
-    {% endif %}
+    <div class="article-title">Art. 4. DURATA ŞI PERIOADA DESFĂŞURĂRII STAGIULUI DE PRACTICĂ</div>
+    <p>Perioada de valabilitate a prezentului contract este de <strong>{{ offer.duration_weeks }} săptămâni</strong>, începând cu data de <strong>{{ internship.start_date|date:"d.m.Y" }}</strong>.</p>
 
-    <div class="section">
-        <div class="section-title">CONDITII:</div>
-        <p>
-            Prin prezentul contract, partile agreaza ca studentul {{ student.get_full_name }} 
-            sa efectueze un stagiu de practica la {{ company.company_name }} incepand cu data de 
-            {{ offer.start_date|date:"d.m.Y" }}, pentru o perioada de {{ offer.duration_weeks }} saptamani.
-        </p>
-        <p>
-            Stagiul de practica se va desfasura conform programului stabilit de companie si 
-            sub supravegherea unui mentor desemnat. Studentul se obliga sa respecte regulamentul 
-            intern al companiei si sa mentina confidentialitatea informatiilor la care are acces.
-        </p>
-    </div>
+    <div class="article-title">ART. 5. DREPTURILE ŞI OBLIGAŢIILE PRACTICANTULUI</div>
+    <ul>
+        <li>să respecte programul de lucru stabilit și să execute activitățile specificate de tutore pe toată durata stagiului de practică.</li>
+        <li>să respecte regulamentul de ordine interioară comunicat de către partenerul de practică. În cazul nerespectării acestui regulament, conducătorul partenerului de practică își rezervă dreptul de a lua măsuri de remediere și poate solicita chiar întreruperea stagiului de practică.</li>
+        <li>se angajează să nu folosească, în niciun caz, informațiile confidențiale la care are acces în timpul stagiului despre partenerul de practică sau clienții săi, pentru a le comunica unui terț sau pentru a le publica, chiar după terminarea stagiului, decât cu acordul scris al partenerului de practică.</li>
+        <li>nu poate pretinde un salariu din partea partenerului de practică, cu excepția situației în care practicantul are statut de angajat pe bază de contract individual de muncă separat.</li>
+        <li>să prezinte periodic și după încheierea stagiului de practică un raport sau caiet de practică tutorelui care va cuprinde activitățile desfășurate și competențele exersate.</li>
+    </ul>
 
-    <div class="signatures">
-        <div class="signature-block">
-            <div class="signature-line">
-                Semnatura Companie<br>
-                {{ company.company_name }}
-            </div>
-        </div>
-        <div class="signature-block">
-            <div class="signature-line">
-                Semnatura Student<br>
-                {{ student.get_full_name }}
-            </div>
-        </div>
-    </div>
+    <div class="article-title">Art. 6. DREPTURILE ŞI OBLIGAŢIILE PARTENERULUI DE PRACTICĂ</div>
+    <ul>
+        <li>să efectueze înainte de începerea stagiului de practică instructajul cu privire la normele de securitate și sănătate în muncă, programul de lucru și regulamentul de ordine interioară.</li>
+        <li>să aducă la cunoștința practicantului ce tip de informații constituie secret de serviciu/confidențiale, precum și responsabilitățile ce decurg din intrarea în contact cu aceste tipuri de date.</li>
+        <li>să respecte prevederile legale și să ia toate măsurile necesare cu privire la securitatea și sănătatea în muncă a practicantului.</li>
+        <li>se angajează să înștiințeze serviciul de urgență în cazul unui accident suportat de practicant în cursul stagiului.</li>
+        <li>să pună la dispoziția practicantului toate mijloacele necesare pentru dobândirea competențelor practice stabilite.</li>
+        <li>poate acorda practicantului o indemnizație, gratificare, primă sau eventuale avantaje în natură (plata transportului, tichete de masă etc.).</li>
+        <li>să stabilească un tutore pentru stagiul de practică, selectat dintre salariații proprii:
+            <br><em>Dl/Dna <strong>{{ internship.mentor_name|default:"...................................." }}</strong></em>
+            <br><em>Telefon: <strong>{{ internship.mentor_phone|default:"..................." }}</strong>  Email: <strong>{{ internship.mentor_email|default:"..................." }}</strong></em>
+        </li>
+        <li>tutorele va evalua practicantul în permanență și va elabora la finalul stagiului de practică un raport privind nivelul de dobândire a competențelor de către practicant.</li>
+    </ul>
 
-    <div class="footer">
-        Contract generat automat la data de {{ internship.created_at|date:"d.m.Y H:i" }}
-    </div>
+    <div class="article-title">Art. 7. RĂSPUNDEREA PĂRŢILOR</div>
+    <p>Pentru nerespectarea totală sau parțială a vreuneia din clauzele prezentului contract ori pentru neexecutarea la termen a obligațiilor asumate, partea în culpă datorează celeilalte părți daune-interese. În relațiile cu terții, răspunderea pentru obligațiile contractuale revine părții care s-a obligat.</p>
+
+    <div class="article-title">Art. 8. MODIFICAREA ȘI ÎNCETAREA CONTRACTULUI</div>
+    <p>Prezentul contract poate fi modificat numai cu acordul părților și numai dacă modificarea este în formă scrisă și semnată de către ambele părți. Contractul încetează la expirarea termenului sau prin acordul scris al părților.</p>
+
+    <div class="article-title">Art. 9. LEGEA APLICABILĂ ŞI LITIGII</div>
+    <p>Prezentul contract este guvernat de legea română. Litigiile care se vor naște din prezentul contract sau în legătură cu acesta vor fi soluționate pe cale amiabilă. Dacă părțile nu vor ajunge la o înțelegere amiabilă, litigiile vor fi înaintate spre soluționare instanțelor judecătorești competente de la sediul partenerului de practică.</p>
+
+    <div class="article-title">Art. 10. FORŢA MAJORĂ</div>
+    <p>Forța majoră exonerează părțile de răspundere în condițiile legii, cu cerința notificării scrise în termen de 5 zile de la apariția cazului de forță majoră.</p>
+
+    <div class="article-title">Art. 11. PREVEDERI FINALE</div>
+    <p>Prezentul contract s-a încheiat azi, ___________________, în două exemplare originale, câte unul pentru fiecare parte semnatară.</p>
+
+    <table class="signature-table">
+        <tr>
+            <th>Partener de practică (Compania)<br><strong>{{ company.company_name }}</strong></th>
+            <th>Practicant (Studentul)<br><strong>{{ student.get_full_name }}</strong></th>
+        </tr>
+        <tr class="signature-row">
+            <td>
+                <em>Reprezentant legal / Tutore:</em><br>
+                <strong>{{ company.contact_person|default:"............................" }}</strong>
+                <br><br><br>
+                Data: ...........................<br><br>
+                Semnătura și Ștampila:
+            </td>
+            <td>
+                <em>Practicant:</em><br>
+                <strong>{{ student.get_full_name }}</strong>
+                <br><br><br>
+                Data: ...........................<br><br>
+                Semnătura:
+            </td>
+        </tr>
+    </table>
+
 </body>
 </html>

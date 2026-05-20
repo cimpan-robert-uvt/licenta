@@ -11,9 +11,9 @@ GEMINI_MODEL = getattr(settings, "GEMINI_MODEL", DEFAULT_GEMINI_MODEL)
 
 DEFAULT_MODEL_FALLBACKS = [
     # "gemini-2.5-flash",
-    # "gemini-2.5-flash-lite",
-    # "gemini-3-flash-preview",
-    # "gemini-3.1-flash-lite-preview",
+    "gemini-2.5-flash-lite",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite-preview",
 ]
 MODEL_FALLBACKS = getattr(settings, "GEMINI_MODEL_FALLBACKS", DEFAULT_MODEL_FALLBACKS)
 

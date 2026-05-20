@@ -25,9 +25,23 @@ class InternshipOfferForm(forms.ModelForm):
             "is_active": "Ofertă activă",
         }
         widgets = {
-            "title": forms.TextInput(attrs={"class": "form-control"}),
-            "description": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-            "requirements": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+            "title": forms.TextInput(attrs={"class": "form-control", "maxlength": 250}),
+            "description": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 5,
+                    "maxlength": 2000,
+                    "placeholder": "Oferă o descriere detaliată a stagiului și responsabilităților. Maxim 2000 de caractere.",
+                }
+            ),
+            "requirements": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 4,
+                    "maxlength": 1500,
+                    "placeholder": "Indică cerințele esențiale pentru candidați, cum ar fi abilități, cunoștințe sau experiență relevantă. Maxim 1500 de caractere.",
+                }
+            ),
             "location": forms.TextInput(attrs={"class": "form-control"}),
             "duration_weeks": forms.NumberInput(attrs={"class": "form-control"}),
             "start_date": forms.DateInput(

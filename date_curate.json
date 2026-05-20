@@ -1,0 +1,2734 @@
+[
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$2DWtEh7sma6sWH1fyPHlUx$64evs1pMzSz0ZU+NjAeaiP4jEd/Cor8cWAHWRI0/Ykg=",
+    "last_login": "2026-01-14T17:08:02.654Z",
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-14T15:34:52.218Z",
+    "username": "user_robert",
+    "role": "student",
+    "phone_number": null,
+    "birth_date": null,
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$Xr7BJd2E4vxKA7KxETmnS1$xmkI+RUYFvhtx5XG9SdsEVAyfPqcOYZyDwKuEud3Nsw=",
+    "last_login": "2026-05-18T13:52:02.707Z",
+    "is_superuser": false,
+    "first_name": "Robert Tamas",
+    "last_name": "Cimpan",
+    "email": "robert.cimpan98@e-uvt.ro",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-01-15T08:54:40.141Z",
+    "username": "robert_student",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "1998-04-20",
+    "profile_picture": "profile_pictures/poza_profil_munte_IUmbBlb.png",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$kQ5EAxfDV2WA8tGzHc6tp3$yx6HhfCB5mMoaeW6XP2WF2I8XHFi876W4r/roYY9GDg=",
+    "last_login": "2026-05-12T18:43:32.488Z",
+    "is_superuser": false,
+    "first_name": "Robert Hr",
+    "last_name": "Cimpan",
+    "email": "cimpan.robert.tamas+hr@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-01-15T08:55:55.185Z",
+    "username": "robert_hr",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "1998-04-20",
+    "profile_picture": "profile_pictures/poza_profil_austria_Uz5PY8N.jpeg",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$j043UABps1AiqTn9MkTiLP$ScCTAcWKMA3jxP7GaeXRddQy3ICF5MMGcwSKG2WRwiI=",
+    "last_login": "2026-03-17T17:40:29.757Z",
+    "is_superuser": false,
+    "first_name": "Robert Hr2",
+    "last_name": "Cimpan",
+    "email": "cimpan.robert.tamas+hr2@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-02-04T08:31:24.332Z",
+    "username": "robert_hr2",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "2020-01-01",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$GoPJOP0gufplvWOOcXmBAu$uiLV8jdtNdM7n8IsZS8qxV+gSdCs7Xx8nK53vXQ/W8c=",
+    "last_login": "2026-05-12T10:53:15.829Z",
+    "is_superuser": false,
+    "first_name": "Robert Hr3",
+    "last_name": "Cimpan",
+    "email": "cimpan.robert.tamas+hr3@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-02-04T08:38:19.361Z",
+    "username": "robert_hr3",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "2019-01-03",
+    "profile_picture": "profile_pictures/blue_u77a628.jpg",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$no5lZ3YIufe4Z335jzGxBO$mBUYxPmf8Mb/IP1iXTE1s/l1UdJaC32F0AnTiAHP6Qw=",
+    "last_login": "2026-05-18T13:52:43.343Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s2@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-02-04T15:52:52.855Z",
+    "username": "robert_student2",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-01-27",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$KSsfg5LGXgu3w6DJD8LTGh$I8+wCSWrT+//7YnkS1o33P2XP3pIjGTcpduVURvqwqk=",
+    "last_login": "2026-05-12T18:43:29.012Z",
+    "is_superuser": false,
+    "first_name": "Mihai",
+    "last_name": "Claus",
+    "email": "cimpan.robert.tamas+hr4@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-02-05T16:07:13.807Z",
+    "username": "robert_hr4",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "2017-02-01",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$PvLUCeg1neB4Jo6ejmqpjM$+zVbyBQp3A9kgvGI+2wnRMm4QSsrF8cGp6SoBm7EjR0=",
+    "last_login": "2026-05-12T18:37:26.864Z",
+    "is_superuser": false,
+    "first_name": "Claudiu",
+    "last_name": "Sarb",
+    "email": "cimpan.robert.tamas+hr5@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-02-05T16:10:58.437Z",
+    "username": "robert_hr5",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "1984-05-30",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 18,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$gO4lcqq6aOANtZsCBmCRVo$NmyL7WI3EhgshqAT54N4BIemoWpTnwtlNfW2v8fj/MA=",
+    "last_login": "2026-04-11T15:59:29.524Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+hr11@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-11T15:50:14.442Z",
+    "username": "robert_hr12",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-01",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 19,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$GxJbF9HJ9QzCAKz0a5OQlJ$oS2L1gYGsb+fJxanipHhiwR8W8wJce0ooCLJt9q5s98=",
+    "last_login": "2026-05-18T13:52:47.459Z",
+    "is_superuser": false,
+    "first_name": "Robert",
+    "last_name": "Cimpan",
+    "email": "cimpan.robert.tamas+s3@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-11T16:01:53.105Z",
+    "username": "robert_student3",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-01",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 20,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$784ptew6FgGc7C88vngZX8$2CxexvQn00vtFLRfOqhmQwI8u/F2CRBwN5rD5kbAr3E=",
+    "last_login": "2026-04-11T18:26:58.518Z",
+    "is_superuser": false,
+    "first_name": "Robert",
+    "last_name": "Cimpan",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-11T18:26:57.830Z",
+    "username": "robert_hr11",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-03",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 22,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$tVBCATBcEndtYwQw1nTLpH$qBvOwPdcsxwp4ym/hpS66iFYKK8yYM+jcZ9kprp3KvQ=",
+    "last_login": "2026-05-12T12:52:08.231Z",
+    "is_superuser": false,
+    "first_name": "Robert",
+    "last_name": "Cimpan",
+    "email": "cimpan.robert.tamas+hr10@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T07:53:29.079Z",
+    "username": "robert_hr10",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-01",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 23,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$Zw5CknKyZQHW5ZWWIseS8G$+NCcmpu2s9AS6e7Qz/YbfRBJc3sNDjzfDlrh6fzDN3M=",
+    "last_login": "2026-05-18T12:31:48.734Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s4@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T09:10:36.110Z",
+    "username": "robert_student4",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-04",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 24,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$dIv3HpkPYZspwTk9mo0elY$C5Axc5dOsC0vcP86Hd3Y+hS1m//mzD7/FtfoX6qjFgw=",
+    "last_login": "2026-05-18T12:31:53.238Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s5@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T12:59:13.337Z",
+    "username": "robert_student5",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-08",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 27,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$ommR3uzzxamBwe9wpHxP0t$tAJxWrQh06WzJyhK1UgWtY+m1Hv23K+mCXqXLCEjRrg=",
+    "last_login": "2026-05-12T18:44:03.016Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+6@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T13:34:29.686Z",
+    "username": "robert_student6",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-09",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 28,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$PP20MRazwYLqoTBGXFXe6I$uZcsBCyefcytLZKPnMeTHuJUAg1B7N2FkumGnXScFD8=",
+    "last_login": "2026-04-23T08:32:57.313Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s7@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-15T16:06:19.327Z",
+    "username": "robert_student7",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-03-31",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 30,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$UiDe2tcNIzQvKsoOzFwvgc$SPPtpJcsTcvL24iGIquFR82QZneJcuDWS1pj59ZhKXM=",
+    "last_login": "2026-04-23T09:56:30.653Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s8@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-22T13:16:56.527Z",
+    "username": "robert_student8",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-08",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 31,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$WmQScZRJHe9KNPji3ugipS$MkIPaFtXv2KjU0lgkt36LXwba1GzRKB3WrlPU39WZmw=",
+    "last_login": "2026-05-04T07:35:27.296Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s9@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-22T13:46:20.550Z",
+    "username": "robert_student9",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-01",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 32,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$nQw5cUiEOUEV7z4NakoZuf$Tw0QoCs/5akgVpAzfugJfrh4I2SbrsRSfCjtlhAtKMg=",
+    "last_login": "2026-05-18T13:53:28.777Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s10@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-23T09:58:02.522Z",
+    "username": "robert_student10",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2026-04-01",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 33,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$G736V5H9ZpAdeQCGnrAYt5$/0WRUtctB03gzyelbPKGzwZmKRi8Ig4qlB63fK/sjqo=",
+    "last_login": "2026-05-18T13:52:57.791Z",
+    "is_superuser": false,
+    "first_name": "Cimpan",
+    "last_name": "Robert",
+    "email": "cimpan.robert.tamas+s11@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-25T14:31:42.169Z",
+    "username": "robert_student11",
+    "role": "student",
+    "phone_number": "0760999192",
+    "birth_date": "2025-12-31",
+    "profile_picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 34,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$q8ruyJ1QcaU67Q1ifgP42e$OnWkgCg7UCkaJ1pvq3Em/vhkeaaGfpDdI+N+x70Jsbk=",
+    "last_login": "2026-05-18T13:51:54.862Z",
+    "is_superuser": false,
+    "first_name": "Robert",
+    "last_name": "Cimpan",
+    "email": "cimpan.robert.tamas+hr20@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-05T12:54:45.050Z",
+    "username": "robert_hr20",
+    "role": "company",
+    "phone_number": "0760999192",
+    "birth_date": "1998-04-20",
+    "profile_picture": "profile_pictures/poza_profil_austria_Ip5X13E.jpeg",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-01-15T08:54:40.804Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 5,
+  "fields": {
+    "user": 12,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-02-04T15:52:53.582Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 6,
+  "fields": {
+    "user": 19,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-11T16:01:53.735Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 7,
+  "fields": {
+    "user": 23,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-12T09:10:36.770Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 8,
+  "fields": {
+    "user": 24,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-12T12:59:14.050Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 11,
+  "fields": {
+    "user": 27,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-12T13:34:30.324Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 12,
+  "fields": {
+    "user": 28,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-15T16:06:20.209Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 13,
+  "fields": {
+    "user": 30,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-22T13:16:57.224Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 14,
+  "fields": {
+    "user": 31,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-22T13:46:21.215Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 15,
+  "fields": {
+    "user": 32,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-23T09:58:03.249Z"
+  }
+},
+{
+  "model": "accounts.studentprofile",
+  "pk": 16,
+  "fields": {
+    "user": 33,
+    "faculty": "",
+    "domain": "altele",
+    "specialization": "",
+    "year_of_study": null,
+    "created_at": "2026-04-25T14:31:43.059Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "company_name": "Cirota",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-01-15T08:55:55.802Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 4,
+  "fields": {
+    "user": 9,
+    "company_name": "Renault",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-02-04T08:31:25.029Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 5,
+  "fields": {
+    "user": 10,
+    "company_name": "DELL",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-02-04T08:38:20.441Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 6,
+  "fields": {
+    "user": 13,
+    "company_name": "IBM",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-02-05T16:07:14.541Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 7,
+  "fields": {
+    "user": 14,
+    "company_name": "Nokia",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-02-05T16:10:59.121Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 11,
+  "fields": {
+    "user": 18,
+    "company_name": "Nokia",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-04-11T15:50:15.152Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 12,
+  "fields": {
+    "user": 20,
+    "company_name": "cirota",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-04-11T18:26:58.490Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 14,
+  "fields": {
+    "user": 22,
+    "company_name": "cirota",
+    "domain": "altele",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-04-12T07:53:29.748Z"
+  }
+},
+{
+  "model": "accounts.companyprofile",
+  "pk": 15,
+  "fields": {
+    "user": 34,
+    "company_name": "Cirota",
+    "domain": "informatica",
+    "industry": "",
+    "website": "",
+    "address": "",
+    "contact_person": "",
+    "contact_phone": "",
+    "created_at": "2026-05-05T12:54:46.243Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/robert-cimpan/",
+    "city": "Timisoara",
+    "resume": "Sunt un student in domeniul IT, în vărstâ de 27 de ani, agil, amabil, răbdător, deschis la oportunități de dezvoltare profesională și personală. În urma experienței mele în domeniul muncii am câștigat o personalitate harnică, care împreună cu ambiția mea, mă vor ajuta cu siguranță să evoluez.",
+    "pdf_file": "",
+    "created_at": "2026-02-04T14:44:05.895Z",
+    "updated_at": "2026-04-23T08:16:42.647Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "phone": "",
+    "email": "",
+    "linkedin": "",
+    "city": "",
+    "resume": "",
+    "pdf_file": "",
+    "created_at": "2026-02-04T15:18:54.661Z",
+    "updated_at": "2026-02-04T15:18:54.661Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 4,
+  "fields": {
+    "user": 12,
+    "phone": "+40760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "Dumbravita, TM",
+    "resume": "Rezumat.",
+    "pdf_file": "cv/CV_Cimpan_Robert_Tamas_846fff6a.pdf",
+    "created_at": "2026-02-04T15:54:03.953Z",
+    "updated_at": "2026-05-18T12:33:31.482Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 5,
+  "fields": {
+    "user": 19,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "Sânnicolau Mare",
+    "resume": "rezumat",
+    "pdf_file": "",
+    "created_at": "2026-04-12T07:26:24.045Z",
+    "updated_at": "2026-04-12T07:35:01.175Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 6,
+  "fields": {
+    "user": 23,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "",
+    "resume": "s",
+    "pdf_file": "",
+    "created_at": "2026-04-12T09:11:05.475Z",
+    "updated_at": "2026-04-12T09:11:57.141Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 7,
+  "fields": {
+    "user": 24,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "Sânnicolau Mare",
+    "resume": "Simplu.",
+    "pdf_file": "",
+    "created_at": "2026-04-12T12:59:46.601Z",
+    "updated_at": "2026-04-23T08:13:02.589Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 10,
+  "fields": {
+    "user": 27,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas+s6@gmail.com",
+    "linkedin": "",
+    "city": "Sânnicolau Mare",
+    "resume": "fr",
+    "pdf_file": "",
+    "created_at": "2026-04-12T13:34:40.735Z",
+    "updated_at": "2026-04-12T13:34:49.641Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 11,
+  "fields": {
+    "user": 28,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "Sânnicolau Mare",
+    "resume": "fghjkl",
+    "pdf_file": "cv/CV_Cimpan_Robert_Tamas_04aa81f5.pdf",
+    "created_at": "2026-04-15T16:29:15.514Z",
+    "updated_at": "2026-04-15T19:31:28.069Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 13,
+  "fields": {
+    "user": 30,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "",
+    "resume": "d",
+    "pdf_file": "",
+    "created_at": "2026-04-22T13:18:19.791Z",
+    "updated_at": "2026-04-22T13:45:38.167Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 14,
+  "fields": {
+    "user": 31,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "",
+    "resume": "h",
+    "pdf_file": "",
+    "created_at": "2026-04-22T13:46:52.759Z",
+    "updated_at": "2026-04-22T13:47:12.240Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 15,
+  "fields": {
+    "user": 32,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "Sânnicolau Mare",
+    "resume": "rezumat",
+    "pdf_file": "",
+    "created_at": "2026-04-23T09:58:44.618Z",
+    "updated_at": "2026-04-23T09:58:51.255Z"
+  }
+},
+{
+  "model": "accounts.studentcv",
+  "pk": 16,
+  "fields": {
+    "user": 33,
+    "phone": "0760999192",
+    "email": "cimpan.robert.tamas@gmail.com",
+    "linkedin": "",
+    "city": "Sânnicolau Mare",
+    "resume": "d",
+    "pdf_file": "",
+    "created_at": "2026-04-25T14:31:58.920Z",
+    "updated_at": "2026-04-25T14:32:11.224Z"
+  }
+},
+{
+  "model": "accounts.cveducation",
+  "pk": 10,
+  "fields": {
+    "cv": 1,
+    "school_name": "Facultatea de Informatică - UVT",
+    "start_date": "2023-10-02",
+    "end_date": "2026-07-13",
+    "details": "• Limbaje de programare (Python, C/C++)\r\n• Concepte OOP\r\n• Algoritmi și structuri de date\r\n• Design web\r\n• Am lucrat la proiecte mici: studiu științific, blog, meniu interactiv pentru utilizatori în C.",
+    "created_at": "2026-02-04T17:43:26.082Z"
+  }
+},
+{
+  "model": "accounts.cveducation",
+  "pk": 16,
+  "fields": {
+    "cv": 7,
+    "school_name": "Liceu",
+    "start_date": "2025-11-02",
+    "end_date": "2025-12-17",
+    "details": "Nimic",
+    "created_at": "2026-04-22T13:29:17.504Z"
+  }
+},
+{
+  "model": "accounts.cvexperience",
+  "pk": 6,
+  "fields": {
+    "cv": 1,
+    "institution_name": "IBM DevOps internship",
+    "start_date": "2025-05-05",
+    "end_date": "2025-07-25",
+    "details": "Proiectul se concentrează pe principiile moderne DevOps, cloud computing, containerizarea aplicațiilor și implementarea automată. Se aprofundează următoarele subiecte:\r\n• Sistem de operare: Linux\r\n• Containerizare: Docker\r\n• Orchestrare containere: Kubernetes\r\n• CI/CD: Jenkins\r\n• Sistem de control al versiunilor: Git\r\n• Cloud: IBM Cloud\r\n• Red Hat",
+    "created_at": "2026-02-04T17:49:38.848Z"
+  }
+},
+{
+  "model": "accounts.cvexperience",
+  "pk": 12,
+  "fields": {
+    "cv": 7,
+    "institution_name": "Experienta",
+    "start_date": "2026-04-01",
+    "end_date": "2026-04-20",
+    "details": "nimic",
+    "created_at": "2026-04-22T13:29:17.516Z"
+  }
+},
+{
+  "model": "accounts.cvskill",
+  "pk": 5,
+  "fields": {
+    "cv": 1,
+    "skill_type": "foreign_language",
+    "skill_name": "Engleza, Germana, Spaniola",
+    "created_at": "2026-02-05T16:38:02.901Z"
+  }
+},
+{
+  "model": "accounts.cvskill",
+  "pk": 6,
+  "fields": {
+    "cv": 1,
+    "skill_type": "program",
+    "skill_name": "Python, Django, Excel, HTML, CSS, JavaScript",
+    "created_at": "2026-02-05T16:38:02.911Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 6,
+  "fields": {
+    "company": 3,
+    "title": "Cloud FinOps - Internship",
+    "description": "Căutăm un stagiar motivat și talentat pentru a se alătura echipei noastre și a contribui la un proiect dinamic axat pe managementul costurilor în următoarele sisteme hiperscalabile: Amazon Web Services, Google Cloud Platform și Microsoft Azure.\r\n\r\nCa stagiar, veți avea oportunitatea de a lucra la proiecte din lumea reală, de a dobândi experiență practică cu tehnologii de ultimă generație și de a colabora cu o echipă de profesioniști experimentați.\r\n\r\nResponsabilități:\r\n\r\nManagementul costurilor: Analizarea costurilor în cloud și utilizarea instrumentelor de detectare a anomaliilor și optimizare a costurilor. \r\n\r\nÎnțelegerea detaliată a sistemelor financiare simple: facturare, returnarea plății și alte subiecte legate de managementul costurilor.\r\n\r\nScriptare și automatizare: Scrierea de scripturi Python pentru a automatiza diverse sarcini legate de infrastructura AWS și procesele de implementare.\r\n\r\nColaborarea cu membrii echipei pentru a îmbunătăți scripturile de automatizare existente și a dezvolta altele noi, după cum este necesar.\r\n\r\nColaborare și documentare: Lucrul îndeaproape cu echipe interfuncționale pentru a înțelege cerințele proiectului și a oferi soluții tehnice.\r\n\r\nDocumentarea soluțiilor, configurațiilor și proceselor pentru a asigura transferul de cunoștințe și referințele viitoare.",
+    "requirements": "Calificări\r\n\r\n-Urmărirea unei facultăți în Informatică Economică, Informatică sau un domeniu conex;\r\n-Cunoașterea de bază a conceptelor de cloud computing și a serviciilor cloud;\r\nInteresul pentru limbajele de programare Python constituie un avantaj;\r\n-Cunoașterea limbii engleze.\r\n\r\nAbilități și competențe:\r\n\r\n-Abilități puternice de rezolvare a problemelor și atenție la detalii;\r\n-Abilități eficiente de comunicare și colaborare;\r\n-Capacitatea de a lucra într-un mediu dinamic și dinamic;\r\n-Dorința de a învăța și de a se adapta la noile tehnologii.",
+    "location": "Timisoara",
+    "duration_weeks": 16,
+    "start_date": "2026-02-05",
+    "is_active": true,
+    "created_at": "2026-02-03T16:38:50.537Z",
+    "updated_at": "2026-02-05T15:59:36.080Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 13,
+  "fields": {
+    "company": 9,
+    "title": "Prelucrare Date utilizand AI Generativ",
+    "description": "Bine ai venit în viitor… în Drive Your Future, programul nostru de internship creat special astfel incat tu sa fii centrul experientei. Dacă îți dorești să înveți, să contribui și să crești într-un mediu profesionist, dinamic și internațional, acest program este pentru tine!\r\n\r\nDe ce să alegi Drive Your Future?\r\n\r\nTu vii cu dorință de implicare → Noi îți oferim proiecte reale, cu impact.\r\nTu ești curios → Noi îți oferim acces la expertiză și oameni de la care să înveți. Tu cauți claritate → Noi îți oferim structură și ghidare.\r\nTu vrei impact → Noi îți oferim implicare în proiecte globale.\r\nTu gândești pe termen lung → Noi îți oferim un START în carieră.",
+    "requirements": "Sprijin în colectarea, procesarea și analiza datelor text (verbatime) folosind tehnici de text mining.\r\n\r\nDezvoltarea de PoC-uri (Proof of Concept) utilizând platforme de AI generativă (MS Copilot).\r\n\r\nDocumentarea fluxurilor de lucru și crearea de materiale explicative pentru soluțiile AI dezvoltate.\r\n\r\nIntegrarea soluțiilor AI cu API-uri interne în funcție de necesitatea proiectului.\r\n\r\nParticiparea la revizuiri periodice ale proiectelor și la întâlniri de lucru cu echipa.\r\n\r\nOrganizarea și menținerea informațiilor de proiect în instrumentele interne (Teams, SharePoint, Confluence, Jira, Looker, etc.).",
+    "location": "Sibiu",
+    "duration_weeks": 12,
+    "start_date": "2026-03-09",
+    "is_active": true,
+    "created_at": "2026-02-04T08:31:43.595Z",
+    "updated_at": "2026-02-05T16:05:09.464Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 14,
+  "fields": {
+    "company": 3,
+    "title": "Process Engineer - Internship",
+    "description": "As a partner to all of the major automobile manufacturers, as well as key players in the aerospace and industrial sectors, we offer you many development opportunities.\r\n\r\nYour Key Responsibilities\r\n-Actively monitor and take improvement actions for the productivity of equipments;\r\n-Support for the continuous improvement of the manufacturing of processes;\r\n-Update the work instructions;\r\n-Accord support for Process Engineer in daily tasks.",
+    "requirements": "-On going University degree in a Technical/ Engineering field;\r\n-Able to work a 6 or 8 hour program;\r\n-Involvement in student organizations is a plus;\r\n-English knowledge - advanced (written and spoken);\r\n-MS Office Package (Excel, PowerPoint, Word).",
+    "location": "SCHAEFFLER Timisoara",
+    "duration_weeks": 12,
+    "start_date": "2026-01-05",
+    "is_active": true,
+    "created_at": "2026-02-04T13:09:07.190Z",
+    "updated_at": "2026-02-05T16:01:44.376Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 15,
+  "fields": {
+    "company": 3,
+    "title": "DEVOPS - internship",
+    "description": "O zi obișnuită ar putea include următoarele:\r\n\r\n• Efectuarea de activități practice de migrare de la Azure DevOps la GitHub Enterprise:\r\n• Migrarea repozitoriului (Git, istoric, ramuri, permisiuni).\r\n• Migrarea conductei CI/CD (Conducte ADO → Acțiuni GitHub).",
+    "requirements": "• Experiență în migrarea cu Jenkins.\r\n• Terraform / Infrastructure as Code.\r\n• Platforme cloud (de preferință Azure).\r\n• Proiecte anterioare de migrare DevOps la scară largă.",
+    "location": "Timisoara",
+    "duration_weeks": 12,
+    "start_date": "2026-05-04",
+    "is_active": true,
+    "created_at": "2026-02-04T17:42:32.730Z",
+    "updated_at": "2026-02-05T15:56:14.766Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 16,
+  "fields": {
+    "company": 13,
+    "title": "Java developer intern",
+    "description": "O cariera in IBM Consulting se bazeaza pe relatii pe termen lung cu clientii si o colaborare stransa la nivel mondial. Vei lucra cu companii de top din diverse industrii, ajutandu-le sa isi modeleze parcursul catre cloud-ul hibrid si inteligenta artificiala. Cu sprijinul partenerilor nostri strategici, tehnologia robusta IBM si Red Hat, vei avea instrumentele necesare pentru a genera schimbari semnificative si a accelera impactul asupra clientilor. La IBM Consulting, curiozitatea alimenteaza succesul. Vei fi incurajat sa provoci normele, sa explorezi idei noi si sa creezi solutii inovatoare care ofera rezultate reale. Cultura noastra de crestere si empatie se concentreaza pe dezvoltarea carierei tale pe termen lung, valorificand in acelasi timp abilitatile si experientele tale unice.",
+    "requirements": "Expertiza tehnica si profesionala preferata:\r\n-Buna intelegere a notiunilor de baza Java\r\n-Cunostinte despre modelele de proiectare software, limbaje multiple si paradigme de dezvoltare\r\n-Ar fi un avantaj experienta cu Python, Spring, Maven, un framework ORM si microservicii",
+    "location": "Oradea, Timisoara",
+    "duration_weeks": 10,
+    "start_date": "2026-03-23",
+    "is_active": true,
+    "created_at": "2026-02-05T16:09:58.145Z",
+    "updated_at": "2026-05-12T18:37:17.794Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 17,
+  "fields": {
+    "company": 14,
+    "title": "Internship - DevOps Trainee",
+    "description": "O oportunitate interesantă de a lucra în industria telecomunicațiilor aflată în continuă schimbare. Ca membru al echipei Common Services & Infrastructure SCM, pentru rețeaua noastră mobilă, vei face parte dintr-o echipă ale cărei obiective sunt de a livra într-un mediu în care sunt încurajate deschiderea, încrederea și autonomia, fiecare membru al echipei selectând sarcinile la care va lucra și discută zilnic cu colegii săi despre progres și provocări.\r\n\r\n\r\nGrupul nostru de afaceri este lider în rețelele de mobilitate wireless și serviciile asociate. Cu peste 3.500 de familii de brevete esențiale pentru 5G, avem un portofoliu 5G puternic și suntem un lider în rețelele de acces radio deschise și virtualizate (O-RAN și vRAN).",
+    "requirements": "Cerințe obligatorii:\r\n\r\nExperiență în dezvoltarea de software folosind unul sau mai multe limbaje de programare generale (Java, C/C++, C#, Python, JavaScript sau Go)\r\nDorință puternică de a contribui cu soluții creative, gata de utilizare, într-un mediu dinamic și rapid\r\nExperiență cu Linux și scripting shell\r\nAbilități de gândire analitică, cu capacitatea de a rezolva probleme complexe\r\nAbilități puternice de lucru în echipă și colaborare\r\n\r\nEste de dorit:\r\n\r\nFamiliaritate cu alte limbaje de programare sau framework-uri\r\nExperiență în medii sub presiune sau gestionarea mai multor sarcini cu termene limită strânse\r\nExperiență în tehnologii cloud sau containerizare",
+    "location": "Bucuresti",
+    "duration_weeks": 12,
+    "start_date": "2026-06-01",
+    "is_active": true,
+    "created_at": "2026-02-05T16:12:51.984Z",
+    "updated_at": "2026-02-05T16:12:51.984Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 18,
+  "fields": {
+    "company": 14,
+    "title": "Internship - HR Operations",
+    "description": "Echipa locală Employee Service Care este responsabilă pentru suportul pe durata ciclului de viață al angajării pentru activitățile legate de HR (PO) din România, cum ar fi angajarea, întreținerea datelor HR și beneficiile.",
+    "requirements": "Responsabilitățile dumneavoastră:\r\nÎn cadrul departamentului Care, veți gestiona administrarea politicilor, procedurilor și programelor de resurse umane și veți desfășura activități în următoarele domenii:\r\n\r\n-Gestionarea administrativă a dosarelor angajaților\r\n-Suport pentru documentația privind managementul ieșirilor (în principal, urmărirea furnizării și arhivării documentelor de ieșire)\r\n-Sarcini administrative, suport pentru procesele de beneficii\r\n-Arhivarea/digitalizarea generală a documentelor\r\n\r\nAptitudinile dumneavoastră:\r\n-În prezent, sunteți candidat la o licență sau diplomă în Resurse Umane, Psihologie, Comunicare, Economie sau un domeniu conex, la o școală acreditată din România.\r\n-Excelente cunoștințe de utilizare a computerului într-un mediu Microsoft Windows, inclusiv Excel și abilități demonstrate în gestionarea bazelor de date și păstrarea evidențelor\r\n-Abilități interpersonale puternice\r\n-Spirit entuziast al spiritului de echipă, cu un nivel ridicat de motivație, auto-organizare și o abordare a muncii orientată spre rezultate și calitate\r\n-Bună comunicare scrisă și orală în limbile română și engleză și confort în lucrul într-un mediu multicultural",
+    "location": "Bucuresti, Iasi",
+    "duration_weeks": 12,
+    "start_date": "2026-04-16",
+    "is_active": true,
+    "created_at": "2026-02-05T16:16:46.280Z",
+    "updated_at": "2026-02-05T16:16:46.280Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 29,
+  "fields": {
+    "company": 22,
+    "title": "t13",
+    "description": "t13",
+    "requirements": "t13",
+    "location": "t13",
+    "duration_weeks": 12,
+    "start_date": "2026-04-17",
+    "is_active": false,
+    "created_at": "2026-04-12T08:41:53.466Z",
+    "updated_at": "2026-04-22T16:18:04.525Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 31,
+  "fields": {
+    "company": 22,
+    "title": "t15",
+    "description": "t15",
+    "requirements": "t15",
+    "location": "t15",
+    "duration_weeks": 12,
+    "start_date": "2026-04-25",
+    "is_active": false,
+    "created_at": "2026-04-12T08:42:10.620Z",
+    "updated_at": "2026-04-22T16:09:52.600Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 32,
+  "fields": {
+    "company": 22,
+    "title": "t21",
+    "description": "t21",
+    "requirements": "t21",
+    "location": "t21",
+    "duration_weeks": 12,
+    "start_date": "2026-04-12",
+    "is_active": false,
+    "created_at": "2026-04-12T12:58:17.600Z",
+    "updated_at": "2026-04-22T16:10:48.123Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 34,
+  "fields": {
+    "company": 14,
+    "title": "Internship - HR Operations",
+    "description": "Echipa locală Employee Service Care este responsabilă pentru suportul pe durata ciclului de viață al angajării pentru activitățile legate de HR (PO) din România, cum ar fi angajarea, întreținerea datelor HR și beneficiile.",
+    "requirements": "Responsabilitățile dumneavoastră:\r\nÎn cadrul departamentului Care, veți gestiona administrarea politicilor, procedurilor și programelor de resurse umane și veți desfășura activități în următoarele domenii:\r\n\r\n-Gestionarea administrativă a dosarelor angajaților\r\n-Suport pentru documentația privind managementul ieșirilor (în principal, urmărirea furnizării și arhivării documentelor de ieșire)\r\n-Sarcini administrative, suport pentru procesele de beneficii\r\n-Arhivarea/digitalizarea generală a documentelor\r\n\r\nAptitudinile dumneavoastră:\r\n-În prezent, sunteți candidat la o licență sau diplomă în Resurse Umane, Psihologie, Comunicare, Economie sau un domeniu conex, la o școală acreditată din România.\r\n-Excelente cunoștințe de utilizare a computerului într-un mediu Microsoft Windows, inclusiv Excel și abilități demonstrate în gestionarea bazelor de date și păstrarea evidențelor\r\n-Abilități interpersonale puternice\r\n-Spirit entuziast al spiritului de echipă, cu un nivel ridicat de motivație, auto-organizare și o abordare a muncii orientată spre rezultate și calitate\r\n-Bună comunicare scrisă și orală în limbile română și engleză și confort în lucrul într-un mediu multicultural",
+    "location": "Timisoara",
+    "duration_weeks": 12,
+    "start_date": "2026-04-22",
+    "is_active": true,
+    "created_at": "2026-04-22T08:38:19.222Z",
+    "updated_at": "2026-04-22T08:38:19.223Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 35,
+  "fields": {
+    "company": 14,
+    "title": "Internship - HR Operations",
+    "description": "Echipa locală Employee Service Care este responsabilă pentru suportul pe durata ciclului de viață al angajării pentru activitățile legate de HR (PO) din România, cum ar fi angajarea, întreținerea datelor HR și beneficiile.",
+    "requirements": "Responsabilitățile dumneavoastră:\r\nÎn cadrul departamentului Care, veți gestiona administrarea politicilor, procedurilor și programelor de resurse umane și veți desfășura activități în următoarele domenii:\r\n\r\n-Gestionarea administrativă a dosarelor angajaților\r\n-Suport pentru documentația privind managementul ieșirilor (în principal, urmărirea furnizării și arhivării documentelor de ieșire)\r\n-Sarcini administrative, suport pentru procesele de beneficii\r\n-Arhivarea/digitalizarea generală a documentelor\r\n\r\nAptitudinile dumneavoastră:\r\n-În prezent, sunteți candidat la o licență sau diplomă în Resurse Umane, Psihologie, Comunicare, Economie sau un domeniu conex, la o școală acreditată din România.\r\n-Excelente cunoștințe de utilizare a computerului într-un mediu Microsoft Windows, inclusiv Excel și abilități demonstrate în gestionarea bazelor de date și păstrarea evidențelor\r\n-Abilități interpersonale puternice\r\n-Spirit entuziast al spiritului de echipă, cu un nivel ridicat de motivație, auto-organizare și o abordare a muncii orientată spre rezultate și calitate\r\n-Bună comunicare scrisă și orală în limbile română și engleză și confort în lucrul într-un mediu multicultural",
+    "location": "Timisoara",
+    "duration_weeks": 12,
+    "start_date": "2026-04-23",
+    "is_active": true,
+    "created_at": "2026-04-22T08:38:48.066Z",
+    "updated_at": "2026-04-22T08:38:48.066Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 36,
+  "fields": {
+    "company": 14,
+    "title": "Internship - DevOps Trainee",
+    "description": "O oportunitate interesantă de a lucra în industria telecomunicațiilor aflată în continuă schimbare. Ca membru al echipei Common Services & Infrastructure SCM, pentru rețeaua noastră mobilă, vei face parte dintr-o echipă ale cărei obiective sunt de a livra într-un mediu în care sunt încurajate deschiderea, încrederea și autonomia, fiecare membru al echipei selectând sarcinile la care va lucra și discută zilnic cu colegii săi despre progres și provocări.\r\n\r\nGrupul nostru de afaceri este lider în rețelele de mobilitate wireless și serviciile asociate. Cu peste 3.500 de familii de brevete esențiale pentru 5G, avem un portofoliu 5G puternic și suntem un lider în rețelele de acces radio deschise și virtualizate (O-RAN și vRAN).",
+    "requirements": "Cerințe obligatorii:\r\n\r\nExperiență în dezvoltarea de software folosind unul sau mai multe limbaje de programare generale (Java, C/C++, C#, Python, JavaScript sau Go)\r\nDorință puternică de a contribui cu soluții creative, gata de utilizare, într-un mediu dinamic și rapid\r\nExperiență cu Linux și scripting shell\r\nAbilități de gândire analitică, cu capacitatea de a rezolva probleme complexe\r\nAbilități puternice de lucru în echipă și colaborare\r\n\r\nEste de dorit:\r\n\r\nFamiliaritate cu alte limbaje de programare sau framework-uri\r\nExperiență în medii sub presiune sau gestionarea mai multor sarcini cu termene limită strânse\r\nExperiență în tehnologii cloud sau containerizare",
+    "location": "Timisoara",
+    "duration_weeks": 12,
+    "start_date": "2026-04-23",
+    "is_active": true,
+    "created_at": "2026-04-22T08:40:18.919Z",
+    "updated_at": "2026-04-22T08:40:18.919Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 37,
+  "fields": {
+    "company": 14,
+    "title": "Internship - DevOps Trainee",
+    "description": "O oportunitate interesantă de a lucra în industria telecomunicațiilor aflată în continuă schimbare. Ca membru al echipei Common Services & Infrastructure SCM, pentru rețeaua noastră mobilă, vei face parte dintr-o echipă ale cărei obiective sunt de a livra într-un mediu în care sunt încurajate deschiderea, încrederea și autonomia, fiecare membru al echipei selectând sarcinile la care va lucra și discută zilnic cu colegii săi despre progres și provocări.\r\n\r\nGrupul nostru de afaceri este lider în rețelele de mobilitate wireless și serviciile asociate. Cu peste 3.500 de familii de brevete esențiale pentru 5G, avem un portofoliu 5G puternic și suntem un lider în rețelele de acces radio deschise și virtualizate (O-RAN și vRAN).",
+    "requirements": "Cerințe obligatorii:\r\n\r\nExperiență în dezvoltarea de software folosind unul sau mai multe limbaje de programare generale (Java, C/C++, C#, Python, JavaScript sau Go)\r\nDorință puternică de a contribui cu soluții creative, gata de utilizare, într-un mediu dinamic și rapid\r\nExperiență cu Linux și scripting shell\r\nAbilități de gândire analitică, cu capacitatea de a rezolva probleme complexe\r\nAbilități puternice de lucru în echipă și colaborare\r\n\r\nEste de dorit:\r\n\r\nFamiliaritate cu alte limbaje de programare sau framework-uri\r\nExperiență în medii sub presiune sau gestionarea mai multor sarcini cu termene limită strânse\r\nExperiență în tehnologii cloud sau containerizare",
+    "location": "Timisoara",
+    "duration_weeks": 12,
+    "start_date": "2026-04-23",
+    "is_active": true,
+    "created_at": "2026-04-22T08:40:41.991Z",
+    "updated_at": "2026-04-22T08:40:41.991Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 38,
+  "fields": {
+    "company": 10,
+    "title": "TESTHR3",
+    "description": "TEST",
+    "requirements": "TEST",
+    "location": "TEST",
+    "duration_weeks": 2,
+    "start_date": "2026-04-23",
+    "is_active": true,
+    "created_at": "2026-04-23T09:27:32.917Z",
+    "updated_at": "2026-05-04T08:14:46.145Z"
+  }
+},
+{
+  "model": "main.internshipoffer",
+  "pk": 39,
+  "fields": {
+    "company": 3,
+    "title": "test hr, student6",
+    "description": "test",
+    "requirements": "test",
+    "location": "hybrid",
+    "duration_weeks": 3,
+    "start_date": "2026-05-12",
+    "is_active": true,
+    "created_at": "2026-05-12T18:37:50.163Z",
+    "updated_at": "2026-05-12T18:40:00.109Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 10,
+  "fields": {
+    "student": 12,
+    "offer": 13,
+    "status": "accepted",
+    "applied_at": "2026-02-04T15:59:38.572Z",
+    "updated_at": "2026-03-17T17:41:25.575Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 11,
+  "fields": {
+    "student": 12,
+    "offer": 6,
+    "status": "rejected",
+    "applied_at": "2026-02-05T16:51:48.781Z",
+    "updated_at": "2026-02-05T17:05:59.303Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 15,
+  "fields": {
+    "student": 12,
+    "offer": 15,
+    "status": "accepted",
+    "applied_at": "2026-02-05T17:12:34.230Z",
+    "updated_at": "2026-02-05T17:36:23.832Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 22,
+  "fields": {
+    "student": 2,
+    "offer": 16,
+    "status": "accepted",
+    "applied_at": "2026-02-05T17:56:00.543Z",
+    "updated_at": "2026-02-05T17:56:09.268Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 23,
+  "fields": {
+    "student": 2,
+    "offer": 6,
+    "status": "accepted",
+    "applied_at": "2026-03-17T16:01:12.278Z",
+    "updated_at": "2026-03-17T16:01:54.347Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 26,
+  "fields": {
+    "student": 19,
+    "offer": 16,
+    "status": "withdrawn",
+    "applied_at": "2026-04-12T07:18:45.909Z",
+    "updated_at": "2026-04-12T07:18:45.909Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 36,
+  "fields": {
+    "student": 19,
+    "offer": 29,
+    "status": "student_confirmed",
+    "applied_at": "2026-04-12T08:42:54.193Z",
+    "updated_at": "2026-04-12T08:45:13.243Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 39,
+  "fields": {
+    "student": 23,
+    "offer": 31,
+    "status": "student_confirmed",
+    "applied_at": "2026-04-12T09:26:06.078Z",
+    "updated_at": "2026-04-12T09:29:38.607Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 40,
+  "fields": {
+    "student": 24,
+    "offer": 32,
+    "status": "student_confirmed",
+    "applied_at": "2026-04-12T13:00:06.214Z",
+    "updated_at": "2026-04-12T13:00:43.530Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 43,
+  "fields": {
+    "student": 28,
+    "offer": 31,
+    "status": "student_confirmed",
+    "applied_at": "2026-04-15T19:21:51.027Z",
+    "updated_at": "2026-04-15T19:31:07.497Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 44,
+  "fields": {
+    "student": 30,
+    "offer": 36,
+    "status": "student_declined",
+    "applied_at": "2026-04-23T08:21:03.928Z",
+    "updated_at": "2026-04-23T08:22:40.401Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 45,
+  "fields": {
+    "student": 30,
+    "offer": 35,
+    "status": "rejected",
+    "applied_at": "2026-04-23T08:22:50.490Z",
+    "updated_at": "2026-04-23T08:23:03.558Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 46,
+  "fields": {
+    "student": 30,
+    "offer": 38,
+    "status": "student_confirmed",
+    "applied_at": "2026-04-23T09:28:07.591Z",
+    "updated_at": "2026-04-23T09:28:41.823Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 48,
+  "fields": {
+    "student": 31,
+    "offer": 38,
+    "status": "student_confirmed",
+    "applied_at": "2026-04-23T09:55:57.092Z",
+    "updated_at": "2026-04-23T09:57:12.689Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 49,
+  "fields": {
+    "student": 32,
+    "offer": 38,
+    "status": "student_confirmed",
+    "applied_at": "2026-04-23T09:59:03.631Z",
+    "updated_at": "2026-04-23T09:59:28.239Z"
+  }
+},
+{
+  "model": "main.application",
+  "pk": 50,
+  "fields": {
+    "student": 27,
+    "offer": 39,
+    "status": "student_confirmed",
+    "applied_at": "2026-05-12T18:38:09.098Z",
+    "updated_at": "2026-05-12T18:38:46.695Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 407,
+  "fields": {
+    "student": 24,
+    "offer": 37,
+    "score": 11,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.853Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 408,
+  "fields": {
+    "student": 24,
+    "offer": 36,
+    "score": 11,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.866Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 409,
+  "fields": {
+    "student": 24,
+    "offer": 16,
+    "score": 8,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.878Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 410,
+  "fields": {
+    "student": 24,
+    "offer": 6,
+    "score": 8,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.890Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 411,
+  "fields": {
+    "student": 24,
+    "offer": 17,
+    "score": 8,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.904Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 412,
+  "fields": {
+    "student": 24,
+    "offer": 15,
+    "score": 8,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.919Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 413,
+  "fields": {
+    "student": 24,
+    "offer": 35,
+    "score": 7,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.930Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 414,
+  "fields": {
+    "student": 24,
+    "offer": 34,
+    "score": 7,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.945Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 415,
+  "fields": {
+    "student": 24,
+    "offer": 18,
+    "score": 7,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.955Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 416,
+  "fields": {
+    "student": 24,
+    "offer": 14,
+    "score": 6,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:25:44.968Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 417,
+  "fields": {
+    "student": 27,
+    "offer": 37,
+    "score": 18,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.294Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 418,
+  "fields": {
+    "student": 27,
+    "offer": 36,
+    "score": 18,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.304Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 419,
+  "fields": {
+    "student": 27,
+    "offer": 16,
+    "score": 18,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.313Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 420,
+  "fields": {
+    "student": 27,
+    "offer": 6,
+    "score": 18,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.322Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 421,
+  "fields": {
+    "student": 27,
+    "offer": 15,
+    "score": 16,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.331Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 422,
+  "fields": {
+    "student": 27,
+    "offer": 35,
+    "score": 16,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.340Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 423,
+  "fields": {
+    "student": 27,
+    "offer": 34,
+    "score": 16,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.349Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 424,
+  "fields": {
+    "student": 27,
+    "offer": 14,
+    "score": 14,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.358Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 425,
+  "fields": {
+    "student": 27,
+    "offer": 17,
+    "score": 14,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.367Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 426,
+  "fields": {
+    "student": 27,
+    "offer": 18,
+    "score": 12,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-22T14:26:13.377Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 477,
+  "fields": {
+    "student": 28,
+    "offer": 6,
+    "score": 94,
+    "explanation": "Candidatul are competențe solide în Python și AWS, direct aliniate cu cerințele de automatizare și managementul costurilor în cloud.",
+    "created_at": "2026-04-22T14:42:19.778Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 478,
+  "fields": {
+    "student": 28,
+    "offer": 37,
+    "score": 88,
+    "explanation": "Potrivire excelentă prin experiența în Linux, Python și Docker, fiind un candidat ideal pentru un rol de DevOps într-o echipă agilă.",
+    "created_at": "2026-04-22T14:42:19.789Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 479,
+  "fields": {
+    "student": 28,
+    "offer": 36,
+    "score": 88,
+    "explanation": "Aceeași compatibilitate tehnică puternică ca la ID 37, având cunoștințe relevante de cloud și containerizare solicitate.",
+    "created_at": "2026-04-22T14:42:19.800Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 480,
+  "fields": {
+    "student": 28,
+    "offer": 17,
+    "score": 86,
+    "explanation": "Abilități tehnice foarte bune, deși locația este București, ceea ce reprezintă un mic dezavantaj logistic.",
+    "created_at": "2026-04-22T14:42:19.811Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 481,
+  "fields": {
+    "student": 28,
+    "offer": 16,
+    "score": 82,
+    "explanation": "Candidatul deține cunoștințe de Java și Python, fiind bine aliniat cu profilul de dezvoltator solicitat de IBM.",
+    "created_at": "2026-04-22T14:42:19.822Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 482,
+  "fields": {
+    "student": 28,
+    "offer": 15,
+    "score": 77,
+    "explanation": "Experiența cu Jenkins și Git este relevantă, deși îi lipsește expunerea practică la Terraform și Azure solicitată specific.",
+    "created_at": "2026-04-22T14:42:19.833Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 483,
+  "fields": {
+    "student": 28,
+    "offer": 13,
+    "score": 64,
+    "explanation": "Candidatul are bazele de programare necesare, însă proiectul se concentrează pe AI, un domeniu în care acesta are experiență limitată.",
+    "created_at": "2026-04-22T14:42:19.843Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 484,
+  "fields": {
+    "student": 28,
+    "offer": 35,
+    "score": 40,
+    "explanation": "Profilul tehnic este supra-calificat pentru un rol de HR, deși deține experiență relevantă în servicii clienți.",
+    "created_at": "2026-04-22T14:42:19.854Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 485,
+  "fields": {
+    "student": 28,
+    "offer": 34,
+    "score": 40,
+    "explanation": "Similar cu oferta 35, competențele tehnice nu sunt utilizate în contextul HR Operations cerut.",
+    "created_at": "2026-04-22T14:42:19.864Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 486,
+  "fields": {
+    "student": 28,
+    "offer": 18,
+    "score": 36,
+    "explanation": "Potrivire scăzută datorită focalizării pe IT, locația fiind de asemenea diferită de cea a candidatului.",
+    "created_at": "2026-04-22T14:42:19.875Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 557,
+  "fields": {
+    "student": 30,
+    "offer": 37,
+    "score": 11,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.219Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 558,
+  "fields": {
+    "student": 30,
+    "offer": 36,
+    "score": 11,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.230Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 559,
+  "fields": {
+    "student": 30,
+    "offer": 16,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.239Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 560,
+  "fields": {
+    "student": 30,
+    "offer": 6,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.248Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 561,
+  "fields": {
+    "student": 30,
+    "offer": 15,
+    "score": 8,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.257Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 562,
+  "fields": {
+    "student": 30,
+    "offer": 13,
+    "score": 8,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.266Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 563,
+  "fields": {
+    "student": 30,
+    "offer": 35,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.275Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 564,
+  "fields": {
+    "student": 30,
+    "offer": 34,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.284Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 565,
+  "fields": {
+    "student": 30,
+    "offer": 18,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.293Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 566,
+  "fields": {
+    "student": 30,
+    "offer": 14,
+    "score": 7,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T07:44:39.302Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 577,
+  "fields": {
+    "student": 31,
+    "offer": 37,
+    "score": 12,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.099Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 578,
+  "fields": {
+    "student": 31,
+    "offer": 36,
+    "score": 12,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.109Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 579,
+  "fields": {
+    "student": 31,
+    "offer": 16,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.119Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 580,
+  "fields": {
+    "student": 31,
+    "offer": 6,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.129Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 581,
+  "fields": {
+    "student": 31,
+    "offer": 15,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.138Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 582,
+  "fields": {
+    "student": 31,
+    "offer": 13,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.148Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 583,
+  "fields": {
+    "student": 31,
+    "offer": 35,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.158Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 584,
+  "fields": {
+    "student": 31,
+    "offer": 34,
+    "score": 10,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.169Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 585,
+  "fields": {
+    "student": 31,
+    "offer": 14,
+    "score": 9,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.179Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 586,
+  "fields": {
+    "student": 31,
+    "offer": 18,
+    "score": 9,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-23T09:56:59.189Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 637,
+  "fields": {
+    "student": 33,
+    "offer": 37,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.252Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 638,
+  "fields": {
+    "student": 33,
+    "offer": 36,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.263Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 639,
+  "fields": {
+    "student": 33,
+    "offer": 35,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.274Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 640,
+  "fields": {
+    "student": 33,
+    "offer": 34,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.285Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 641,
+  "fields": {
+    "student": 33,
+    "offer": 16,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.296Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 642,
+  "fields": {
+    "student": 33,
+    "offer": 15,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.306Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 643,
+  "fields": {
+    "student": 33,
+    "offer": 14,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.317Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 644,
+  "fields": {
+    "student": 33,
+    "offer": 6,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.327Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 645,
+  "fields": {
+    "student": 33,
+    "offer": 18,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.337Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 646,
+  "fields": {
+    "student": 33,
+    "offer": 17,
+    "score": 0,
+    "explanation": "CV-ul conține foarte puține informații relevante pentru evaluarea potrivirii (ex: rezumat foarte scurt, fără experiență/abilități detaliate).",
+    "created_at": "2026-04-30T12:42:20.346Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 657,
+  "fields": {
+    "student": 2,
+    "offer": 37,
+    "score": 86,
+    "explanation": "Potrivire excelentă între cerințe și experiența și cunoștințele candidatului.",
+    "created_at": "2026-05-18T13:52:27.077Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 658,
+  "fields": {
+    "student": 2,
+    "offer": 36,
+    "score": 86,
+    "explanation": "Potrivire excelentă între cerințe și experiența și cunoștințele candidatului.",
+    "created_at": "2026-05-18T13:52:27.089Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 659,
+  "fields": {
+    "student": 2,
+    "offer": 17,
+    "score": 84,
+    "explanation": "Cunoștințe solide de programare și experiență în Linux, potrivite pentru rolul DevOps.",
+    "created_at": "2026-05-18T13:52:27.105Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 660,
+  "fields": {
+    "student": 2,
+    "offer": 15,
+    "score": 81,
+    "explanation": "Experiența în DevOps și cunoștințele de Linux și containerizare sunt relevante pentru această ofertă.",
+    "created_at": "2026-05-18T13:52:27.120Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 661,
+  "fields": {
+    "student": 2,
+    "offer": 6,
+    "score": 78,
+    "explanation": "Cunoștințe de Python și interes pentru cloud computing îl fac un candidat potrivit.",
+    "created_at": "2026-05-18T13:52:27.136Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 662,
+  "fields": {
+    "student": 2,
+    "offer": 39,
+    "score": 8,
+    "explanation": "Cerințele sunt foarte vagi, iar CV-ul nu oferă detalii suficiente pentru o potrivire clară.",
+    "created_at": "2026-05-18T13:52:27.148Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 663,
+  "fields": {
+    "student": 2,
+    "offer": 38,
+    "score": 5,
+    "explanation": "Oferta are cerințe extrem de vagi, iar CV-ul nu poate fi evaluat corespunzător.",
+    "created_at": "2026-05-18T13:52:27.161Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 664,
+  "fields": {
+    "student": 2,
+    "offer": 16,
+    "score": 71,
+    "explanation": "Cunoștințele de Python și C/C++ sunt relevante pentru rolul de Java developer intern.",
+    "created_at": "2026-05-18T13:52:27.175Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 665,
+  "fields": {
+    "student": 2,
+    "offer": 35,
+    "score": 20,
+    "explanation": "Candidatul nu are experiență specifică în HR și studiile sunt în IT, nu în domeniul HR.",
+    "created_at": "2026-05-18T13:52:27.189Z"
+  }
+},
+{
+  "model": "main.compatibilitymatch",
+  "pk": 666,
+  "fields": {
+    "student": 2,
+    "offer": 34,
+    "score": 20,
+    "explanation": "Candidatul nu are experiență specifică în HR și studiile sunt în IT, nu în domeniul HR.",
+    "created_at": "2026-05-18T13:52:27.203Z"
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 1,
+  "fields": {
+    "offer": 6,
+    "student": 2,
+    "company": 3,
+    "start_date": "2026-02-05",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_6.pdf",
+    "created_at": "2026-02-05T17:22:26.279Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 2,
+  "fields": {
+    "offer": 6,
+    "student": 2,
+    "company": 3,
+    "start_date": "2026-01-05",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_14.pdf",
+    "created_at": "2026-02-05T17:25:37.098Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 3,
+  "fields": {
+    "offer": 6,
+    "student": 2,
+    "company": 3,
+    "start_date": "2026-01-05",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_14_iI6zwbZ.pdf",
+    "created_at": "2026-02-05T17:28:39.494Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 4,
+  "fields": {
+    "offer": 6,
+    "student": 2,
+    "company": 3,
+    "start_date": "2026-01-05",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_14_KxgOHa6.pdf",
+    "created_at": "2026-02-05T17:31:44.031Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 5,
+  "fields": {
+    "offer": 6,
+    "student": 2,
+    "company": 3,
+    "start_date": "2026-01-05",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_14_3k1OZ4m.pdf",
+    "created_at": "2026-02-05T17:34:09.832Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 6,
+  "fields": {
+    "offer": 15,
+    "student": 12,
+    "company": 3,
+    "start_date": "2026-05-04",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_15.pdf",
+    "created_at": "2026-02-05T17:36:23.855Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 7,
+  "fields": {
+    "offer": 6,
+    "student": 2,
+    "company": 3,
+    "start_date": "2026-01-05",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_14_AEUZtwn.pdf",
+    "created_at": "2026-02-05T17:49:41.218Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 8,
+  "fields": {
+    "offer": 16,
+    "student": 2,
+    "company": 13,
+    "start_date": "2026-03-23",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_16.pdf",
+    "created_at": "2026-02-05T17:52:32.470Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 9,
+  "fields": {
+    "offer": 16,
+    "student": 2,
+    "company": 13,
+    "start_date": "2026-03-23",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_16_5z61aUu.pdf",
+    "created_at": "2026-02-05T17:56:09.294Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 10,
+  "fields": {
+    "offer": 6,
+    "student": 2,
+    "company": 3,
+    "start_date": "2026-02-05",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_6_VXKQM5L.pdf",
+    "created_at": "2026-03-17T16:01:54.371Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 11,
+  "fields": {
+    "offer": null,
+    "student": 2,
+    "company": 14,
+    "start_date": "2026-06-01",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Tamas_Cimpan_17.pdf",
+    "created_at": "2026-03-17T16:56:31.125Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 12,
+  "fields": {
+    "offer": 13,
+    "student": 12,
+    "company": 9,
+    "start_date": "2026-03-09",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_13.pdf",
+    "created_at": "2026-03-17T17:41:25.600Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 13,
+  "fields": {
+    "offer": 29,
+    "student": 19,
+    "company": 22,
+    "start_date": "2026-04-17",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Robert_Cimpan_29.pdf",
+    "created_at": "2026-04-12T08:45:13.274Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 14,
+  "fields": {
+    "offer": 31,
+    "student": 23,
+    "company": 22,
+    "start_date": "2026-04-25",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_31.pdf",
+    "created_at": "2026-04-12T09:29:38.635Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 15,
+  "fields": {
+    "offer": 32,
+    "student": 24,
+    "company": 22,
+    "start_date": "2026-04-12",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_32.pdf",
+    "created_at": "2026-04-12T13:00:43.562Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 18,
+  "fields": {
+    "offer": 31,
+    "student": 28,
+    "company": 22,
+    "start_date": "2026-04-25",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_31_XrCUfgu.pdf",
+    "created_at": "2026-04-15T19:31:07.518Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 19,
+  "fields": {
+    "offer": 38,
+    "student": 30,
+    "company": 10,
+    "start_date": "2026-04-23",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_38.pdf",
+    "created_at": "2026-04-23T09:28:41.844Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 20,
+  "fields": {
+    "offer": 38,
+    "student": 31,
+    "company": 10,
+    "start_date": "2026-04-23",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_38_dw3gHpY.pdf",
+    "created_at": "2026-04-23T09:57:12.715Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 21,
+  "fields": {
+    "offer": 38,
+    "student": 32,
+    "company": 10,
+    "start_date": "2026-04-23",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_38_w0s7XZu.pdf",
+    "created_at": "2026-04-23T09:59:28.265Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.internship",
+  "pk": 22,
+  "fields": {
+    "offer": 39,
+    "student": 27,
+    "company": 3,
+    "start_date": "2026-05-12",
+    "end_date": null,
+    "is_active": true,
+    "signed_contract": "contracts/Contract_Cimpan_Robert_39.pdf",
+    "created_at": "2026-05-12T18:38:46.722Z",
+    "mentor_name": null,
+    "mentor_email": null,
+    "mentor_phone": null
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 3,
+  "fields": {
+    "internship": 2,
+    "week_number": 1,
+    "content": "intrare saptamana 1",
+    "created_at": "2026-03-17T16:43:31.207Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 4,
+  "fields": {
+    "internship": 2,
+    "week_number": 2,
+    "content": "test",
+    "created_at": "2026-03-17T16:46:24.113Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 5,
+  "fields": {
+    "internship": 2,
+    "week_number": 3,
+    "content": "test",
+    "created_at": "2026-03-17T16:47:37.107Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 6,
+  "fields": {
+    "internship": 2,
+    "week_number": 11,
+    "content": "test",
+    "created_at": "2026-03-17T17:42:31.340Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 8,
+  "fields": {
+    "internship": 13,
+    "week_number": 1,
+    "content": "detalii",
+    "created_at": "2026-04-22T15:30:21.533Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 9,
+  "fields": {
+    "internship": 13,
+    "week_number": 2,
+    "content": "dd",
+    "created_at": "2026-04-22T15:50:23.074Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 10,
+  "fields": {
+    "internship": 13,
+    "week_number": 3,
+    "content": "d",
+    "created_at": "2026-04-22T15:50:37.691Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 11,
+  "fields": {
+    "internship": 13,
+    "week_number": 4,
+    "content": "d",
+    "created_at": "2026-04-22T15:51:16.552Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 12,
+  "fields": {
+    "internship": 13,
+    "week_number": 5,
+    "content": "f",
+    "created_at": "2026-04-22T15:53:32.442Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 13,
+  "fields": {
+    "internship": 13,
+    "week_number": 6,
+    "content": "t",
+    "created_at": "2026-04-22T15:54:40.638Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 19,
+  "fields": {
+    "internship": 19,
+    "week_number": 1,
+    "content": "e",
+    "created_at": "2026-04-23T09:54:47.710Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 20,
+  "fields": {
+    "internship": 19,
+    "week_number": 2,
+    "content": "dd",
+    "created_at": "2026-04-23T09:55:02.725Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 31,
+  "fields": {
+    "internship": 20,
+    "week_number": 1,
+    "content": "h",
+    "created_at": "2026-05-04T07:36:32.106Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 34,
+  "fields": {
+    "internship": 21,
+    "week_number": 1,
+    "content": "In aceasta saptamana am invatat despre asta si aia.",
+    "created_at": "2026-05-04T08:17:36.018Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 35,
+  "fields": {
+    "internship": 21,
+    "week_number": 2,
+    "content": "In aceasta saptamana am invatat despre astalalta si aialalta.",
+    "created_at": "2026-05-04T08:17:48.668Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 36,
+  "fields": {
+    "internship": 22,
+    "week_number": 1,
+    "content": "test",
+    "created_at": "2026-05-12T18:38:59.285Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 37,
+  "fields": {
+    "internship": 8,
+    "week_number": 1,
+    "content": "In aceasta saptamana am invatat toata istoria java si cunosc toate librariile necesare pentru criptografie.",
+    "created_at": "2026-05-12T18:47:02.906Z"
+  }
+},
+{
+  "model": "main.journalentry",
+  "pk": 38,
+  "fields": {
+    "internship": 8,
+    "week_number": 2,
+    "content": "in aceasta saptamana am invatat toate aspectele legate de librariile folosite in domeniul devops.",
+    "created_at": "2026-05-12T18:47:32.870Z"
+  }
+},
+{
+  "model": "main.careeranalysis",
+  "pk": 4,
+  "fields": {
+    "internship": 22,
+    "result_text": "Notă: informații insuficiente pentru recomandări precise.\n**DIRECȚIE**: Calitate și Testare: Activitatea de \"test\" poate indica o înclinație spre roluri de verificare și asigurare a calității în diverse domenii.\n**DIRECȚIE**: Suport Tehnic: Poate fi potrivit pentru roluri de diagnosticare și testare a soluțiilor în asistența utilizatorilor sau a sistemelor.",
+    "user_context": "",
+    "created_at": "2026-05-12T18:39:13.242Z",
+    "updated_at": "2026-05-12T18:39:13.242Z"
+  }
+},
+{
+  "model": "main.careeranalysis",
+  "pk": 9,
+  "fields": {
+    "internship": 21,
+    "result_text": "Informațiile disponibile sunt limitate pentru recomandări precise, dar pe baza activităților observate, se conturează o deschidere către învățare și explorare. Sugerez să te orientezi către roluri de entry-level care pun accent pe dezvoltare continuă și oportunități de a aprofunda diverse domenii, precum asistent de cercetare într-o companie inovatoare sau un program de trainee care îți permite să rotești prin mai multe departamente. Aceste căi îți vor permite să descoperi ce te pasionează cu adevărat, transformând fiecare săptămână într-o nouă oportunitate de a învăța și de a-ți construi o bază solidă pentru viitor.",
+    "user_context": "",
+    "created_at": "2026-05-12T19:15:00.025Z",
+    "updated_at": "2026-05-12T19:15:00.025Z"
+  }
+},
+{
+  "model": "main.careeranalysis",
+  "pk": 15,
+  "fields": {
+    "internship": 8,
+    "result_text": "Pe baza parcursului educațional solid în informatică și a viitorului stagiu IBM DevOps, care acoperă tehnologii esențiale precum Docker, Kubernetes și CI/CD, direcția de DevOps Engineer este una extrem de potrivită. De asemenea, cunoștințele de Python și Django, combinate cu înțelegerea infrastructurii cloud, deschid oportunități către roluri de Backend Developer cu accent pe operabilitate sau Cloud Engineer. Ambiția și deschiderea către dezvoltare personală te vor ajuta să excelezi în oricare dintre aceste domenii dinamice.",
+    "user_context": "",
+    "created_at": "2026-05-12T20:04:37.905Z",
+    "updated_at": "2026-05-12T20:04:37.906Z"
+  }
+}
+]

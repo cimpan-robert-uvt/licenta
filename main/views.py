@@ -5,10 +5,11 @@ from uuid import uuid4
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import FileResponse, HttpResponse
 from django.contrib.auth.hashers import check_password
 from django.core.files.base import ContentFile
 from django.core.cache import cache
+from django.db.models import Q
 from django.forms import modelformset_factory
 from django.utils import timezone
 from .models import (
@@ -22,13 +23,13 @@ from .models import (
 from .forms import InternshipOfferForm
 from .utils_api import get_smart_matches, get_career_guidance
 from .utils_pdf import generate_pdf
-from accounts.models import StudentCV, CVEducation, CVExperience, CVSkill
+from accounts.models import StudentCV, CVEducation, CVExperience, CVSkill, User
 from accounts.forms import StudentCVForm, CVEducationForm, CVExperienceForm, CVSkillForm
 
 
 logger = logging.getLogger(__name__)
 
-SMART_MATCH_ERROR_MESSAGE = "Nu au fost primite rezultate valide pentru actualizare. Rezultatele existente au fost păstrate."
+SMART_MATCH_ERROR_MESSAGE = "Serviciul este momentan indisponibil. Rezultatele existente au fost păstrate. Te rugăm să încerci din nou mai târziu."
 
 
 def is_company(user):
@@ -41,6 +42,20 @@ def _smart_match_lock_key(user_id):
 
 def _career_analysis_lock_key(user_id, internship_id):
     return f"career_analysis_running_{user_id}_{internship_id}"
+
+
+@login_required
+def serve_protected_cv(request, cv_id):
+    cv = get_object_or_404(StudentCV, pk=cv_id)
+
+    can_view = request.user == cv.user or request.user.role == "company"
+    if not can_view:
+        return _forbidden_page(request, "Nu ai permisiunea să vizualizezi acest CV.")
+
+    if not cv.pdf_file:
+        return _forbidden_page(request, "Acest CV nu are un fișier PDF încărcat.")
+
+    return FileResponse(cv.pdf_file.open("rb"), content_type="application/pdf")
 
 
 def _smart_match_error_redirect(request):
@@ -89,9 +104,18 @@ def has_applicable_cv(cv):
 
 
 def home(request):
-    offers = InternshipOffer.objects.filter(is_active=True).order_by("-created_at")
+    q = (request.GET.get("q") or "").strip()
+    offers = InternshipOffer.objects.filter(is_active=True)
+    if q:
+        offers = offers.filter(
+            Q(title__icontains=q)
+            | Q(description__icontains=q)
+            | Q(company__company_profile__company_name__icontains=q)
+        ).distinct()
+    offers = offers.order_by("-created_at")
     context = {
         "offers": offers,
+        "q": q,
     }
     return render(request, "main/home.html", context)
 
@@ -686,7 +710,7 @@ def view_candidate_application(request, application_id):
             Internship.objects.filter(
                 student=app.student,
                 company=request.user,
-                start_date=app.offer.start_date,
+                offer=app.offer,
             )
             .order_by("-created_at")
             .first()
@@ -1064,3 +1088,40 @@ def analyze_career_view(request, internship_id):
         request, "Analiza de carieră a fost generată cu succes.", extra_tags="career"
     )
     return redirect("my_internship")
+
+
+# =======================================================
+# =======================================================
+def test_contract_pdf(request):
+    student = User.objects.filter(role="student").first()
+    company = User.objects.filter(role="company").first()
+
+    if not student or not company:
+        return HttpResponse(
+            "Nu există studenți sau companii. Rulează 'python manage.py seed_data'"
+        )
+
+    offer = InternshipOffer.objects.filter(company=company).first()
+
+    internship, _ = Internship.objects.get_or_create(
+        student=student,
+        company=company,
+        offer=offer,
+        defaults={
+            "start_date": timezone.now().date(),
+            "is_active": True,
+        },
+    )
+
+    context = {
+        "internship": internship,
+        "student": student,
+        "company": company.company_profile,
+        "offer": offer,
+    }
+
+    pdf_content = generate_pdf("main/pdf/contract_template.html", context)
+    response = HttpResponse(pdf_content, content_type="application/pdf")
+    response["Content-Disposition"] = 'inline; filename="Test_Contract.pdf"'
+
+    return response

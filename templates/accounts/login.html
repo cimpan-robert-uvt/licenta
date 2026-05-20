@@ -31,6 +31,9 @@
                     {{ field }} {% if field.errors %}
                     <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
                     {% endif %}
+                    {% if field.name == "password" %}
+                    <a href="{% url 'forgot_password' %}" class="small text-muted float-end mt-1">Am uitat parola!</a>
+                    {% endif %}
                 </div>
                 {% endfor %}
 

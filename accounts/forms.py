@@ -511,6 +511,71 @@ class CVSkillForm(forms.ModelForm):
         self.fields["skill_name"].required = False
 
 
+class ResetPasswordForm(forms.Form):
+    code = forms.CharField(
+        label="Cod din email",
+        widget=forms.TextInput(attrs={"class": "form-control", "autofocus": True}),
+    )
+    new_password1 = forms.CharField(
+        label="Parolă nouă",
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "autocomplete": "new-password"}
+        ),
+        help_text=(
+            "Parola trebuie să conțină minim 8 caractere, o literă mică, "
+            "o literă mare, o cifră și un caracter special."
+        ),
+    )
+    new_password2 = forms.CharField(
+        label="Confirmă parola nouă",
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "autocomplete": "new-password"}
+        ),
+        help_text="Introduceți din nou parola pentru verificare.",
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.error_messages["required"] = "Acest câmp este obligatoriu."
+
+    def clean_code(self):
+        return (self.cleaned_data.get("code") or "").strip()
+
+    def clean_new_password1(self):
+        password = self.cleaned_data.get("new_password1")
+        if password:
+            if len(password) < 8:
+                raise ValidationError(
+                    "Parola trebuie să conțină cel puțin 8 caractere."
+                )
+            if not any(char.isupper() for char in password):
+                raise ValidationError(
+                    "Parola trebuie să conțină cel puțin o literă mare."
+                )
+            if not any(char.islower() for char in password):
+                raise ValidationError(
+                    "Parola trebuie să conțină cel puțin o literă mică."
+                )
+            if not any(char.isdigit() for char in password):
+                raise ValidationError("Parola trebuie să conțină cel puțin o cifră.")
+            if not re.search(r"[^a-zA-Z0-9]", password):
+                raise ValidationError(
+                    "Parola trebuie să conțină cel puțin un caracter special (ex: @, #, !, etc.)."
+                )
+        return password
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("new_password1")
+        password2 = cleaned_data.get("new_password2")
+
+        if password1 and password2 and password1 != password2:
+            self.add_error("new_password2", "Cele două parole nu se potrivesc.")
+
+        return cleaned_data
+
+
 class DeleteAccountForm(forms.Form):
     password = forms.CharField(
         label="PAROLA",

@@ -41,7 +41,7 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-2 text-muted">La aplicare, CV-ul încărcat este folosit cu prioritate.</p>
-                    <a href="{{ cv.pdf_file.url }}" target="_blank" class="btn btn-outline-primary rounded-pill">
+                        <a href="{% url 'serve_protected_cv' cv.id %}" target="_blank" class="btn btn-outline-primary rounded-pill">
                         <i class="bi bi-file-earmark-pdf"></i> Deschide CV-ul personal
                     </a>
                 </div>

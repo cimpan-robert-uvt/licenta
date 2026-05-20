@@ -1,71 +1,76 @@
 @page {
-    size: A4;
-    margin: 2cm;
+    size: A4 portrait;
+    margin: 2.5cm;
 }
 
 body {
-    font-family: 'DejaVu Sans', Arial, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-    font-size: 20px;
-}
-
-.section {
-    margin-bottom: 20px;
-}
-
-.section-title {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #555;
-    font-size: 14px;
-}
-
-.info-row {
-    margin-bottom: 8px;
-    font-size: 12px;
-}
-
-.label {
-    font-weight: bold;
-    display: inline-block;
-    width: 200px;
-}
-
-.signatures {
-    margin-top: 60px;
-}
-
-.signature-block {
-    text-align: center;
-    width: 45%;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.signature-line {
-    border-top: 1px solid #000;
-    margin-top: 60px;
-    padding-top: 5px;
-    font-size: 11px;
-}
-
-p {
-    font-size: 12px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 11pt;
+    line-height: 1.15;
+    color: #000;
     text-align: justify;
 }
 
-.footer {
-    margin-top: 40px;
+.header-title {
     text-align: center;
-    font-size: 12px;
-    color: #666;
+    font-weight: bold;
+    font-size: 12pt;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.header-title p {
+    margin: 2px 0;
+}
+
+.article-title {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 11pt;
+}
+
+p, ul {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+strong, b {
+    font-weight: bold;
+}
+
+.signature-table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+    page-break-inside: avoid;
+}
+
+.signature-table th, .signature-table td {
+    width: 50%;
+    vertical-align: top;
+    text-align: center;
+    padding: 10px;
+}
+
+.signature-table th {
+    font-weight: bold;
+    font-size: 10pt;
+    padding-bottom: 20px;
+}
+
+.signature-row td {
+    height: 100px;
+    vertical-align: bottom;
+    text-align: left;
+    padding-left: 15px;
 }
