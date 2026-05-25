@@ -339,6 +339,7 @@ class Command(BaseCommand):
                 else:
                     CompanyProfile.objects.filter(pk=company_profile.pk).update(
                         company_name=data["company_name"],
+                        full_company_name=data["full_company_name"],
                         domain=data["domain"],
                         industry=data["industry"],
                         website=data["website"],

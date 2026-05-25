@@ -10,7 +10,16 @@
         <h2 class="fw-bold mb-0">Ofertele mele</h2>
         <p class="text-muted">Gestionează posturile de practică publicate</p>
     </div>
-    <a href="{% url 'create_internship_offer' %}" class="btn btn-primary shadow-sm">Adaugă ofertă</a>
+    <div class="d-flex align-items-center gap-3">
+        {% if not has_identification_data %}
+        <span class="text-muted small"> Pentru a adăuga oferte, trebuie să completezi
+            <a href="{% url 'identification_data' %}">datele de identificare</a>
+        </span>
+        <button type="button" class="btn btn-primary shadow-sm" disabled>Adaugă ofertă</button>
+        {% else %}
+        <a href="{% url 'create_internship_offer' %}" class="btn btn-primary shadow-sm">Adaugă ofertă</a>
+        {% endif %}
+    </div>
 </div>
 
 {% if messages %}
@@ -28,8 +37,13 @@
         <div class="card h-100 border-0">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start mb-3">
-                    {% if offer.is_active %}<span class="badge bg-success">Activ</span>{% else %}<span
-                        class="badge bg-secondary">Inactiv</span>{% endif %}
+                    {% if offer.is_archived %}
+                    <span class="badge bg-dark">Arhivată</span>
+                    {% elif offer.is_active %}
+                    <span class="badge bg-success">Activ</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Inactiv</span>
+                    {% endif %}
                     <div class="dropdown">
                         <button class="btn btn-link text-muted p-0" data-bs-toggle="dropdown">
                             <i class="fas fa-ellipsis-v"></i>
@@ -37,11 +51,14 @@
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
                             <li><a class="dropdown-item" href="{% url 'edit_internship_offer' offer.pk %}"><i
                                         class="fas fa-edit me-2"></i>Editează</a></li>
-                            <li>
-                            </li>
+                            {% if offer.is_archived %}
+                            <li><span class="dropdown-item text-muted"><i
+                                        class="fas fa-archive me-2"></i>Arhivată</span></li>
+                            {% else %}
                             <li><a class="dropdown-item text-danger"
-                                    href="{% url 'delete_internship_offer' offer.pk %}"><i
-                                        class="fas fa-trash me-2"></i>Șterge</a></li>
+                                    href="{% url 'archive_internship_offer' offer.pk %}"><i
+                                        class="fas fa-archive me-2"></i>Arhivează</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

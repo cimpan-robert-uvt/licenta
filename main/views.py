@@ -9,9 +9,11 @@ from django.http import FileResponse, HttpResponse
 from django.contrib.auth.hashers import check_password
 from django.core.files.base import ContentFile
 from django.core.cache import cache
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.forms import modelformset_factory
 from django.utils import timezone
+from django.urls import reverse
 from .models import (
     InternshipOffer,
     Application,
@@ -23,7 +25,14 @@ from .models import (
 from .forms import InternshipOfferForm
 from .utils_api import get_smart_matches, get_career_guidance
 from .utils_pdf import generate_pdf
-from accounts.models import StudentCV, CVEducation, CVExperience, CVSkill, User
+from accounts.models import (
+    StudentCV,
+    CVEducation,
+    CVExperience,
+    CVSkill,
+    StudentProfile,
+    User,
+)
 from accounts.forms import StudentCVForm, CVEducationForm, CVExperienceForm, CVSkillForm
 
 
@@ -42,6 +51,124 @@ def _smart_match_lock_key(user_id):
 
 def _career_analysis_lock_key(user_id, internship_id):
     return f"career_analysis_running_{user_id}_{internship_id}"
+
+
+def _journal_pdf_context(internship):
+    entries = internship.journal_entries.all().order_by("week_number", "created_at")
+    company_profile = getattr(internship.company, "company_profile", None)
+    signed_by_name = (
+        (
+            getattr(internship.journal_confirmed_by, "get_full_name", lambda: "")()
+            or ""
+        ).strip()
+        if internship.journal_confirmed_by
+        else ""
+    )
+    if not signed_by_name:
+        signed_by_name = (
+            (getattr(company_profile, "contact_person", "") or "").strip()
+            if company_profile
+            else ""
+        )
+    if not signed_by_name:
+        signed_by_name = (
+            (internship.company.get_full_name() or "").strip()
+            if internship.company
+            else ""
+        )
+
+    return {
+        "internship": internship,
+        "student": internship.student,
+        "company": internship.company,
+        "company_profile": company_profile,
+        "entries": entries,
+        "journal_submitted_at": internship.journal_submitted_at,
+        "journal_confirmed_at": internship.journal_confirmed_at,
+        "signed_by_name": signed_by_name,
+    }
+
+
+def _can_access_journal_pdf(request, internship):
+    if not request.user.is_authenticated:
+        return False
+    return request.user == internship.student or request.user == internship.company
+
+
+def _get_internship_application(internship):
+    return (
+        Application.objects.filter(
+            student=internship.student,
+            offer=internship.offer,
+        )
+        .order_by("-applied_at")
+        .first()
+    )
+
+
+def _redirect_to_application_or_company_dashboard(internship):
+    application = _get_internship_application(internship)
+    if application:
+        return redirect("view_candidate_application", application_id=application.id)
+    return redirect("company_candidates")
+
+
+def _notify_students_about_new_offer(request, offer):
+    company_profile = getattr(offer.company, "company_profile", None)
+    if not company_profile or not company_profile.domain:
+        return 0
+
+    students = (
+        StudentProfile.objects.select_related("user")
+        .filter(
+            domain=company_profile.domain,
+            receive_offer_notifications=True,
+            user__is_active=True,
+        )
+        .exclude(user__email__isnull=True)
+        .exclude(user__email="")
+    )
+
+    if not students.exists():
+        return 0
+
+    offer_url = request.build_absolute_uri(reverse("offer_details", args=[offer.pk]))
+    domain_label = company_profile.get_domain_display()
+    company_name = (
+        company_profile.company_name.strip() if company_profile.company_name else ""
+    )
+    sender_name = (
+        company_name or offer.company.get_full_name().strip() or offer.company.username
+    )
+    subject = f"Anunț nou în domeniul {domain_label}"
+
+    sent_count = 0
+    for student_profile in students:
+        student_user = student_profile.user
+        recipient_email = (student_user.email or "").strip()
+        if not recipient_email:
+            continue
+
+        full_name = student_user.get_full_name().strip() or student_user.username
+        message = (
+            f"Bună, {full_name}!\n\n"
+            f"A fost publicat un nou anunț în domeniul {domain_label}:\n"
+            f"{offer.title}\n\n"
+            f"Companie: {sender_name}\n"
+            f"Îl poți vedea aici: {offer_url}\n\n"
+            "Dacă nu mai dorești astfel de notificări, le poți dezactiva din pagina de profil."
+        )
+        try:
+            send_mail(subject, message, None, [recipient_email])
+            sent_count += 1
+        except Exception:
+            logger.exception(
+                "Failed to send new offer notification to student %s for offer %s",
+                student_user.id,
+                offer.id,
+            )
+
+    return sent_count
 
 
 @login_required
@@ -103,6 +230,49 @@ def has_applicable_cv(cv):
     return bool((cv.resume or "").strip())
 
 
+def _has_student_identification_data(user):
+    profile = getattr(user, "student_profile", None)
+    if not profile:
+        return False
+
+    cnp = (profile.cnp or "").strip()
+    if not (cnp and len(cnp) == 13 and cnp.isdigit()):
+        return False
+
+    if not (profile.faculty or "").strip():
+        return False
+    if not (profile.specialization or "").strip():
+        return False
+    if not (profile.study_level or "").strip():
+        return False
+    if profile.year_of_study is None or profile.year_of_study <= 0:
+        return False
+
+    return True
+
+
+def _has_company_identification_data(user):
+    profile = getattr(user, "company_profile", None)
+    if not profile:
+        return False
+
+    full_company_name = (profile.full_company_name or "").strip()
+    cui = (profile.cui or "").strip()
+    address = (profile.address or "").strip()
+    contact_person = (profile.contact_person or "").strip()
+
+    if not full_company_name:
+        return False
+    if not (cui and cui.isdigit()):
+        return False
+    if not address:
+        return False
+    if not contact_person:
+        return False
+
+    return True
+
+
 def home(request):
     q = (request.GET.get("q") or "").strip()
     offers = InternshipOffer.objects.filter(is_active=True)
@@ -129,6 +299,7 @@ def offer_details(request, pk):
     has_complete_cv = False
     has_uploaded_cv = False
     has_applicable_cv_data = False
+    has_identification_data = False
     if request.user.is_authenticated and request.user.is_student():
         student_application = Application.objects.filter(
             student=request.user, offer=offer
@@ -141,6 +312,7 @@ def offer_details(request, pk):
         has_uploaded_cv = bool(cv and cv.pdf_file)
         has_complete_cv = bool(cv and has_applicable_cv(cv) and not cv.pdf_file)
         has_applicable_cv_data = has_applicable_cv(cv)
+        has_identification_data = _has_student_identification_data(request.user)
     context = {
         "offer": offer,
         "is_owner": is_owner,
@@ -150,6 +322,7 @@ def offer_details(request, pk):
         "has_complete_cv": has_complete_cv,
         "has_uploaded_cv": has_uploaded_cv,
         "has_applicable_cv": has_applicable_cv_data,
+        "has_identification_data": has_identification_data,
     }
     return render(request, "main/offer_details.html", context)
 
@@ -158,6 +331,13 @@ def offer_details(request, pk):
 def apply_to_offer(request, offer_id):
     if not request.user.is_student():
         return _forbidden_page(request, "Doar studenții pot aplica.")
+
+    if not _has_student_identification_data(request.user):
+        messages.warning(
+            request,
+            "Pentru a aplica, trebuie să completezi datele de identificare.",
+        )
+        return redirect("identification_data")
 
     cv = StudentCV.objects.filter(user=request.user).first()
     if not has_applicable_cv(cv):
@@ -260,11 +440,27 @@ def my_internship(request):
     hr_contact_email = None
     career_analysis = None
     is_career_running = False
+    journal_weeks_total = 0
+    journal_entries_count = 0
+    can_add_journal_entry = False
+    can_submit_journal = False
+    journal_is_submitted = False
+    journal_is_confirmed = False
 
     if internship:
         entries = internship.journal_entries.all().order_by(
             "-week_number", "-created_at"
         )
+        journal_entries_count = entries.count()
+        journal_weeks_total = internship.offer.duration_weeks if internship.offer else 0
+        can_add_journal_entry = bool(
+            journal_weeks_total
+            and journal_entries_count < journal_weeks_total
+            and not internship.journal_is_locked()
+        )
+        can_submit_journal = internship.journal_can_be_submitted()
+        journal_is_submitted = bool(internship.journal_submitted_at)
+        journal_is_confirmed = bool(internship.journal_confirmed_at)
 
         career_analysis = (
             CareerAnalysis.objects.filter(internship=internship)
@@ -298,6 +494,12 @@ def my_internship(request):
         "hr_contact_email": hr_contact_email,
         "career_analysis": career_analysis,
         "is_career_running": is_career_running,
+        "journal_weeks_total": journal_weeks_total,
+        "journal_entries_count": journal_entries_count,
+        "can_add_journal_entry": can_add_journal_entry,
+        "can_submit_journal": can_submit_journal,
+        "journal_is_submitted": journal_is_submitted,
+        "journal_is_confirmed": journal_is_confirmed,
     }
     return render(request, "main/my_internship.html", context)
 
@@ -331,6 +533,29 @@ def create_journal_entry(request, internship_id):
 
     if request.user != internship.student:
         return _forbidden_page(request, "Doar studentul poate crea intrări în jurnal.")
+
+    if internship.journal_is_locked():
+        messages.warning(
+            request,
+            "Jurnalul a fost deja trimis pentru semnare și nu mai poate fi modificat.",
+        )
+        return redirect("my_internship")
+
+    existing_weeks = set(
+        internship.journal_entries.values_list("week_number", flat=True)
+    )
+    next_available_week = None
+    if internship.offer and internship.offer.duration_weeks:
+        for week_number in range(1, internship.offer.duration_weeks + 1):
+            if week_number not in existing_weeks:
+                next_available_week = week_number
+                break
+
+    if request.method == "POST" and next_available_week is None:
+        messages.warning(
+            request, "Jurnalul este complet. Nu mai poți adăuga alte intrări."
+        )
+        return redirect("my_internship")
 
     if request.method == "POST":
         week_number_raw = request.POST.get("week_number")
@@ -382,6 +607,7 @@ def create_journal_entry(request, internship_id):
 
     context = {
         "internship": internship,
+        "next_available_week": next_available_week,
     }
     return render(request, "main/create_journal_entry.html", context)
 
@@ -392,6 +618,13 @@ def edit_journal_entry(request, internship_id, entry_id):
 
     if request.user != internship.student:
         return _forbidden_page(request, "Doar studentul poate edita intrări în jurnal.")
+
+    if internship.journal_is_locked():
+        messages.warning(
+            request,
+            "Jurnalul a fost deja trimis pentru semnare și nu mai poate fi modificat.",
+        )
+        return redirect("my_internship")
 
     entry = get_object_or_404(JournalEntry, pk=entry_id, internship=internship)
 
@@ -457,6 +690,13 @@ def delete_journal_entry(request, internship_id, entry_id):
             request, "Doar studentul poate șterge intrări din jurnal."
         )
 
+    if internship.journal_is_locked():
+        messages.warning(
+            request,
+            "Jurnalul a fost deja trimis pentru semnare și nu mai poate fi modificat.",
+        )
+        return redirect("my_internship")
+
     entry = get_object_or_404(JournalEntry, pk=entry_id, internship=internship)
 
     if request.method != "POST":
@@ -484,12 +724,66 @@ def preview_journal_pdf(request, internship_id):
         )
         return redirect("my_internship")
 
-    context = {
-        "internship": internship,
-        "student": internship.student,
-        "company": internship.company,
-        "entries": entries,
-    }
+    context = _journal_pdf_context(internship)
+    pdf_content = generate_pdf("main/pdf/journal_template.html", context)
+
+    response = HttpResponse(pdf_content, content_type="application/pdf")
+    response["Content-Disposition"] = (
+        f'inline; filename="Jurnal_practica_{internship.id}.pdf"'
+    )
+    return response
+
+
+@login_required
+def submit_journal_for_signature(request, internship_id):
+    internship = get_object_or_404(Internship, pk=internship_id)
+
+    if request.user != internship.student:
+        return _forbidden_page(
+            request,
+            "Doar studentul poate trimite jurnalul pentru semnare.",
+        )
+
+    if request.method != "POST":
+        return redirect("my_internship")
+
+    if internship.journal_confirmed_at:
+        messages.info(request, "Jurnalul a fost deja confirmat de HR/mentor.")
+        return redirect("my_internship")
+
+    if not internship.journal_can_be_submitted():
+        messages.warning(
+            request,
+            "Trebuie să completezi toate intrările cerute înainte de a trimite jurnalul.",
+        )
+        return redirect("my_internship")
+
+    internship.journal_submitted_at = timezone.now()
+    internship.save(update_fields=["journal_submitted_at"])
+    return redirect("my_internship")
+
+
+@login_required
+@user_passes_test(is_company)
+def company_preview_journal_pdf(request, internship_id):
+    internship = get_object_or_404(
+        Internship, pk=internship_id, company=request.user, offer__isnull=False
+    )
+
+    if not internship.journal_submitted_at:
+        return _redirect_to_application_or_company_dashboard(internship)
+
+    if internship.journal_confirmed_at and internship.journal_pdf:
+        return redirect("serve_protected_journal_pdf", internship_id=internship.id)
+
+    entries = internship.journal_entries.all().order_by("week_number", "created_at")
+    if not entries.exists():
+        messages.info(
+            request, "Nu există încă intrări în jurnal pentru previzualizare."
+        )
+        return redirect("company_candidates")
+
+    context = _journal_pdf_context(internship)
     pdf_content = generate_pdf("main/pdf/journal_template.html", context)
 
     response = HttpResponse(pdf_content, content_type="application/pdf")
@@ -501,22 +795,112 @@ def preview_journal_pdf(request, internship_id):
 
 @login_required
 @user_passes_test(is_company)
+def confirm_journal(request, internship_id):
+    internship = get_object_or_404(Internship, pk=internship_id, company=request.user)
+
+    if request.method != "POST":
+        return redirect("company_candidates")
+
+    if internship.journal_confirmed_at:
+        messages.info(request, "Jurnalul este deja confirmat.")
+        return _redirect_to_application_or_company_dashboard(internship)
+
+    if not internship.journal_submitted_at:
+        messages.warning(
+            request, "Jurnalul trebuie trimis de student înainte de confirmare."
+        )
+        return _redirect_to_application_or_company_dashboard(internship)
+
+    entries = internship.journal_entries.all().order_by("week_number", "created_at")
+    if not entries.exists() or not internship.journal_is_complete():
+        messages.warning(request, "Jurnalul nu este complet și nu poate fi confirmat.")
+        return _redirect_to_application_or_company_dashboard(internship)
+
+    internship.journal_confirmed_at = timezone.now()
+    internship.journal_confirmed_by = request.user
+    pdf_content = generate_pdf(
+        "main/pdf/journal_template.html", _journal_pdf_context(internship)
+    )
+    filename = (
+        f"Jurnal_practica_{internship.student.get_full_name()}_{internship.id}.pdf"
+    )
+    internship.journal_pdf.save(filename, ContentFile(pdf_content), save=False)
+    internship.save(
+        update_fields=["journal_pdf", "journal_confirmed_at", "journal_confirmed_by"]
+    )
+
+    return _redirect_to_application_or_company_dashboard(internship)
+
+
+@login_required
+def serve_protected_journal_pdf(request, internship_id):
+    internship = get_object_or_404(Internship, pk=internship_id)
+
+    if not _can_access_journal_pdf(request, internship):
+        return _forbidden_page(
+            request,
+            "Nu ai permisiunea să descarci acest jurnal.",
+        )
+
+    if not internship.journal_pdf:
+        messages.info(request, "Nu există încă un PDF semnat pentru acest jurnal.")
+        return redirect(
+            "my_internship"
+            if request.user == internship.student
+            else "company_candidates"
+        )
+
+    return FileResponse(
+        internship.journal_pdf.open("rb"), content_type="application/pdf"
+    )
+
+
+@login_required
+@user_passes_test(is_company)
 def company_my_offers(request):
     offers = InternshipOffer.objects.filter(company=request.user).order_by(
         "-created_at"
     )
-    return render(request, "main/company_my_offers.html", {"offers": offers})
+    has_identification_data = _has_company_identification_data(request.user)
+    return render(
+        request,
+        "main/company_my_offers.html",
+        {
+            "offers": offers,
+            "has_identification_data": has_identification_data,
+        },
+    )
+
+
+@login_required
+@user_passes_test(is_company)
+def company_journals(request):
+    internships = (
+        Internship.objects.filter(
+            company=request.user, journal_submitted_at__isnull=False
+        )
+        .select_related("student", "offer")
+        .order_by("-journal_submitted_at", "-journal_confirmed_at")
+    )
+
+    context = {"internships": internships}
+    return render(request, "main/company_journals.html", context)
 
 
 @login_required
 @user_passes_test(is_company)
 def create_internship_offer(request):
+    if not _has_company_identification_data(request.user):
+        messages.warning(request, "Te rugam să completezi datele de identificare.")
+        return redirect("identification_data")
     if request.method == "POST":
         form = InternshipOfferForm(request.POST)
         if form.is_valid():
             offer = form.save(commit=False)
             offer.company = request.user
             offer.save()
+            if offer.is_active:
+                _notify_students_about_new_offer(request, offer)
             messages.success(request, "Oferta de stagiu a fost creată cu succes!")
             return redirect("company_my_offers")
     else:
@@ -548,11 +932,11 @@ def edit_internship_offer(request, pk):
 
 @login_required
 @user_passes_test(is_company)
-def delete_internship_offer(request, pk):
+def archive_internship_offer(request, pk):
     offer = get_object_or_404(InternshipOffer, pk=pk)
 
     if offer.company != request.user:
-        return _forbidden_page(request, "Nu ai permisiunea de a șterge această ofertă.")
+        return _forbidden_page(request, "Nu ai permisiunea de a arhiva această ofertă.")
 
     if request.method == "POST":
         password = request.POST.get("password")
@@ -561,13 +945,27 @@ def delete_internship_offer(request, pk):
                 "offer": offer,
                 "password_error": "Parola introdusă este incorectă.",
             }
-            return render(request, "main/delete_internship_offer.html", context)
+            return render(request, "main/archive_internship_offer.html", context)
 
-        offer.delete()
-        messages.success(request, "Oferta de stagiu a fost ștearsă cu succes!")
+        if offer.is_archived:
+            messages.info(request, "Oferta este deja arhivata.")
+            return redirect("company_my_offers")
+
+        offer.is_active = False
+        offer.is_archived = True
+        offer.save(update_fields=["is_active", "is_archived"])
+
+        offer.applications.filter(status="pending").update(
+            status="withdrawn", updated_at=timezone.now()
+        )
+
+        messages.success(
+            request,
+            "Oferta a fost arhivata. Aplicațiile în așteptare au fost retrase automat.",
+        )
         return redirect("company_my_offers")
 
-    return render(request, "main/delete_internship_offer.html", {"offer": offer})
+    return render(request, "main/archive_internship_offer.html", {"offer": offer})
 
 
 @login_required
@@ -680,12 +1078,12 @@ def update_student_application_status(request, application_id, action):
         }
 
         pdf_content = generate_pdf("main/pdf/contract_template.html", context)
-        filename = f"Contract_{app.student.get_full_name()}_{app.offer.id}.pdf"
+        filename = f"Conventie_{app.student.get_full_name()}_{app.offer.id}.pdf"
         internship.signed_contract.save(filename, ContentFile(pdf_content))
 
         messages.success(
             request,
-            "Participarea a fost confirmată. Contractul de practică a fost generat.",
+            "Participarea a fost confirmată. Conventia de practică a fost generată.",
         )
         return redirect("my_internship")
 
@@ -916,7 +1314,11 @@ def smart_match_sync(request):
         )
 
         if not relevant_offers.exists():
-            return _smart_match_error_redirect(request)
+            messages.warning(
+                request,
+                "Nu există oferte active în domeniul tău. Încearcă din nou mai târziu.",
+            )
+            return redirect("smart_match")
 
         try:
             matches = get_smart_matches(student_cv, relevant_offers)
@@ -974,7 +1376,7 @@ def smart_match_sync(request):
             if created_count:
                 messages.success(
                     request,
-                    "Rezultatele de smart matching au fost actualizate cu succes.",
+                    "Rezultatele au fost actualizate cu succes.",
                 )
             else:
                 messages.warning(request, SMART_MATCH_ERROR_MESSAGE)
@@ -1093,7 +1495,7 @@ def analyze_career_view(request, internship_id):
 # =======================================================
 # =======================================================
 def test_contract_pdf(request):
-    student = User.objects.filter(role="student").first()
+    student = User.objects.filter(username="robert_student", role="student").first()
     company = User.objects.filter(role="company").first()
 
     if not student or not company:
@@ -1122,6 +1524,6 @@ def test_contract_pdf(request):
 
     pdf_content = generate_pdf("main/pdf/contract_template.html", context)
     response = HttpResponse(pdf_content, content_type="application/pdf")
-    response["Content-Disposition"] = 'inline; filename="Test_Contract.pdf"'
+    response["Content-Disposition"] = 'inline; filename="Test_Conventie.pdf"'
 
     return response

@@ -11,6 +11,11 @@
 
     <div class="card p-4">
         <div class="card-body">
+            {% if offer.is_archived %}
+            <div class="alert alert-warning" role="alert">
+                Oferta este arhivata si nu mai poate fi reactivata.
+            </div>
+            {% endif %}
             {% if messages %}
             <div class="mb-3">
                 {% for message in messages %}
@@ -122,7 +127,11 @@
                 <p class="text-muted small mt-3">* - câmp obligatoriu</p>
                 <div class="d-flex gap-2 mt-3">
                     <a href="{% url 'company_my_offers' %}" class="btn btn-secondary flex-grow-1 rounded-pill">Anulează</a>
+                    {% if offer.is_archived %}
+                    <button type="submit" class="btn btn-primary flex-grow-1 rounded-pill" disabled>Salvarea este dezactivată</button>
+                    {% else %}
                     <button type="submit" class="btn btn-primary flex-grow-1 rounded-pill">Salvează modificări</button>
+                    {% endif %}
                 </div>
             </form>
         </div>

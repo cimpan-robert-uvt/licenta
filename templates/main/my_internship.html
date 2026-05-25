@@ -6,6 +6,15 @@
 
 {% block content %}
     <h2 class="mb-4">Stagiu de practică</h2>
+    {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                {% if 'career' not in message.tags %}
+                    <div class="alert alert-{{ message.level_tag }} shadow-sm" role="alert">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
     {% if internship %}
         {% with status=internship.get_status %}
         <div class="card border-0 shadow-sm">
@@ -19,21 +28,23 @@
                                 {{ internship.company.company_profile.company_name }}
                             {% endif %}
                         </h5>
-                        {% if status == 'finished' %}
-                            <span class="badge bg-success">Stagiu finalizat</span>
-                        {% elif status == 'not_started' %}
+                        {% if status == 'not_started' %}
                             <p class="text-muted mt-2 mb-0">
                                 Stagiu confirmat. Urmează să înceapă la data planificată.
                             </p>
-                        {% else %}
+                        {% elif status == 'in_progress' %}
                             <span class="badge bg-success">Stagiu activ</span>
+                        {% elif status == 'practica_finalizata' %}
+                            <span class="badge bg-warning text-dark">Practică finalizată</span>
+                        {% elif status == 'completed' %}
+                            <span class="badge bg-success">Stagiu complet</span>
                         {% endif %}
                     </div>
                 </div>
 
                 {% if hr_contact_name or hr_contact_email %}
                 <div class="border-bottom pb-3 mb-3">
-                    <small class="text-muted d-block mb-2">Contact HR:</small>
+                    <small class="text-muted d-block mb-2">Contact:</small>
                     <div>
                         {% if hr_contact_name %}
                             <strong>{{ hr_contact_name }}</strong>
@@ -47,7 +58,7 @@
                 </div>
                 {% endif %}
 
-                {% if status == 'finished' %}
+                {% if status == 'completed' %}
                     <div class="row mb-4">
                         <div class="col-md-6 mb-2">
                             <small class="text-muted d-block">Data începerii</small>
@@ -64,10 +75,25 @@
                             </strong>
                         </div>
                     </div>
-                    <div class="alert alert-success mb-4" role="alert">
-                        <i class="fas fa-check-circle me-2"></i>
-                        <strong>Stagiu finalizat!</strong>
+                    
+                {% elif status == 'practica_finalizata' %}
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-2">
+                            <small class="text-muted d-block">Data începerii</small>
+                            <strong>{{ internship.start_date|date:"j b Y" }}</strong>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <small class="text-muted d-block">Data finalizării</small>
+                            <strong>
+                                {% if internship.get_planned_end_date %}
+                                    {{ internship.get_planned_end_date|date:"j b Y" }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </strong>
+                        </div>
                     </div>
+                    
                 {% else %}
                     <div class="row mb-4">
                         <div class="col-md-4 mb-2">
@@ -100,22 +126,39 @@
                 <div class="d-flex gap-2 flex-wrap">
                     {% if internship.signed_contract %}
                         <a href="{{ internship.signed_contract.url }}" target="_blank" class="btn btn-outline-primary rounded-pill">
-                            <i class="fas fa-file-pdf me-2"></i>Afișare contract
+                            <i class="fas fa-file-pdf me-2"></i>Afișare conventie
                         </a>
                     {% endif %}
 
-                    {% if entries %}
+                    {% if journal_is_confirmed and internship.journal_pdf %}
+                        <a href="{% url 'serve_protected_journal_pdf' internship.pk %}" target="_blank" class="btn btn-outline-success rounded-pill">
+                            <i class="fas fa-file-pdf me-2"></i>Afișare jurnal
+                        </a>
+                    {% elif entries %}
                         <a href="{% url 'preview_journal_pdf' internship.pk %}" target="_blank" class="btn btn-outline-secondary rounded-pill">
-                            Afișare jurnal
+                            Previzualizează jurnalul
                         </a>
                     {% endif %}
 
-                    {% if status == 'in_progress' %}
+                    {% if can_submit_journal %}
+                        <form method="post" action="{% url 'submit_journal_for_signature' internship.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success rounded-pill" onclick="return confirm('Confirmi trimiterea jurnalului pentru semnare?')">
+                                Trimite jurnalul pentru confirmare
+                            </button>
+                        </form>
+                    {% elif can_add_journal_entry %}
                         <a href="{% url 'create_journal_entry' internship.pk %}" class="btn btn-success rounded-pill">
                             Adaugă intrare
                         </a>
                     {% endif %}
                 </div>
+
+                {% if journal_is_submitted and not journal_is_confirmed %}
+                    <div class="alert alert-info mt-4 mb-0" role="alert">
+                        Jurnalul a fost trimis pentru confirmare.
+                    </div>
+                {% endif %}
 
                 {% if status != 'not_started' and entries %}
                 <div class="mt-4 pt-4 border-top">
@@ -173,37 +216,24 @@
                 </div>
                 {% endif %}
 
-                {% if status == 'not_started' %}
-                    <div class="mt-4 pt-4 border-top">
-                        <p class="text-muted mb-0">Aici vei putea adăuga informații în jurnalul de practică după ce stagiul va începe.</p>
-                    </div>
-                {% else %}
-                    <div class="mt-4 pt-4 border-top">
-                        <h5 class="mb-3">Intrări jurnal</h5>
-                        {% if messages %}
-                            <div class="mb-3">
-                                {% for message in messages %}
-                                    {% if 'career' not in message.tags %}
-                                        <div class="alert alert-{{ message.level_tag }} shadow-sm mb-2" role="alert">{{ message }}</div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                        {% if entries %}
-                            <div class="row g-4">
-                                {% for entry in entries %}
-                                    <div class="col-md-6 col-lg-4">
-                                        <div class="card h-100 border-0 shadow-sm">
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                                    <span class="badge bg-primary">Săptămâna {{ entry.week_number }}</span>
-                                                </div>
-                                                <p class="card-text text-muted small mb-2">
-                                                    Adăugat: {{ entry.created_at|date:"d M Y H:i" }}
-                                                </p>
-                                                <div class="mb-2">
-                                                    <p class="mb-0">{{ entry.content|linebreaksbr }}</p>
-                                                </div>
+                <div class="mt-4 pt-4 border-top">
+                    <h5 class="mb-3">Intrări jurnal</h5>
+                    {% if entries %}
+                        <div class="row g-4">
+                            {% for entry in entries %}
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <span class="badge bg-primary">Săptămâna {{ entry.week_number }}</span>
+                                            </div>
+                                            <p class="card-text text-muted small mb-2">
+                                                Adăugat: {{ entry.created_at|date:"d M Y H:i" }}
+                                            </p>
+                                            <div class="mb-2">
+                                                <p class="mb-0">{{ entry.content|linebreaksbr|truncatechars:70 }}</p>
+                                            </div>
+                                            {% if not journal_is_submitted and not journal_is_confirmed %}
                                                 <div class="d-flex gap-2 mt-3">
                                                     <a href="{% url 'edit_journal_entry' internship.pk entry.pk %}" class="btn btn-sm btn-outline-primary rounded-pill">
                                                         Editează
@@ -213,16 +243,16 @@
                                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">Șterge</button>
                                                     </form>
                                                 </div>
-                                            </div>
+                                            {% endif %}
                                         </div>
                                     </div>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <p class="text-muted mb-0">Aici vor fi afișate informațiile introduse în jurnalul de practică.</p>
-                        {% endif %}
-                    </div>
-                {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted mb-0">Aici vor fi afișate informațiile introduse în jurnalul de practică.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
         {% endwith %}

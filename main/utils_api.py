@@ -10,7 +10,6 @@ DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI_MODEL = getattr(settings, "GEMINI_MODEL", DEFAULT_GEMINI_MODEL)
 
 DEFAULT_MODEL_FALLBACKS = [
-    # "gemini-2.5-flash",
     "gemini-2.5-flash-lite",
     "gemini-3-flash-preview",
     "gemini-3.1-flash-lite-preview",
@@ -66,18 +65,6 @@ def generate_with_project_model(client, contents, model_name=None):
         raise last_error
 
     raise RuntimeError("Nu s-a putut genera răspuns de la niciun model Gemini.")
-
-
-# def test_gemini_connection():
-#     client = get_gemini_client()
-#     try:
-#         response = generate_with_project_model(
-#             client,
-#             contents="Salut! Te rog confirma ca aceasta conexiune cu noul pachet google-genai functioneaza.",
-#         )
-#         return f"Model activ: {GEMINI_MODEL}\n{response.text}"
-#     except Exception as e:
-#         return f"Eroare la conectare Gemini (New SDK): {str(e)}"
 
 
 def _extract_json_text(raw_text):

@@ -38,6 +38,11 @@ urlpatterns = [
         name="create_journal_entry",
     ),
     path(
+        "internship/<int:internship_id>/journal/submit/",
+        views.submit_journal_for_signature,
+        name="submit_journal_for_signature",
+    ),
+    path(
         "internship/<int:internship_id>/journal/<int:entry_id>/edit/",
         views.edit_journal_entry,
         name="edit_journal_entry",
@@ -53,9 +58,29 @@ urlpatterns = [
         name="preview_journal_pdf",
     ),
     path(
+        "internship/<int:internship_id>/journal/download/",
+        views.serve_protected_journal_pdf,
+        name="serve_protected_journal_pdf",
+    ),
+    path(
+        "company/internship/<int:internship_id>/journal/preview/",
+        views.company_preview_journal_pdf,
+        name="company_preview_journal_pdf",
+    ),
+    path(
+        "company/internship/<int:internship_id>/journal/confirm/",
+        views.confirm_journal,
+        name="confirm_journal",
+    ),
+    path(
         "company/offers/",
         views.company_my_offers,
         name="company_my_offers",
+    ),
+    path(
+        "company/journals/",
+        views.company_journals,
+        name="company_journals",
     ),
     path(
         "company/offers/create/",
@@ -68,9 +93,9 @@ urlpatterns = [
         name="edit_internship_offer",
     ),
     path(
-        "company/offers/<int:pk>/delete/",
-        views.delete_internship_offer,
-        name="delete_internship_offer",
+        "company/offers/<int:pk>/archive/",
+        views.archive_internship_offer,
+        name="archive_internship_offer",
     ),
     path(
         "company/candidates/",

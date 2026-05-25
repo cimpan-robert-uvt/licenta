@@ -19,6 +19,7 @@ class InternshipOffer(models.Model):
     duration_weeks = models.IntegerField(default=12)
     start_date = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
+    is_archived = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -130,6 +131,16 @@ class Internship(models.Model):
     end_date = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     signed_contract = models.FileField(upload_to="contracts/", null=True, blank=True)
+    journal_submitted_at = models.DateTimeField(null=True, blank=True)
+    journal_confirmed_at = models.DateTimeField(null=True, blank=True)
+    journal_confirmed_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="confirmed_journals",
+    )
+    journal_pdf = models.FileField(upload_to="journals/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     mentor_name = models.CharField(max_length=255, blank=True, null=True)
     mentor_email = models.EmailField(blank=True, null=True)
@@ -149,18 +160,19 @@ class Internship(models.Model):
         return f"{self.student.get_full_name()} la {title}"
 
     def get_status(self):
-        """Return internship status: 'not_started', 'in_progress', or 'finished'"""
         today = timezone.now().date()
         if today < self.start_date:
             return "not_started"
 
+        if self.journal_confirmed_at:
+            return "completed"
+
         planned_end = self.get_planned_end_date()
-        if planned_end and today > planned_end:
-            return "finished"
-        elif self.end_date and today > self.end_date:
-            return "finished"
-        else:
-            return "in_progress"
+        end_check = planned_end or self.end_date
+        if end_check and today > end_check:
+            return "practica_finalizata"
+
+        return "in_progress"
 
     def get_days_until_start(self):
         """Days remaining until internship starts"""
@@ -172,6 +184,26 @@ class Internship(models.Model):
         if self.offer:
             return self.start_date + timedelta(weeks=self.offer.duration_weeks)
         return self.end_date
+
+    def journal_required_weeks(self):
+        if self.offer and self.offer.duration_weeks:
+            return self.offer.duration_weeks
+        return 0
+
+    def journal_is_complete(self):
+        required_weeks = self.journal_required_weeks()
+        if not required_weeks:
+            return False
+        return self.journal_entries.count() >= required_weeks
+
+    def journal_is_locked(self):
+        return bool(self.journal_submitted_at or self.journal_confirmed_at)
+
+    def journal_can_be_submitted(self):
+        return self.journal_is_complete() and not self.journal_is_locked()
+
+    def journal_is_confirmed(self):
+        return bool(self.journal_confirmed_at)
 
     def get_current_week(self):
         if not self.is_active or self.get_status() != "in_progress":

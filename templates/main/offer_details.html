@@ -26,14 +26,23 @@
                         </div>
                         {% if is_owner %}
                         <div class="d-flex gap-2">
+                            {% if offer.is_archived %}
+                            <button type="button" class="btn btn-sm btn-secondary rounded-pill" disabled>
+                                <i class="fas fa-edit me-1"></i>Editează
+                            </button>
+                            <button type="button" class="btn btn-sm btn-secondary rounded-pill" disabled>
+                                <i class="fas fa-archive me-1"></i>Arhivată
+                            </button>
+                            {% else %}
                             <a href="{% url 'edit_internship_offer' offer.pk %}"
                                 class="btn btn-sm btn-warning rounded-pill">
                                 <i class="fas fa-edit me-1"></i>Editează
                             </a>
-                            <a href="{% url 'delete_internship_offer' offer.pk %}"
+                            <a href="{% url 'archive_internship_offer' offer.pk %}"
                                 class="btn btn-sm btn-danger rounded-pill">
-                                <i class="fas fa-trash me-1"></i>Șterge
+                                <i class="fas fa-archive me-1"></i>Arhivează
                             </a>
+                            {% endif %}
                         </div>
                         {% endif %}
                     </div>
@@ -71,12 +80,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-check-circle text-{% if offer.is_active %}success{% else %}secondary{% endif %} me-3"
+                                <i class="fas fa-check-circle text-{% if offer.is_archived %}dark{% elif offer.is_active %}success{% else %}secondary{% endif %} me-3"
                                     style="font-size: 1.5rem;"></i>
                                 <div>
                                     <small class="text-muted d-block">Status</small>
-                                    <strong>{% if offer.is_active %}<span class="badge bg-success">Activ</span>
-                                        {% else %}<span class="badge bg-secondary">Inactiv</span>{% endif %}</strong>
+                                    <strong>
+                                        {% if offer.is_archived %}
+                                        <span class="badge bg-dark">Arhivată</span>
+                                        {% elif offer.is_active %}
+                                        <span class="badge bg-success">Activ</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">Inactiv</span>
+                                        {% endif %}
+                                    </strong>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +153,7 @@
                             {% elif student_application.status == 'student_declined' %}
                                 <p class="text-danger mb-0">Ai refuzat participarea.</p>
                             {% elif student_application.status == 'withdrawn' %}
-                                <p class="text-muted mb-0">Cerere retrasă automat, ai confirmat participarea la alt stagiu de practică.</p>
+                                <p class="text-muted mb-0">Cerere retrasă automat.</p>
                             {% elif student_application.status == 'student_confirmed' %}
                                 <p class="text-success mb-0">Ai confirmat participarea la acest stagiu de practică.</p>
                             {% elif student_application.status == 'hr_accepted' %}
@@ -154,6 +170,22 @@
                         {% else %}
                             {% if has_active_internship %}
                                 <p class="text-muted mb-0">Nu poți aplica momentan, există un stagiu de practică activ.</p>
+                            {% elif not has_identification_data and not has_applicable_cv %}
+                                <p class="text-muted mb-0">
+                                    Pentru a aplica, trebuie să completezi datele de identificare și să ai CV-ul completat sau să încarci un CV personal (PDF).
+                                    <br>
+                                    <br>
+                                    <a href="{% url 'identification_data' %}">Completează datele de identificare aici</a>
+                                    <br>
+                                    <a href="{% url 'edit_cv' %}">Completează/încarcă CV-ul aici</a>
+                                </p>
+                            {% elif not has_identification_data %}
+                                <p class="text-muted mb-0">
+                                    Pentru a aplica, trebuie să completezi datele de identificare.
+                                    <br>
+                                    <br>
+                                    <a href="{% url 'identification_data' %}">Completează datele de identificare aici</a>
+                                </p>
                             {% elif not has_applicable_cv %}
                                 <p class="text-muted mb-0">
                                     Pentru a aplica, trebuie să ai CV-ul completat sau să încarci un CV personal (PDF).

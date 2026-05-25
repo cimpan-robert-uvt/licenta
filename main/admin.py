@@ -4,8 +4,15 @@ from .models import InternshipOffer, Application, Internship, JournalEntry
 
 @admin.register(InternshipOffer)
 class InternshipOfferAdmin(admin.ModelAdmin):
-    list_display = ("title", "company", "location", "is_active", "created_at")
-    list_filter = ("is_active", "created_at", "start_date")
+    list_display = (
+        "title",
+        "company",
+        "location",
+        "is_active",
+        "is_archived",
+        "created_at",
+    )
+    list_filter = ("is_active", "is_archived", "created_at", "start_date")
     search_fields = ("title", "description", "company__username")
     readonly_fields = ("created_at", "updated_at")
 
@@ -35,8 +42,15 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(Internship)
 class InternshipAdmin(admin.ModelAdmin):
-    list_display = ("student", "company", "start_date", "is_active")
-    list_filter = ("is_active", "start_date")
+    list_display = (
+        "student",
+        "company",
+        "start_date",
+        "is_active",
+        "journal_submitted_at",
+        "journal_confirmed_at",
+    )
+    list_filter = ("is_active", "start_date", "journal_submitted_at", "journal_confirmed_at")
     search_fields = ("student__username", "company__username")
     readonly_fields = ("created_at", "get_current_week")
 

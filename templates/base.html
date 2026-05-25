@@ -44,6 +44,7 @@
                         {% elif user.is_company %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'company_my_offers' %}">Ofertele mele</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'company_candidates' %}">Candidați</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'company_journals' %}">Jurnale</a></li>
                         {% endif %}
                         <li class="nav-item ms-lg-3">
                             <a class="nav-link btn btn-white-outline px-4 d-flex align-items-center gap-2" href="{% url 'profile' %}">

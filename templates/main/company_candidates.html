@@ -52,13 +52,7 @@
                                 {% for app in item.applications %}
                                 <tr>
                                     <td class="ps-3 fw-bold">{{ app.student.get_full_name }}</td>
-                                    <td>
-                                        {% if app.student.student_cv %}
-                                            {{ app.student.student_cv.email|default:"-" }}
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
+                                    <td>{{ app.student.email|default:"-" }}</td>
                                     <td>
                                         {% if app.student.student_cv %}
                                             {{ app.student.student_cv.city|default:"-" }}

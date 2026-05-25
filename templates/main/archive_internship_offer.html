@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}Șterge ofertă de stagiu{% endblock %}
+{% block title %}Arhivează ofertă de stagiu{% endblock %}
 
 {% block content %}
 <div class="auth-wrapper mt-4">
     <div class="auth-header">
-        <h2>Șterge oferta de stagiu</h2>
+        <h2>Arhivează oferta de stagiu</h2>
     </div>
 
     <div class="card p-4">
         <div class="card-body">
             <div class="alert alert-warning" role="alert" data-permanent="true">
                 <h5 class="alert-heading">Atenție!</h5>
-                <p>Ștergerea acestei oferte va rezulta în:</p>
+                <p>Arhivarea acestei oferte va rezulta în:</p>
                 <ul class="mb-0">
-                    <li>Ștergerea tuturor aplicațiilor asociate</li>
-                    <li>Ștergerea tuturor internshipurilor create din această ofertă</li>
-                    <li>Pierderea tuturor datelor legate de stagii</li>
+                    <li>Oferta nu va mai fi vizibilă studenților</li>
+                    <li>Aplicațiile în așteptare vor fi retrase automat</li>
+                    <li>Oferta nu va mai putea fi reactivată</li>
                 </ul>
             </div>
 
@@ -31,16 +31,16 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="password" class="form-label fw-bold">Introdu parola contului tău pentru a confirma ștergerea acestei oferte.</label>
+                    <label for="password" class="form-label fw-bold">Introdu parola contului tău pentru a confirma arhivarea acestei oferte.</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                     {% if password_error %}
                     <div class="text-danger small mt-1">{{ password_error }}</div>
                     {% endif %}
                 </div>
-                <p class="opacity-75 text-danger">Ești sigur că dorești să ștergi această ofertă? Această acțiune este ireversibilă.</p>
+                <p class="opacity-75 text-danger">Ești sigur că dorești să arhivezi această ofertă? Această acțiune este ireversibilă.</p>
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-danger flex-grow-1 rounded-pill">
-                        Șterge oferta
+                        Arhivează oferta
                     </button>
                     <a href="{% url 'company_my_offers' %}" class="btn btn-secondary flex-grow-1 rounded-pill">Anulează</a>
                 </div>

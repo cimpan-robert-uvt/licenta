@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Jurnale trimise{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-0">Jurnale trimise de studenți</h2>
+        <p class="text-muted">Verifică și confirmă jurnalele studenților</p>
+    </div>
+</div>
+
+{% if internships %}
+    <div class="row g-4">
+        {% for intern in internships %}
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-1">{{ intern.student.get_full_name }}</h5>
+                    <p class="text-muted small mb-2">Oferta: {{ intern.offer.title|default:"-" }}</p>
+                    <p class="text-muted small mb-2">Trimis la: {% if intern.journal_submitted_at %}{{ intern.journal_submitted_at|date:"j b Y H:i" }}{% else %}-{% endif %}</p>
+
+                    <div class="d-flex gap-2">
+                        {% if intern.journal_submitted_at and not intern.journal_confirmed_at %}
+                            <a href="{% url 'company_preview_journal_pdf' intern.id %}" target="_blank" class="btn btn-outline-secondary rounded-pill">Previzualizează</a>
+                            <form method="post" action="{% url 'confirm_journal' intern.id %}" onsubmit="return confirm('Sigur dorești să confirmi jurnalul?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success rounded-pill">Confirmă jurnal</button>
+                            </form>
+                        {% elif intern.journal_confirmed_at and intern.journal_pdf %}
+                            <div class="d-flex flex-column gap-2">
+                                <span class="badge bg-success">Confirmat</span>
+                                <a href="{% url 'serve_protected_journal_pdf' intern.id %}" class="btn btn-outline-success rounded-pill">Descarcă PDF</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state-centered">
+        <p>Momentan nu există jurnale de confirmat.</p>
+    </div>
+{% endif %}
+{% endblock %}

@@ -33,6 +33,11 @@ DOMAIN_CHOICES = [
     ("turism", "Turism"),
 ]
 
+STUDY_LEVEL_CHOICES = [
+    ("licenta", "Licenta"),
+    ("master", "Master"),
+]
+
 
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator()
@@ -86,10 +91,13 @@ class StudentProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="student_profile"
     )
+    cnp = models.CharField(max_length=13, blank=True)
     faculty = models.CharField(max_length=255, blank=True)
     domain = models.CharField(max_length=50, choices=DOMAIN_CHOICES, default="altele")
+    receive_offer_notifications = models.BooleanField(default=False)
     specialization = models.CharField(max_length=255, blank=True)
     year_of_study = models.IntegerField(null=True, blank=True)
+    study_level = models.CharField(max_length=20, choices=STUDY_LEVEL_CHOICES, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -105,6 +113,8 @@ class CompanyProfile(models.Model):
         User, on_delete=models.CASCADE, related_name="company_profile"
     )
     company_name = models.CharField(max_length=255)
+    full_company_name = models.CharField(max_length=255, blank=True)
+    cui = models.CharField(max_length=30, blank=True)
     domain = models.CharField(max_length=50, choices=DOMAIN_CHOICES, default="altele")
     industry = models.CharField(max_length=255, blank=True)
     website = models.URLField(blank=True)

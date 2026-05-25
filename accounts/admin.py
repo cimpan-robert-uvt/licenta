@@ -29,13 +29,25 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "faculty", "specialization", "year_of_study")
-    list_filter = ("faculty", "year_of_study")
+    list_display = (
+        "user",
+        "faculty",
+        "specialization",
+        "year_of_study",
+        "receive_offer_notifications",
+    )
+    list_filter = ("faculty", "year_of_study", "receive_offer_notifications")
     search_fields = ("user__username", "user__email", "faculty")
 
 
 @admin.register(CompanyProfile)
 class CompanyProfileAdmin(admin.ModelAdmin):
-    list_display = ("company_name", "user", "industry", "contact_person")
+    list_display = (
+        "company_name",
+        "full_company_name",
+        "user",
+        "industry",
+        "contact_person",
+    )
     list_filter = ("industry", "created_at")
-    search_fields = ("company_name", "user__username", "website")
+    search_fields = ("company_name", "full_company_name", "user__username", "website")

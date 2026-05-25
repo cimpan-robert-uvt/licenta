@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Date de identificare{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper mt-4">
+    <div class="auth-header position-relative text-center mb-3 py-2">
+        <h2>Date de identificare</h2>
+        <p class="opacity-75">Completează datele de identificare pentru contul tău</p>
+    </div>
+
+    <div class="card p-4">
+        <div class="card-body">
+            {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger mb-3">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="row g-2">
+                    {% for field in form %}
+                    <div class="{% if field.name == 'address' %}col-md-12{% else %}col-md-6{% endif %}">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-muted small text-uppercase">{% if field.field.required %}*{% endif %}{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                            <div class="form-text small mt-1">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% if field.errors %}
+                            {% for error in field.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <p class="small text-muted mb-2">* - câmp obligatoriu</p>
+                <button type="submit" class="btn btn-primary w-100 mt-3">Salvează date</button>
+                <div class="card-footer bg-transparent border-0 text-center py-3">
+                    <p class="mb-0 text-muted"><a href="{% url 'profile' %}" class="fw-bold text-primary">Înapoi la profil</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

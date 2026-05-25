@@ -6,7 +6,7 @@
 {% block content %}
 {% block messages %}{% endblock %}
 <div class="auth-wrapper mt-4">
-    <div class="auth-header">
+    <div class="auth-header position-relative text-center mb-3 py-2">
         <h2>Profilul meu</h2>
         <p class="opacity-75">Gestionează informațiile tale personale</p>
     </div>
@@ -37,7 +37,7 @@
 
                 <div class="row g-2">
                     {% for field in form %}
-                        {% if field.name not in 'role|domain|company_name|profile_picture' %}
+                        {% if field.name not in 'role|domain|company_name|profile_picture|receive_offer_notifications' %}
                         <div class="col-md-6">
                             <div class="mb-2">
                                 <label class="form-label fw-bold text-muted small text-uppercase">{% if field.field.required %}*{% endif %}{{ field.label }}</label>
@@ -77,6 +77,20 @@
                             {% endif %}
                         </div>
                     </div>
+
+                    <div class="col-md-12">
+                        <div class="form-check mb-2">
+                            {{ form.receive_offer_notifications }}
+                            <label class="form-check-label" for="{{ form.receive_offer_notifications.id_for_label }}">
+                                {{ form.receive_offer_notifications.label }}
+                            </label>
+                            {% if form.receive_offer_notifications.errors %}
+                            {% for error in form.receive_offer_notifications.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
                     {% endif %}
 
                     {% if user.is_company %}
@@ -84,6 +98,9 @@
                         <div class="mb-2">
                             <label class="form-label fw-bold text-muted small text-uppercase">{% if form.company_name.field.required %}*{% endif %}{{ form.company_name.label }}</label>
                             {{ form.company_name }}
+                            {% if form.company_name.help_text %}
+                            <div class="form-text small mt-1">{{ form.company_name.help_text }}</div>
+                            {% endif %}
                             {% if form.company_name.errors %}
                             {% for error in form.company_name.errors %}
                             <div class="text-danger small mt-1">{{ error }}</div>
@@ -107,12 +124,10 @@
                     </div>
                     {% endif %}
 
-                    <!-- Profile Picture Section -->
                     <div class="col-md-8">
                         <div class="mb-2">
                             <label class="form-label fw-bold text-muted small text-uppercase">{% if form.profile_picture.field.required %}*{% endif %}{{ form.profile_picture.label }}</label>
                             <div class="d-flex gap-2 align-items-start">
-                                <!-- Current Picture -->
                                 <div class="flex-shrink-0 pt-1">
                                     {% if user.profile_picture %}
                                         <img src="{{ user.profile_picture.url }}" alt="Profil" class="rounded-circle" 
@@ -125,7 +140,6 @@
                                     {% endif %}
                                 </div>
                                 
-                                <!-- Upload & Delete Controls -->
                                 <div class="flex-grow-1">
                                     <input type="file" name="profile_picture" class="form-control form-control-sm" accept="image/*">
                                     {% if user.profile_picture %}
@@ -146,7 +160,8 @@
                 </div>
 
                 <p class="small text-muted mb-2">* - câmp obligatoriu</p>
-                <button type="submit" class="btn btn-primary w-100 mt-3">Salvează modificări</button>
+                <a href="{% url 'identification_data' %}" class="btn btn-outline-primary w-100 mb-2 rounded-pill shadow-sm">Date de identificare</a>
+                <button type="submit" class="btn btn-primary w-100 mt-1">Salvează modificări</button>
             </form>
         </div>
         <div class="card-footer bg-transparent border-0 py-3">

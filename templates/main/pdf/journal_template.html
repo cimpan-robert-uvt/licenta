@@ -2,71 +2,162 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Jurnal de practică</title>
-    <style>
-        @page {
-            size: A4;
-            margin: 2cm;
+	<title>Jurnal de practica - {{ student.get_full_name }}</title>
+	<style type="text/css">
+		@page {
+			size: A4;
+			margin: 2cm;
+		}
+		body {
+			font-size: 11pt;
+			color: #333;
+			line-height: 1.5;
+		}
+		.journal-page-title {
+			text-align: center;
+			font-size: 20pt;
+			font-weight: bold;
+			margin-bottom: 24px;
+		}
+		.journal-meta { margin-bottom: 20px; }
+		.journal-meta p { margin: 4px 0; }
+		.journal-entry { margin-top: 20px; page-break-inside: avoid; }
+		.journal-entry-title { font-size: 14pt; font-weight: bold; margin-bottom: 4px; }
+		.journal-entry-meta { font-size: 9pt; color: #666; margin-bottom: 8px; }
+		.journal-entry-content { text-align: justify; }
+		.muted { color: #777; }
+        .journal-signature {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: none;
         }
-
-        body {
-            font-family: DejaVu Sans, sans-serif;
-            font-size: 11pt;
-            color: #1f2937;
-            line-height: 1.5;
+        .signature-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            border: none;
         }
-
-        h1 {
+        .signature-table th, .signature-table td {
+            width: 50%;
             text-align: center;
-            margin: 0 0 12px 0;
-            font-size: 20pt;
-        }
-
-        .meta {
-            margin-bottom: 14px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #d1d5db;
-        }
-
-        .meta p {
-            margin: 2px 0;
-        }
-
-        .entry {
-            margin-top: 14px;
+            vertical-align: top;
             padding: 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
+            border: none;
         }
-
-        .entry-title {
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .entry-date {
-            color: #4b5563;
-            font-size: 10pt;
-            margin-bottom: 8px;
-        }
-    </style>
+        .signature-table .signature-row td { padding-top: 20px; }
+        .signature-line { margin-top: 36px; }
+	</style>
 </head>
 <body>
-    <h1>Jurnal de practică</h1>
+    <div class="pdf-document">
+        <div class="journal-page-title">Jurnal de practica</div>
 
-    <div class="meta">
-        <p><strong>Student:</strong> {{ student.get_full_name }}</p>
-        <p><strong>Companie:</strong> {{ company.company_profile.company_name|default:company.get_full_name }}</p>
-        <p><strong>Ofertă:</strong> {{ internship.offer.title|default:"-" }}</p>
-        <p><strong>Perioadă:</strong> {{ internship.start_date|date:"d.m.Y" }} - {{ internship.get_planned_end_date|date:"d.m.Y"|default:"-" }}</p>
-    </div>
-
-    {% for entry in entries %}
-        <div class="entry">
-            <div class="entry-title">Săptămâna {{ entry.week_number }}</div>
-            <div class="entry-date">Adăugat: {{ entry.created_at|date:"d.m.Y H:i" }}</div>
-            <div>{{ entry.content|linebreaksbr }}</div>
+        <div class="journal-meta">
+            <p>
+                {{ student.get_full_name }}, de la facultatea {{ student.student_profile.faculty|default:"-" }},
+                specializarea {{ student.student_profile.specialization|default:"-" }},
+                in anul de studiu {{ student.student_profile.year_of_study|default:"-" }}
+                ({{ student.student_profile.study_level|default:"-"|title }}), privind activitatea desfasurata
+                in calitate de practicant la
+                {% if company_profile %}
+                    {{ company_profile.full_company_name|default:company_profile.company_name|default:company.get_full_name|default:"-" }}
+                {% else %}
+                    {{ company.get_full_name|default:"-" }}
+                {% endif %}, reprezentant
+                {% if company_profile %}
+                    {{ company_profile.contact_person|default:company.get_full_name|default:"-" }}
+                {% else %}
+                    {{ company.get_full_name|default:"-" }}
+                {% endif %}, in perioada
+                {{ internship.start_date|date:"d.m.Y" }} - {{ internship.get_planned_end_date|date:"d.m.Y" }}:
+            </p>
         </div>
-    {% endfor %}
+
+        {% if entries %}
+            {% for entry in entries %}
+                <div class="journal-entry">
+                    <div class="journal-entry-title">Saptamana {{ entry.week_number }}</div>
+                    <div class="journal-entry-meta">Adaugat: {{ entry.created_at|date:"d.m.Y H:i" }}</div>
+                    <div class="journal-entry-content">{{ entry.content|linebreaksbr }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="muted">Nu exista inca intrari in jurnal pentru acest stagiu.</p>
+        {% endif %}
+
+        <strong><p class="muted">Declar pe propria raspundere faptul ca nu am realizat stagiul de practica in mod formal si nu am copiat sau dat sa fie copiat jurnalul de practica.</p></strong>
+
+        <div class="journal-signature">
+            {% if not journal_submitted_at and not journal_confirmed_at %}
+                <p><strong>Stare jurnal:</strong> Neconfirmat</p>
+
+            {% elif journal_submitted_at and not journal_confirmed_at %}
+                <p><strong>Stare jurnal:</strong> Trimis pentru confirmare</p>
+
+                <table class="signature-table">
+                    <tr>
+                        <th>Partener de practica (Compania)<br>
+                            {% if company_profile %}
+                                <strong>{{ company_profile.full_company_name|default:company_profile.company_name|default:company.get_full_name|default:"...................." }}</strong>
+                            {% else %}
+                                <strong>{{ company.get_full_name|default:"...................." }}</strong>
+                            {% endif %}
+                        </th>
+                        <th>Practicant (Studentul)<br><strong>{{ student.get_full_name|default:"...................." }}</strong></th>
+                    </tr>
+                    <tr class="signature-row">
+                        <td>
+                            <em>Reprezentant:</em><br>
+                            ___________________________<br><br>
+                            Data: __________________<br><br>
+                            Semnatura:<br>
+                            ________________________
+                        </td>
+                        <td>
+                            <em>Practicant:</em><br>
+                            <strong>{{ student.get_full_name|default:"...................." }}</strong>
+                            <br><br>
+                            Data: {{ journal_submitted_at|date:"d.m.Y H:i" }}<br><br>
+                            Semnatura:<br>
+                            <strong>[SEMNAT DIGITAL]</strong>
+                        </td>
+                    </tr>
+                </table>
+
+            {% elif journal_confirmed_at %}
+                <table class="signature-table">
+                    <tr>
+                        <th>Partener de practica (Compania)<br>
+                            {% if company_profile %}
+                                <strong>{{ company_profile.full_company_name|default:company_profile.company_name|default:company.get_full_name|default:"...................." }}</strong>
+                            {% else %}
+                                <strong>{{ company.get_full_name|default:"...................." }}</strong>
+                            {% endif %}
+                        </th>
+                        <th>Practicant (Studentul)<br><strong>{{ student.get_full_name|default:"...................." }}</strong></th>
+                    </tr>
+                    <tr class="signature-row">
+                        <td>
+                            <em>Reprezentant:</em><br>
+                            <strong>{{ signed_by_name|default:company_profile.contact_person|default:company.get_full_name|default:"-" }}</strong>
+                            <br><br>
+                            Data: {{ journal_confirmed_at|date:"d.m.Y H:i" }}<br><br>
+                            Semnatura:<br>
+                            <strong>[SEMNAT DIGITAL]</strong>
+                        </td>
+                        <td>
+                            <em>Practicant:</em><br>
+                            <strong>{{ student.get_full_name|default:"...................." }}</strong>
+                            <br><br>
+                            Data: {{ journal_submitted_at|date:"d.m.Y H:i"|default:"-" }}<br><br>
+                            Semnatura:<br>
+                            <strong>[SEMNAT DIGITAL]</strong>
+                        </td>
+                    </tr>
+                </table>
+
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

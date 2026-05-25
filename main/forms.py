@@ -71,6 +71,13 @@ class InternshipOfferForm(forms.ModelForm):
                 "Data începerii stagiului nu poate fi în trecut."
             )
 
+        if self.instance and self.instance.pk:
+            has_internships = self.instance.internships.exists()
+            if has_internships and start_date != self.instance.start_date:
+                raise forms.ValidationError(
+                    "Data începerii nu poate fi modificată deoarece există deja stagii asociate acestei oferte."
+                )
+
         return start_date
 
     def __init__(self, *args, **kwargs):
@@ -81,6 +88,23 @@ class InternshipOfferForm(forms.ModelForm):
         self.fields["location"].required = True
         self.fields["duration_weeks"].required = True
         self.fields["start_date"].required = True
+
+        if (
+            self.instance
+            and self.instance.pk
+            and getattr(self.instance, "is_archived", False)
+        ):
+            self.fields["is_active"].disabled = True
+            self.fields["is_active"].initial = False
+            self.fields[
+                "is_active"
+            ].help_text = "Oferta este arhivata si nu mai poate fi reactivata."
+
+    def clean_is_active(self):
+        is_active = self.cleaned_data.get("is_active")
+        if self.instance and getattr(self.instance, "is_archived", False) and is_active:
+            raise forms.ValidationError("Oferta arhivata nu poate fi reactivata.")
+        return is_active
 
     def clean_duration_weeks(self):
         duration = self.cleaned_data.get("duration_weeks")

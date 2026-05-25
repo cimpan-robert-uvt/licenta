@@ -16,6 +16,7 @@ from .models import (
     CVExperience,
     CVSkill,
     DOMAIN_CHOICES,
+    STUDY_LEVEL_CHOICES,
 )
 
 
@@ -238,6 +239,12 @@ class ProfileForm(forms.ModelForm):
         label="Domeniu",
     )
 
+    receive_offer_notifications = forms.BooleanField(
+        required=False,
+        label="Primește notificări pentru anunțuri noi în domeniu",
+        widget=forms.CheckboxInput(attrs={"class": "form-check-input"}),
+    )
+
     class Meta:
         model = User
         fields = (
@@ -290,6 +297,9 @@ class ProfileForm(forms.ModelForm):
             and hasattr(self.instance, "student_profile")
         ):
             self.fields["domain"].initial = self.instance.student_profile.domain
+            self.fields[
+                "receive_offer_notifications"
+            ].initial = self.instance.student_profile.receive_offer_notifications
         elif (
             self.instance.pk
             and self.instance.role == "company"
@@ -340,13 +350,121 @@ class ProfileForm(forms.ModelForm):
                 )
         elif user.role == "student":
             domain = self.cleaned_data.get("domain")
+            receive_offer_notifications = self.cleaned_data.get(
+                "receive_offer_notifications", False
+            )
             if hasattr(user, "student_profile"):
                 user.student_profile.domain = domain
+                user.student_profile.receive_offer_notifications = (
+                    receive_offer_notifications
+                )
                 user.student_profile.save()
             else:
-                StudentProfile.objects.create(user=user, domain=domain)
+                StudentProfile.objects.create(
+                    user=user,
+                    domain=domain,
+                    receive_offer_notifications=receive_offer_notifications,
+                )
 
         return user
+
+
+class StudentIdentificationForm(forms.ModelForm):
+    cnp = forms.CharField(
+        required=True,
+        label="CNP",
+        max_length=13,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        validators=[
+            RegexValidator(
+                regex=r"^\d{13}$",
+                message="CNP-ul trebuie să conțină exact 13 cifre.",
+            )
+        ],
+    )
+    faculty = forms.CharField(
+        required=True,
+        label="Facultate",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    specialization = forms.CharField(
+        required=True,
+        label="Specializare",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    year_of_study = forms.IntegerField(
+        required=True,
+        label="Anul de studii",
+        min_value=1,
+        widget=forms.NumberInput(attrs={"class": "form-control"}),
+    )
+    study_level = forms.ChoiceField(
+        required=True,
+        choices=STUDY_LEVEL_CHOICES,
+        label="Nivel de studii",
+        widget=forms.Select(attrs={"class": "form-control"}),
+    )
+
+    class Meta:
+        model = StudentProfile
+        fields = (
+            "cnp",
+            "faculty",
+            "specialization",
+            "year_of_study",
+            "study_level",
+        )
+        widgets = {}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["study_level"].choices = [("", "---")] + list(STUDY_LEVEL_CHOICES)
+        for field in self.fields.values():
+            field.error_messages["required"] = "Acest câmp este obligatoriu."
+
+
+class CompanyIdentificationForm(forms.ModelForm):
+    full_company_name = forms.CharField(
+        required=True,
+        label="Nume complet companie",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    cui = forms.CharField(
+        required=True,
+        label="CUI",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        validators=[
+            RegexValidator(
+                regex=r"^\d+$",
+                message="CUI-ul trebuie să conțină doar cifre.",
+            )
+        ],
+    )
+    address = forms.CharField(
+        required=True,
+        label="Adresa sediului",
+        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+    )
+    contact_person = forms.CharField(
+        required=True,
+        label="Reprezentant",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+
+    class Meta:
+        model = CompanyProfile
+        fields = (
+            "full_company_name",
+            "cui",
+            "address",
+            "contact_person",
+        )
+        widgets = {}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.error_messages["required"] = "Acest câmp este obligatoriu."
 
 
 class StudentCVForm(forms.ModelForm):

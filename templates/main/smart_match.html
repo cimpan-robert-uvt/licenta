@@ -26,7 +26,7 @@
                     </form>
                 {% else %}
                     <p class="text-muted mb-0">
-                        Pentru a aplica, trebuie să ai CV-ul completat sau să încarci un CV personal (PDF).
+                        Pentru analiză, trebuie să ai CV-ul completat sau să încarci un CV personal (PDF).
                         <br>
                         <br>
                         <a href="{% url 'edit_cv' %}">Completează/încarcă CV-ul aici</a>
@@ -52,7 +52,7 @@
 
             <div id="results-section">
                 {% if matches %}
-                    <h3 class="mb-4 text-start">Top 10 recomandari pentru tine:</h3>
+                    <h3 class="mb-4 text-start">Top recomandări:</h3>
                     <div class="row text-start">
                         {% for match in matches %}
                             <div class="col-12 mb-3">
