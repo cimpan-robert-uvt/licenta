@@ -48,6 +48,7 @@
 			CNP <strong>{{ student.student_profile.cnp|default:"...................................." }}</strong>,
 			email <strong>{{ student.email|default:"........................................" }}</strong>, telefon <strong>{{ student.phone_number|default:"................................" }}</strong>,
 			inscris(a) in anul universitar <strong>{{ student.student_profile.year_of_study|default:"....." }}</strong>,
+			la <strong>{{ student.student_profile.faculty|default:"..........................." }}</strong>,
 			specializarea <strong>{{ student.student_profile.specialization|default:"..................." }}</strong>,
 			in calitate de <em>practicant</em>.
 		</p>

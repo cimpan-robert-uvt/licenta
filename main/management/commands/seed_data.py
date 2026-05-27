@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import timedelta
 import random
 
 from django.core.management.base import BaseCommand
@@ -7,12 +7,7 @@ from django.utils import timezone
 
 from accounts.models import (
     User,
-    StudentProfile,
     CompanyProfile,
-    StudentCV,
-    CVEducation,
-    CVExperience,
-    CVSkill,
 )
 from main.models import InternshipOffer
 
@@ -288,16 +283,7 @@ class Command(BaseCommand):
         created_companies = 0
         created_company_profiles = 0
         created_offers = 0
-        created_students = 0
-        created_student_profiles = 0
-        created_cvs = 0
-        created_education = 0
-        created_experience = 0
-        created_skills = 0
         deleted_offers = 0
-        deleted_education = 0
-        deleted_experience = 0
-        deleted_skills = 0
 
         with transaction.atomic():
             for i in range(5):
@@ -382,134 +368,10 @@ class Command(BaseCommand):
                     )
                     created_offers += 1
 
-            for i in range(5):
-                username = "robert_student" if i == 0 else f"robert_student{i + 1}"
-                email = f"cimpan.robert.tamas+s{i + 1}@gmail.com"
-                data = STUDENT_PROFILE_DATA[i]
-
-                user = User.objects.filter(username=username).first()
-                if not user:
-                    user = User.objects.create_user(
-                        username=username,
-                        email=email,
-                        password=PASSWORD,
-                        role="student",
-                        first_name="Robert",
-                        last_name=f"Student{i + 1}",
-                    )
-                    created_students += 1
-                else:
-                    user.role = "student"
-                    user.email = email
-                    user.set_password(PASSWORD)
-                    user.save(update_fields=["role", "email", "password"])
-
-                profile, created = StudentProfile.objects.get_or_create(
-                    user=user,
-                    defaults={
-                        "faculty": data["faculty"],
-                        "domain": data["domain"],
-                        "specialization": data["specialization"],
-                        "year_of_study": data["year_of_study"],
-                    },
-                )
-                if created:
-                    created_student_profiles += 1
-                else:
-                    StudentProfile.objects.filter(pk=profile.pk).update(
-                        faculty=data["faculty"],
-                        domain=data["domain"],
-                        specialization=data["specialization"],
-                        year_of_study=data["year_of_study"],
-                    )
-
-                cv, created = StudentCV.objects.get_or_create(
-                    user=user,
-                    defaults={
-                        "phone": f"071000000{i + 1}",
-                        "email": email,
-                        "linkedin": f"https://www.linkedin.com/in/robert-student{i + 1}/",
-                        "city": data["city"],
-                        "resume": (
-                            "Student motivat, interesat sa invete si sa contribuie la proiecte reale. "
-                            "Am experienta in proiecte academice si doresc un stagiu relevant."
-                        ),
-                    },
-                )
-                if created:
-                    created_cvs += 1
-                else:
-                    StudentCV.objects.filter(pk=cv.pk).update(
-                        phone=f"071000000{i + 1}",
-                        email=email,
-                        linkedin=f"https://www.linkedin.com/in/robert-student{i + 1}/",
-                        city=data["city"],
-                        resume=(
-                            "Student motivat, interesat sa invete si sa contribuie la proiecte reale. "
-                            "Am experienta in proiecte academice si doresc un stagiu relevant."
-                        ),
-                    )
-
-                education_exists = CVEducation.objects.filter(cv=cv).exists()
-                if refresh and education_exists:
-                    deleted_education += CVEducation.objects.filter(cv=cv).count()
-                    CVEducation.objects.filter(cv=cv).delete()
-                    education_exists = False
-
-                if not education_exists:
-                    CVEducation.objects.create(
-                        cv=cv,
-                        school_name=data["faculty"],
-                        start_date=date(timezone.now().year - 2, 10, 1),
-                        end_date=date(timezone.now().year + 1, 7, 1),
-                        details="Program de licenta cu proiecte practice si colaborari in echipa.",
-                    )
-                    created_education += 1
-
-                experience_exists = CVExperience.objects.filter(cv=cv).exists()
-                if refresh and experience_exists:
-                    deleted_experience += CVExperience.objects.filter(cv=cv).count()
-                    CVExperience.objects.filter(cv=cv).delete()
-                    experience_exists = False
-
-                if not experience_exists:
-                    CVExperience.objects.create(
-                        cv=cv,
-                        institution_name="Stagiu de practica",
-                        start_date=timezone.now().date() - timedelta(days=180),
-                        end_date=timezone.now().date() - timedelta(days=30),
-                        details="Contributii la proiecte interne, documentatie si testare.",
-                    )
-                    created_experience += 1
-
-                existing_skills = CVSkill.objects.filter(cv=cv)
-                if refresh and existing_skills.exists():
-                    deleted_skills += existing_skills.count()
-                    existing_skills.delete()
-                    needed_skills = 3
-                else:
-                    needed_skills = max(0, 3 - existing_skills.count())
-
-                if needed_skills:
-                    for skill_type, skill_name in STUDENT_SKILLS[data["domain"]][
-                        :needed_skills
-                    ]:
-                        CVSkill.objects.create(
-                            cv=cv,
-                            skill_type=skill_type,
-                            skill_name=skill_name,
-                        )
-                        created_skills += 1
-
         self.stdout.write(
             self.style.SUCCESS(
                 "Seed finalizat. "
                 f"Companii create: {created_companies}, Profile companii: {created_company_profiles}, "
                 f"Oferte create: {created_offers}, Oferte sterse: {deleted_offers}. "
-                f"Studenti creati: {created_students}, Profile studenti: {created_student_profiles}, "
-                f"CV-uri create: {created_cvs}, Educatii create: {created_education}, "
-                f"Experiente create: {created_experience}, Abilitati create: {created_skills}. "
-                f"Educatii sterse: {deleted_education}, Experiente sterse: {deleted_experience}, "
-                f"Abilitati sterse: {deleted_skills}."
             )
         )

@@ -27,10 +27,14 @@
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success rounded-pill">Confirmă jurnal</button>
                             </form>
+                            <form method="post" action="{% url 'reject_journal' intern.id %}" onsubmit="return confirm('Sigur dorești să respingi jurnalul?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger rounded-pill">Respinge jurnal</button>
+                            </form>
                         {% elif intern.journal_confirmed_at and intern.journal_pdf %}
                             <div class="d-flex flex-column gap-2">
                                 <span class="badge bg-success">Confirmat</span>
-                                <a href="{% url 'serve_protected_journal_pdf' intern.id %}" class="btn btn-outline-success rounded-pill">Descarcă PDF</a>
+                                <a href="{% url 'serve_protected_journal_pdf' intern.id %}" class="btn btn-outline-success rounded-pill">Descarcă jurnal</a>
                             </div>
                         {% endif %}
                     </div>

@@ -73,6 +73,11 @@ urlpatterns = [
         name="confirm_journal",
     ),
     path(
+        "company/internship/<int:internship_id>/journal/reject/",
+        views.reject_journal,
+        name="reject_journal",
+    ),
+    path(
         "company/offers/",
         views.company_my_offers,
         name="company_my_offers",

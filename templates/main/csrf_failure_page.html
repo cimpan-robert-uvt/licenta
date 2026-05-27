@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title|default:'Verificare CSRF eșuată' }}{% endblock %}
+
+{% block content %}
+<div class="min-vh-75 d-flex align-items-center justify-content-center py-5">
+    <div class="text-center px-3" style="max-width: 640px;">
+        <h1 class="fw-bold mb-0">Verificare CSRF eșuată</h1>
+        <p class="text-muted">{{ error_message|default:'Sesiunea a expirat sau tokenul CSRF nu mai este valid. Reîncarcă pagina și încearcă din nou.' }}</p>
+        <div class="mt-4">
+            <a href="javascript:history.back()" class="btn btn-primary rounded-pill px-4">Înapoi</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -8,9 +8,6 @@ logger = logging.getLogger(__name__)
 
 
 def generate_pdf(template_name, context):
-    """
-    Renders a Django template to a PDF using xhtml2pdf.
-    """
     html_string = render_to_string(template_name, context or {})
     buffer = BytesIO()
     pdf_status = pisa.CreatePDF(

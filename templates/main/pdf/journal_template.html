@@ -54,20 +54,21 @@
 
         <div class="journal-meta">
             <p>
-                {{ student.get_full_name }}, de la facultatea {{ student.student_profile.faculty|default:"-" }},
-                specializarea {{ student.student_profile.specialization|default:"-" }},
-                in anul de studiu {{ student.student_profile.year_of_study|default:"-" }}
-                ({{ student.student_profile.study_level|default:"-"|title }}), privind activitatea desfasurata
+                <strong>{{ student.get_full_name }}</strong>, 
+                de la facultatea <strong>{{ student.student_profile.faculty|default:"-" }}</strong>,
+                specializarea <strong>{{ student.student_profile.specialization|default:"-" }}</strong>,
+                in anul de studiu <strong>{{ student.student_profile.year_of_study|default:"-" }}</strong>
+                (<strong>{{ student.student_profile.study_level|default:"-"|title }}</strong>), privind activitatea desfasurata
                 in calitate de practicant la
                 {% if company_profile %}
-                    {{ company_profile.full_company_name|default:company_profile.company_name|default:company.get_full_name|default:"-" }}
+                    <strong>{{ company_profile.full_company_name|default:company_profile.company_name|default:company.get_full_name|default:"-" }}</strong>
                 {% else %}
-                    {{ company.get_full_name|default:"-" }}
+                    <strong>{{ company.get_full_name|default:"-" }}</strong>
                 {% endif %}, reprezentant
                 {% if company_profile %}
-                    {{ company_profile.contact_person|default:company.get_full_name|default:"-" }}
+                    <strong>{{ company_profile.contact_person|default:company.get_full_name|default:"-" }}</strong>
                 {% else %}
-                    {{ company.get_full_name|default:"-" }}
+                    <strong>{{ company.get_full_name|default:"-" }}</strong>
                 {% endif %}, in perioada
                 {{ internship.start_date|date:"d.m.Y" }} - {{ internship.get_planned_end_date|date:"d.m.Y" }}:
             </p>

@@ -202,6 +202,24 @@ def _forbidden_page(request, message, title="Acces restricționat"):
     )
 
 
+def csrf_failure_view(request, reason=""):
+    message = (
+        "Verificarea CSRF a eșuat. Te rugăm să reîncarci pagina și să încerci din nou."
+    )
+    if reason:
+        message = f"{message}"
+
+    return render(
+        request,
+        "main/csrf_failure_page.html",
+        {
+            "page_title": "Verificare CSRF eșuată",
+            "error_message": message,
+        },
+        status=403,
+    )
+
+
 def _extract_match_explanation(item, offer_obj):
     for key in (
         "justificare",
@@ -829,6 +847,48 @@ def confirm_journal(request, internship_id):
         update_fields=["journal_pdf", "journal_confirmed_at", "journal_confirmed_by"]
     )
 
+    return _redirect_to_application_or_company_dashboard(internship)
+
+
+@login_required
+@user_passes_test(is_company)
+def reject_journal(request, internship_id):
+    internship = get_object_or_404(Internship, pk=internship_id, company=request.user)
+
+    if request.method != "POST":
+        return redirect("company_candidates")
+
+    if not internship.journal_submitted_at:
+        messages.warning(
+            request, "Jurnalul nu a fost trimis de student si nu poate fi respins."
+        )
+        return _redirect_to_application_or_company_dashboard(internship)
+
+    if internship.journal_confirmed_at:
+        messages.info(
+            request, "Jurnalul este deja confirmat si nu poate fi respins."
+        )
+        return _redirect_to_application_or_company_dashboard(internship)
+
+    if internship.journal_pdf:
+        internship.journal_pdf.delete(save=False)
+
+    internship.journal_submitted_at = None
+    internship.journal_confirmed_at = None
+    internship.journal_confirmed_by = None
+    internship.journal_pdf = None
+    internship.save(
+        update_fields=[
+            "journal_submitted_at",
+            "journal_confirmed_at",
+            "journal_confirmed_by",
+            "journal_pdf",
+        ]
+    )
+
+    messages.success(
+        request, "Jurnalul a fost respins si poate fi modificat din nou."
+    )
     return _redirect_to_application_or_company_dashboard(internship)
 
 
