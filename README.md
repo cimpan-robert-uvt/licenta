@@ -1,6 +1,6 @@
 PIGSP - Platforma Inteligentă de Gestionare a Stagiilor de Practică
 
-O aplicație web dezvoltată pentru digitalizarea, eficientizarea și automatizarea procesului de desfășurare a stagiilor de practică universitare. Platforma conectează studenții cu angajatorii, integrând un modul de inteligență artificială pentru orientare în carieră și potrivire cu ofertele, alături de un sistem de generare și securizare digitală a documentelor oficiale.
+O aplicație web dezvoltată pentru digitalizarea, eficientizarea și automatizarea procesului de desfășurare a stagiilor de practică universitare. Platforma conectează studenții cu angajatorii, integrând un modul de inteligență artificială pentru potrivire cu ofertele și orientare în carieră, alături de un sistem de generare a documentelor oficiale în format digital.
 
 Tehnologii Utilizate
 Backend: Python, Framework-ul Django
@@ -38,22 +38,23 @@ Instalează toate pachetele necesare rulând:
 pip install -r requirements.txt
 ```
 4. Configurarea bazei de date și a variabilelor de mediu
+
 Creează o bază de date PostgreSQL goală (ex: internship_db) folosind pgAdmin sau linia de comandă.
 
 Apoi, în folderul principal al proiectului, fă o copie a fișierului .env.template și redenumește-o în .env. Completează fișierul cu datele tale de conectare:
 
 ```env
-Configurări bază de date
+#Configurări bază de date
 DB_NAME=internship_db
 DB_USER=utilizatorul_tau_postgres
 DB_PASSWORD=parola_ta_postgres
 DB_HOST=localhost
 DB_PORT=5432
 
-Configurare API AI
+#Configurare API AI
 GEMINI_API_KEY=cheia_ta_de_la_google_ai_studio
 
-Configurare email (notificări)
+#Configurare email (notificări)
 EMAIL_HOST_USER=adresa_ta_de_email@gmail.com
 EMAIL_HOST_PASSWORD=parola_de_aplicatie
 ```
